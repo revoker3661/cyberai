@@ -73,3 +73,38 @@ This log tracks significant AI-assisted prompts used to build CyberAI. Required 
 > Run npm run build, fix all TypeScript errors. Issues: LucideIcon type for style prop, unknown type for ReactNode, maxOutputTokens API param name, Supabase client lazy initialization for SSR prerender safety, force-dynamic on server pages, middleware resilience to missing env vars.
 
 **Outcome:** npm run build passes with zero TypeScript errors. All 16 routes shown in route manifest.
+
+---
+
+### Prompt 11 — 240-question bank + anti-cheat quiz engine
+> Expand quiz content from 4 to 30 questions per module (240 total across 8 modules). Implement Fisher-Yates shuffle + 15/30 serve per attempt in buildServedQuestions(). Each question gets allocatedPoints from allocatePoints(). For anti-cheat: store servedQuestionIds + optionOrders (shuffled option text arrays keyed by questionId) in save-progress. Server recomputes correctness by text identity — selectedIndex means nothing without the original option order.
+
+**Outcome:** 240-question bank in content.json. allocatePoints() distributes module pts evenly across 15 served questions. save-progress stores optionOrders and verifies answers by matching selectedText to original correctText. Client cannot forge a correct answer via index manipulation.
+
+---
+
+### Prompt 12 — Confidence bonus scoring (1.25× multiplier)
+> Confidence inputs should actually affect the score. Implement bonus-only model: correct + confident = 25% extra pts (CONFIDENCE_BONUS_MULTIPLIER = 1.25 in lib/game.ts); correct + guessing = base pts; wrong = 0 regardless of confidence. Apply server-side in save-progress route — never trust client score. Display as split score: "baseScore / maxServedPoints" + "+N confidence bonus 🎯" on results screen. Per-question review shows actual earned pts.
+
+**Outcome:** CONFIDENCE_BONUS_MULTIPLIER exported from lib/game.ts. save-progress applies Math.round(pts * 1.25) per confident+correct answer. QuizEngine.tsx shows baseScore + confidenceBonus split. Wrong answers display "-Xpts" in red instead of "0 pts" for clearer feedback.
+
+---
+
+### Prompt 13 — Coursera-style Learn tab (creative addition)
+> Add a /learn route as an enhancement beyond the wireframes. Two-column layout: left panel is module list with completion status and progress indicators; right panel renders the selected module's full lesson content inline. Mirrors Coursera/Udemy UX patterns. Add "Learn" to Sidebar nav between Dashboard and Profile. Reuse existing lesson content from content.json — no new content, just a different UI surface for review.
+
+**Outcome:** /learn and /learn/[moduleId] pages implemented. Sidebar updated with Learn nav item. Allows users to review all module content without entering quiz flow. Responsive: stacks vertically on mobile.
+
+---
+
+### Prompt 14 — Floating AI Assistant (page-aware, multi-turn conversational)
+> Build a FloatingAssistant component that persists across all (app) pages except quiz. Features: page-aware context (reads lesson text from content.json for /learn/[moduleId] pages), 20-turn conversation history passed as native messages[] array to AI, human personality system prompt with expressive language, auto-hidden on quiz pages to prevent mid-assessment coaching. Suggestion chips for quick follow-up. Groq→Gemini 4-attempt fallback.
+
+**Outcome:** FloatingAssistant renders on dashboard, lesson, badge, certificate, profile pages — hidden on quiz. Reads current module's lesson content to answer page-specific questions. Full multi-turn conversation maintained in component state. Suggestion chips update after each AI response.
+
+---
+
+### Prompt 15 — AI provider reliability (4-attempt fallback chain)
+> Harden generateAIObject() and generateChat() against provider failures. Strategy: Attempt 1: Groq structured output (generateObject). Attempt 2: Gemini structured output. Attempt 3: Groq text + JSON regex extract + zod parse. Attempt 4: Gemini text + JSON regex extract + zod parse. generateChat() uses same 4-attempt pattern, passing full conversation as native CoreMessage[] array for attempts 1–2 (best context fidelity). On total failure, return typed fallback shape — never crash the UI.
+
+**Outcome:** lib/ai/client.ts implements full 4-attempt chain for both generateAIObject and generateChat. generateChat passes CoreMessage[] natively to preserve conversation quality. All AI features have graceful degradation with fallback shapes. Zero UI-crashing AI errors in production.

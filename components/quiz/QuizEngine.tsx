@@ -1,16 +1,29 @@
 "use client";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { Brain, Lightbulb, CheckCircle, XCircle, ArrowRight } from "lucide-react";
+import {
+  Brain, Lightbulb, CheckCircle, XCircle, ArrowRight,
+  Trophy, AlertTriangle, RefreshCw,
+} from "lucide-react";
 import type { Module, QuizQuestion } from "@/lib/content";
+import { allocatePoints, shuffleArray, isPassed, PASS_THRESHOLD, QUIZ_SERVE_COUNT, CONFIDENCE_BONUS_MULTIPLIER } from "@/lib/game";
 
 type Confidence = "confident" | "guessing";
 
+interface ServedQuestion extends QuizQuestion {
+  servedOptions: string[];   // shuffled options
+  servedCorrectIndex: number; // correct index in servedOptions
+  allocatedPoints: number;
+}
+
 interface Answer {
   questionId: string;
-  selectedIndex: number;
+  selectedIndex: number; // index in servedOptions
   correct: boolean;
   confidence: Confidence;
+  topic: string;
+  chosenText: string;
+  correctText: string;
 }
 
 interface QuizEngineProps {
@@ -20,38 +33,77 @@ interface QuizEngineProps {
   existingAnswers?: Answer[];
 }
 
+function buildServedQuestions(mod: Module): ServedQuestion[] {
+  const pool = [...mod.quiz];
+  shuffleArray(pool);
+  const selected = pool.slice(0, Math.min(QUIZ_SERVE_COUNT, pool.length));
+  const pts = allocatePoints(mod.maxPoints, selected.length);
+
+  return selected.map((q, i) => {
+    const opts = [...q.options];
+    const correctText = opts[q.correctIndex];
+    shuffleArray(opts);
+    const servedCorrectIndex = opts.indexOf(correctText);
+    return {
+      ...q,
+      servedOptions: opts,
+      servedCorrectIndex,
+      allocatedPoints: pts[i],
+    };
+  });
+}
+
 export function QuizEngine({ mod, userId, readOnly = false, existingAnswers }: QuizEngineProps) {
   const router = useRouter();
-  const questions = mod.quiz;
+
+  // Build served questions once per quiz session
+  const servedRef = useRef<ServedQuestion[]>(
+    readOnly && existingAnswers
+      ? (existingAnswers.map((a, i) => {
+          const q = mod.quiz.find((q) => q.id === a.questionId);
+          if (!q) return null;
+          const pts = allocatePoints(mod.maxPoints, existingAnswers.length);
+          return {
+            ...q,
+            servedOptions: q.options,
+            servedCorrectIndex: q.correctIndex,
+            allocatedPoints: pts[i],
+          };
+        }).filter(Boolean) as ServedQuestion[])
+      : buildServedQuestions(mod)
+  );
+  const served = servedRef.current;
+
   const [currentIdx, setCurrentIdx] = useState(0);
   const [answers, setAnswers] = useState<Answer[]>(existingAnswers ?? []);
   const [selectedOption, setSelectedOption] = useState<number | null>(
-    existingAnswers ? existingAnswers[0]?.selectedIndex ?? null : null
+    readOnly && existingAnswers ? existingAnswers[0]?.selectedIndex ?? null : null
   );
   const [confidence, setConfidence] = useState<Confidence>(
-    existingAnswers ? existingAnswers[0]?.confidence ?? "confident" : "confident"
+    readOnly && existingAnswers ? existingAnswers[0]?.confidence ?? "confident" : "confident"
   );
   const [locked, setLocked] = useState(readOnly || !!existingAnswers);
   const [saving, setSaving] = useState(false);
   const [done, setDone] = useState(false);
   const [coachData, setCoachData] = useState<Record<string, unknown> | null>(null);
   const [coachLoading, setCoachLoading] = useState(false);
+  const [serverPassed, setServerPassed] = useState<boolean | null>(null);
 
-  const question: QuizQuestion = readOnly && existingAnswers
-    ? questions[currentIdx]
-    : questions[currentIdx];
-
+  const question = served[currentIdx];
   const currentAnswer = readOnly ? existingAnswers?.[currentIdx] : answers[currentIdx];
 
   function handleSelect(idx: number) {
-    if (locked || readOnly) return;
+    if (locked || readOnly || !question) return;
     setSelectedOption(idx);
-    const correct = idx === question.correctIndex;
+    const correct = idx === question.servedCorrectIndex;
     const answer: Answer = {
       questionId: question.id,
       selectedIndex: idx,
       correct,
       confidence,
+      topic: question.question.slice(0, 60),
+      chosenText: question.servedOptions[idx],
+      correctText: question.servedOptions[question.servedCorrectIndex],
     };
     const newAnswers = [...answers];
     newAnswers[currentIdx] = answer;
@@ -60,7 +112,7 @@ export function QuizEngine({ mod, userId, readOnly = false, existingAnswers }: Q
   }
 
   async function handleNext() {
-    if (currentIdx < questions.length - 1) {
+    if (currentIdx < served.length - 1) {
       const nextIdx = currentIdx + 1;
       setCurrentIdx(nextIdx);
       if (readOnly && existingAnswers) {
@@ -80,23 +132,32 @@ export function QuizEngine({ mod, userId, readOnly = false, existingAnswers }: Q
   const handleFinish = useCallback(async () => {
     if (readOnly) { setDone(true); return; }
     setSaving(true);
-    const totalScore = answers.reduce((sum, a) => {
-      const q = questions.find((q) => q.id === a.questionId);
-      return sum + (a.correct && q ? q.points : 0);
-    }, 0);
 
+    const maxServedPoints = served.reduce((s, q) => s + q.allocatedPoints, 0);
+    const servedQuestionIds = served.map((q) => q.id);
+    const optionOrders: Record<string, string[]> = {};
+    served.forEach((q) => { optionOrders[q.id] = q.servedOptions; });
+
+    let passed = false;
     try {
-      await fetch("/api/save-progress", {
+      const res = await fetch("/api/save-progress", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           moduleId: mod.id,
-          score: totalScore,
-          maxScore: mod.maxPoints,
           answers,
+          servedQuestionIds,
+          optionOrders,
+          maxServedPoints,
         }),
       });
+      if (res.ok) {
+        const data = await res.json();
+        passed = data.passed ?? false;
+      }
     } catch {}
+
+    setServerPassed(passed);
 
     // Get coach analysis
     setCoachLoading(true);
@@ -106,16 +167,14 @@ export function QuizEngine({ mod, userId, readOnly = false, existingAnswers }: Q
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           moduleTitle: mod.title,
-          questions: answers.map((a) => {
-            const q = questions.find((q) => q.id === a.questionId);
-            return {
-              question: q?.question,
-              chosen: q?.options[a.selectedIndex],
-              correct: q?.options[q.correctIndex],
-              wasCorrect: a.correct,
-              confidence: a.confidence,
-            };
-          }),
+          passed,
+          questions: answers.map((a) => ({
+            topic: a.topic,
+            chosen: a.chosenText,
+            correct: a.correctText,
+            wasCorrect: a.correct,
+            confidence: a.confidence,
+          })),
         }),
       });
       if (coachRes.ok) setCoachData(await coachRes.json());
@@ -123,47 +182,56 @@ export function QuizEngine({ mod, userId, readOnly = false, existingAnswers }: Q
     setCoachLoading(false);
     setSaving(false);
     setDone(true);
-  }, [answers, mod, questions, readOnly]);
+  }, [answers, mod, served, readOnly]);
 
   if (done && !readOnly) {
-    const totalScore = answers.reduce((sum, a) => {
-      const q = questions.find((q) => q.id === a.questionId);
-      return sum + (a.correct && q ? q.points : 0);
+    const baseScore = answers.reduce((sum, a) => {
+      const q = served.find((q) => q.id === a.questionId);
+      return sum + (a.correct && q ? q.allocatedPoints : 0);
     }, 0);
-    const pct = Math.round((totalScore / mod.maxPoints) * 100);
+    const confidenceBonus = answers.reduce((sum, a) => {
+      const q = served.find((q) => q.id === a.questionId);
+      if (!a.correct || !q || a.confidence !== "confident") return sum;
+      return sum + (Math.round(q.allocatedPoints * CONFIDENCE_BONUS_MULTIPLIER) - q.allocatedPoints);
+    }, 0);
+    const totalScore = baseScore + confidenceBonus;
+    const maxServedPoints = served.reduce((s, q) => s + q.allocatedPoints, 0);
+    const passed = serverPassed ?? isPassed(totalScore, maxServedPoints);
+    const pct = Math.round((totalScore / maxServedPoints) * 100);
 
     return (
       <ResultsScreen
         mod={mod}
         answers={answers}
-        questions={questions}
+        served={served}
         totalScore={totalScore}
+        maxServedPoints={maxServedPoints}
+        confidenceBonus={confidenceBonus}
         pct={pct}
+        passed={passed}
         coachData={coachData}
         coachLoading={coachLoading}
       />
     );
   }
 
+  if (!question) return null;
+
   const effectiveLocked = readOnly ? true : locked;
   const effectiveSelected = readOnly ? currentAnswer?.selectedIndex ?? null : selectedOption;
-  const effectiveCorrect = readOnly ? currentAnswer?.correct ?? false : selectedOption !== null && selectedOption === question.correctIndex;
-  const isCorrect = effectiveLocked && effectiveSelected === question.correctIndex;
-  const isWrong = effectiveLocked && effectiveSelected !== null && effectiveSelected !== question.correctIndex;
+  const isCorrect = effectiveLocked && effectiveSelected === question.servedCorrectIndex;
 
-  const progressPct = ((currentIdx + 1) / questions.length) * 100;
+  const progressPct = ((currentIdx + 1) / served.length) * 100;
 
   return (
     <div className="max-w-2xl mx-auto space-y-4">
-      {/* Header */}
       <div>
         <h1 className="text-xl font-bold text-gray-900 dark:text-white">{mod.title} Quiz</h1>
         <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">
-          Question {currentIdx + 1} of {questions.length} | +{question.points} points
+          Question {currentIdx + 1} of {served.length} · +{question.allocatedPoints} pts
         </p>
       </div>
 
-      {/* Progress bar */}
       <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5">
         <div
           className="h-1.5 rounded-full transition-all duration-500"
@@ -171,28 +239,28 @@ export function QuizEngine({ mod, userId, readOnly = false, existingAnswers }: Q
         />
       </div>
 
-      {/* Question */}
       <div className="bg-gray-100 dark:bg-gray-700 rounded-xl p-4">
-        <p className="font-semibold text-gray-900 dark:text-white text-sm leading-relaxed">{question.question}</p>
+        <p className="font-semibold text-gray-900 dark:text-white text-sm leading-relaxed">
+          {question.question}
+        </p>
       </div>
 
-      {/* Options */}
       <div className="space-y-2" role="radiogroup" aria-label="Answer options">
-        {question.options.map((option, idx) => {
+        {question.servedOptions.map((option, idx) => {
           const isSelected = effectiveSelected === idx;
-          const isCorrectOption = idx === question.correctIndex;
-          let optionClass = "border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:border-gray-400 dark:hover:border-gray-400";
+          const isCorrectOption = idx === question.servedCorrectIndex;
+          let cls = "border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:border-gray-400 dark:hover:border-gray-400";
 
           if (effectiveLocked) {
             if (isCorrectOption) {
-              optionClass = "border-2 border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-800 dark:text-emerald-200";
+              cls = "border-2 border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-800 dark:text-emerald-200";
             } else if (isSelected && !isCorrectOption) {
-              optionClass = "border-2 border-red-400 bg-red-50 dark:bg-red-900/20 text-red-800 dark:text-red-200";
+              cls = "border-2 border-red-400 bg-red-50 dark:bg-red-900/20 text-red-800 dark:text-red-200";
             } else {
-              optionClass = "border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-400 dark:text-gray-500";
+              cls = "border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-400 dark:text-gray-500";
             }
           } else if (isSelected) {
-            optionClass = "border-2 border-indigo-500 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-800 dark:text-indigo-200";
+            cls = "border-2 border-indigo-500 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-800 dark:text-indigo-200";
           }
 
           return (
@@ -202,7 +270,7 @@ export function QuizEngine({ mod, userId, readOnly = false, existingAnswers }: Q
               aria-checked={isSelected}
               onClick={() => handleSelect(idx)}
               disabled={effectiveLocked}
-              className={`w-full text-left px-4 py-3 rounded-xl text-sm transition-colors flex items-center justify-between ${optionClass} focus:outline-none focus:ring-2 focus:ring-indigo-400`}
+              className={`w-full text-left px-4 py-3 rounded-xl text-sm transition-colors flex items-center justify-between ${cls} focus:outline-none focus:ring-2 focus:ring-indigo-400`}
             >
               <span>{option}</span>
               {effectiveLocked && isCorrectOption && <CheckCircle size={16} className="text-emerald-500 flex-shrink-0" />}
@@ -215,36 +283,23 @@ export function QuizEngine({ mod, userId, readOnly = false, existingAnswers }: Q
       {/* Confidence selector */}
       {!readOnly && (
         <div className="grid grid-cols-2 gap-3" aria-label="Confidence level">
-          <button
-            onClick={() => !locked && setConfidence("confident")}
-            disabled={locked}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400 ${
-              confidence === "confident"
-                ? "border-indigo-500 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-300"
-                : "border-gray-200 dark:border-gray-600 text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800"
-            }`}
-          >
-            <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${confidence === "confident" ? "border-indigo-500" : "border-gray-400"}`}>
-              {confidence === "confident" && <div className="w-2 h-2 rounded-full bg-indigo-500" />}
-            </div>
-            <Brain size={16} />
-            Confident
-          </button>
-          <button
-            onClick={() => !locked && setConfidence("guessing")}
-            disabled={locked}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400 ${
-              confidence === "guessing"
-                ? "border-indigo-500 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-300"
-                : "border-gray-200 dark:border-gray-600 text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800"
-            }`}
-          >
-            <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${confidence === "guessing" ? "border-indigo-500" : "border-gray-400"}`}>
-              {confidence === "guessing" && <div className="w-2 h-2 rounded-full bg-indigo-500" />}
-            </div>
-            <Lightbulb size={16} />
-            Just Guessing
-          </button>
+          {(["confident", "guessing"] as Confidence[]).map((c) => (
+            <button
+              key={c}
+              onClick={() => !locked && setConfidence(c)}
+              disabled={locked}
+              className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400 ${
+                confidence === c
+                  ? "border-indigo-500 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-300"
+                  : "border-gray-200 dark:border-gray-600 text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800"
+              }`}
+            >
+              <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${confidence === c ? "border-indigo-500" : "border-gray-400"}`}>
+                {confidence === c && <div className="w-2 h-2 rounded-full bg-indigo-500" />}
+              </div>
+              {c === "confident" ? <><Brain size={16} /> Confident</> : <><Lightbulb size={16} /> Just Guessing</>}
+            </button>
+          ))}
         </div>
       )}
 
@@ -253,37 +308,31 @@ export function QuizEngine({ mod, userId, readOnly = false, existingAnswers }: Q
         <div
           aria-live="polite"
           className={`rounded-xl p-4 ${
-            (isCorrect || (readOnly && currentAnswer?.correct))
+            isCorrect
               ? "bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800"
               : "bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800"
           }`}
         >
           <div className="flex items-center gap-2 mb-1">
-            <Lightbulb
-              size={16}
-              className={(isCorrect || (readOnly && currentAnswer?.correct)) ? "text-emerald-600" : "text-red-600"}
-            />
-            <span
-              className={`text-sm font-semibold ${(isCorrect || (readOnly && currentAnswer?.correct)) ? "text-emerald-700 dark:text-emerald-300" : "text-red-700 dark:text-red-300"}`}
-            >
+            <Lightbulb size={16} className={isCorrect ? "text-emerald-600" : "text-red-600"} />
+            <span className={`text-sm font-semibold ${isCorrect ? "text-emerald-700 dark:text-emerald-300" : "text-red-700 dark:text-red-300"}`}>
               Explanation:
             </span>
           </div>
-          <p className={`text-sm ${(isCorrect || (readOnly && currentAnswer?.correct)) ? "text-emerald-800 dark:text-emerald-200" : "text-red-800 dark:text-red-200"}`}>
+          <p className={`text-sm ${isCorrect ? "text-emerald-800 dark:text-emerald-200" : "text-red-800 dark:text-red-200"}`}>
             {question.explanation}
           </p>
         </div>
       )}
 
-      {/* Next / Finish */}
       {effectiveLocked && (
         <button
-          onClick={readOnly ? handleNext : handleNext}
+          onClick={handleNext}
           disabled={saving}
           className="w-full py-3 rounded-xl text-white font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
           style={{ backgroundColor: mod.hexAccent }}
         >
-          {saving ? "Saving…" : currentIdx < questions.length - 1 ? "Next Question" : readOnly ? "Done" : "Finish Quiz"}
+          {saving ? "Saving…" : currentIdx < served.length - 1 ? "Next Question" : readOnly ? "Done" : "Finish Quiz"}
           {!saving && <ArrowRight size={16} className="inline ml-2" />}
         </button>
       )}
@@ -292,13 +341,16 @@ export function QuizEngine({ mod, userId, readOnly = false, existingAnswers }: Q
 }
 
 function ResultsScreen({
-  mod, answers, questions, totalScore, pct, coachData, coachLoading,
+  mod, answers, served, totalScore, maxServedPoints, confidenceBonus, pct, passed, coachData, coachLoading,
 }: {
   mod: Module;
   answers: Answer[];
-  questions: QuizQuestion[];
+  served: ServedQuestion[];
   totalScore: number;
+  maxServedPoints: number;
+  confidenceBonus: number;
   pct: number;
+  passed: boolean;
   coachData: Record<string, unknown> | null;
   coachLoading: boolean;
 }) {
@@ -306,17 +358,34 @@ function ResultsScreen({
 
   return (
     <div className="max-w-2xl mx-auto space-y-5">
-      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-6 text-center">
-        <div className="relative w-32 h-32 mx-auto mb-4">
-          <svg width="128" height="128" className="-rotate-90">
-            <circle cx="64" cy="64" r="54" fill="none" stroke="#e5e7eb" strokeWidth="12" />
+      {/* Pass/Fail Banner */}
+      <div className={`rounded-2xl p-5 text-center ${passed ? "bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-700" : "bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700"}`}>
+        <div className="flex items-center justify-center gap-3 mb-3">
+          {passed
+            ? <Trophy size={36} className="text-emerald-500" />
+            : <AlertTriangle size={36} className="text-red-500" />
+          }
+          <div>
+            <h2 className={`text-2xl font-bold ${passed ? "text-emerald-700 dark:text-emerald-300" : "text-red-700 dark:text-red-300"}`}>
+              {passed ? "PASSED!" : "NOT PASSED"}
+            </h2>
+            <p className={`text-sm ${passed ? "text-emerald-600 dark:text-emerald-400" : "text-red-600 dark:text-red-400"}`}>
+              {passed ? `Great job! You scored above the ${Math.round(PASS_THRESHOLD * 100)}% threshold.` : `You need ${Math.round(PASS_THRESHOLD * 100)}% to pass. Keep studying and try again!`}
+            </p>
+          </div>
+        </div>
+
+        {/* Score gauge */}
+        <div className="relative w-28 h-28 mx-auto">
+          <svg width="112" height="112" className="-rotate-90">
+            <circle cx="56" cy="56" r="46" fill="none" stroke="#e5e7eb" strokeWidth="10" />
             <circle
-              cx="64" cy="64" r="54"
+              cx="56" cy="56" r="46"
               fill="none"
-              stroke={mod.hexAccent}
-              strokeWidth="12"
-              strokeDasharray={2 * Math.PI * 54}
-              strokeDashoffset={2 * Math.PI * 54 * (1 - pct / 100)}
+              stroke={passed ? "#10b981" : "#ef4444"}
+              strokeWidth="10"
+              strokeDasharray={2 * Math.PI * 46}
+              strokeDashoffset={2 * Math.PI * 46 * (1 - pct / 100)}
               strokeLinecap="round"
             />
           </svg>
@@ -324,9 +393,13 @@ function ResultsScreen({
             <span className="text-2xl font-bold text-gray-900 dark:text-white">{pct}%</span>
           </div>
         </div>
-        <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-1">Quiz Complete!</h2>
-        <p className="text-gray-500 dark:text-gray-400 text-sm">
-          You scored <strong className="text-gray-900 dark:text-white">{totalScore} / {mod.maxPoints} points</strong>
+
+        <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
+          Score: <strong className="text-gray-900 dark:text-white">{totalScore - confidenceBonus} / {maxServedPoints} pts</strong>
+          {confidenceBonus > 0 && (
+            <span className="ml-2 text-amber-600 dark:text-amber-400 font-semibold">+{confidenceBonus} confidence bonus 🎯</span>
+          )}
+          {" · "}Pass mark: <strong>{Math.round(PASS_THRESHOLD * maxServedPoints)} pts</strong>
         </p>
       </div>
 
@@ -334,7 +407,7 @@ function ResultsScreen({
       <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-5 space-y-3">
         <h3 className="font-semibold text-gray-900 dark:text-white text-sm">Question Review</h3>
         {answers.map((ans, i) => {
-          const q = questions.find((q) => q.id === ans.questionId);
+          const q = served.find((q) => q.id === ans.questionId);
           if (!q) return null;
           return (
             <div
@@ -346,64 +419,29 @@ function ResultsScreen({
                 : <XCircle size={16} className="text-red-500 mt-0.5 flex-shrink-0" />
               }
               <div className="min-w-0">
-                <p className="text-xs font-medium text-gray-700 dark:text-gray-300 truncate">Q{i + 1}: {q.question}</p>
+                <p className="text-xs font-medium text-gray-700 dark:text-gray-300">Q{i + 1}: {q.question}</p>
                 <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
-                  Your answer: {q.options[ans.selectedIndex]} •{" "}
+                  Your answer: {ans.chosenText} ·{" "}
                   <span className={ans.correct ? "text-emerald-600" : "text-red-600"}>
-                    {ans.correct ? `+${q.points} pts` : "0 pts"}
+                    {ans.correct
+                      ? `+${ans.confidence === "confident" ? Math.round(q.allocatedPoints * CONFIDENCE_BONUS_MULTIPLIER) : q.allocatedPoints} pts${ans.confidence === "confident" ? " 🎯" : ""}`
+                      : `-${q.allocatedPoints} pts`}
                   </span>
+                  {" · "}<span className="text-gray-400">{ans.confidence === "confident" ? "Confident" : "Just Guessing"}</span>
                 </p>
+                {!ans.correct && (
+                  <p className="text-xs text-emerald-700 dark:text-emerald-400 mt-0.5">
+                    Correct: {ans.correctText}
+                  </p>
+                )}
               </div>
             </div>
           );
         })}
       </div>
 
-      {/* AI Coach */}
-      {(coachLoading || coachData) && (
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-5">
-          <h3 className="font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
-            <Brain size={18} className="text-indigo-500" /> Cognitive Security Report
-          </h3>
-          {coachLoading ? (
-            <div className="text-sm text-gray-500 dark:text-gray-400 animate-pulse">Analyzing your performance…</div>
-          ) : coachData && (
-            <div className="space-y-3 text-sm">
-              <p className="text-gray-700 dark:text-gray-300">{String(coachData.summary ?? "")}</p>
-              {Array.isArray(coachData.blindSpots) && coachData.blindSpots.length > 0 && (
-                <div>
-                  <p className="font-semibold text-red-600 dark:text-red-400 mb-1">🎯 Blind Spots (confident but wrong):</p>
-                  <ul className="space-y-1">
-                    {(coachData.blindSpots as string[]).map((s: string, i: number) => (
-                      <li key={i} className="text-gray-600 dark:text-gray-400 flex gap-2">
-                        <span>•</span>{s}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              {Array.isArray(coachData.luckyGuesses) && coachData.luckyGuesses.length > 0 && (
-                <div>
-                  <p className="font-semibold text-amber-600 dark:text-amber-400 mb-1">🍀 Lucky Guesses (guessing but correct):</p>
-                  <ul className="space-y-1">
-                    {(coachData.luckyGuesses as string[]).map((s: string, i: number) => (
-                      <li key={i} className="text-gray-600 dark:text-gray-400 flex gap-2">
-                        <span>•</span>{s}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              {typeof coachData.recommendation === "string" && coachData.recommendation && (
-                <div className="bg-indigo-50 dark:bg-indigo-900/20 rounded-lg p-3">
-                  <p className="font-semibold text-indigo-700 dark:text-indigo-300 mb-1">💡 Recommendation:</p>
-                  <p className="text-indigo-800 dark:text-indigo-200">{coachData.recommendation}</p>
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-      )}
+      {/* AI Cognitive Security Report */}
+      <CognitiveReport coachData={coachData} coachLoading={coachLoading} />
 
       {/* Action buttons */}
       <div className="grid grid-cols-2 gap-3">
@@ -413,14 +451,100 @@ function ResultsScreen({
         >
           Back to Dashboard
         </button>
-        <button
-          onClick={() => router.push(`/modules/${mod.id}/lesson`)}
-          className="py-3 rounded-xl text-white font-medium text-sm hover:opacity-90 transition-opacity"
-          style={{ backgroundColor: mod.hexAccent }}
-        >
-          Review Lesson
-        </button>
+        {passed ? (
+          <button
+            onClick={() => router.push(`/modules/${mod.id}/lesson`)}
+            className="py-3 rounded-xl text-white font-medium text-sm hover:opacity-90 transition-opacity"
+            style={{ backgroundColor: mod.hexAccent }}
+          >
+            Review Lesson
+          </button>
+        ) : (
+          <button
+            onClick={() => router.push(`/modules/${mod.id}/quiz`)}
+            className="py-3 rounded-xl text-white font-medium text-sm hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
+            style={{ backgroundColor: mod.hexAccent }}
+          >
+            <RefreshCw size={14} /> Retake Quiz
+          </button>
+        )}
       </div>
+    </div>
+  );
+}
+
+function CognitiveReport({
+  coachData, coachLoading,
+}: {
+  coachData: Record<string, unknown> | null;
+  coachLoading: boolean;
+}) {
+  if (!coachLoading && !coachData) return null;
+
+  return (
+    <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-5">
+      <h3 className="font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+        <Brain size={18} className="text-indigo-500" /> Cognitive Security Report
+      </h3>
+      {coachLoading ? (
+        <div className="text-sm text-gray-500 dark:text-gray-400 animate-pulse">
+          Analyzing your answers…
+        </div>
+      ) : coachData && (
+        <div className="space-y-4 text-sm">
+          {typeof coachData.headline === "string" && (
+            <p className="font-medium text-gray-800 dark:text-gray-200 text-base">{coachData.headline}</p>
+          )}
+          {typeof coachData.overallComment === "string" && (
+            <p className="text-gray-600 dark:text-gray-400">{coachData.overallComment}</p>
+          )}
+
+          {Array.isArray(coachData.blindSpots) && (coachData.blindSpots as Array<{topic:string;advice:string}>).length > 0 && (
+            <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-4">
+              <p className="font-semibold text-red-700 dark:text-red-300 mb-2 flex items-center gap-1.5">
+                <AlertTriangle size={15} /> Blind Spots — Confident but Wrong
+              </p>
+              <ul className="space-y-2">
+                {(coachData.blindSpots as Array<{topic:string;advice:string}>).map((s, i) => (
+                  <li key={i}>
+                    <span className="font-medium text-red-800 dark:text-red-200">{s.topic}</span>
+                    <span className="text-red-700 dark:text-red-300"> — {s.advice}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {Array.isArray(coachData.luckyGuesses) && (coachData.luckyGuesses as Array<{topic:string;advice:string}>).length > 0 && (
+            <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-4">
+              <p className="font-semibold text-amber-700 dark:text-amber-300 mb-2">
+                🍀 Lucky Guesses — Guessing but Correct
+              </p>
+              <ul className="space-y-2">
+                {(coachData.luckyGuesses as Array<{topic:string;advice:string}>).map((s, i) => (
+                  <li key={i}>
+                    <span className="font-medium text-amber-800 dark:text-amber-200">{s.topic}</span>
+                    <span className="text-amber-700 dark:text-amber-300"> — {s.advice}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {Array.isArray(coachData.nextSteps) && (coachData.nextSteps as string[]).length > 0 && (
+            <div className="bg-indigo-50 dark:bg-indigo-900/20 rounded-xl p-4">
+              <p className="font-semibold text-indigo-700 dark:text-indigo-300 mb-2">💡 Next Steps</p>
+              <ul className="space-y-1">
+                {(coachData.nextSteps as string[]).map((s, i) => (
+                  <li key={i} className="text-indigo-800 dark:text-indigo-200 flex gap-2">
+                    <span className="text-indigo-400">{i + 1}.</span>{s}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }

@@ -1,0 +1,2905 @@
+{
+  "_meta": {
+    "description": "Expanded question bank for CyberAI. 30 questions per module. The first questions per module (matching wireframe IDs) are the originals from content.json; the rest are new, vetted, single-correct-answer MCQs at the same difficulty. At runtime: shuffle the pool per module, pick 15, randomize option order. Points per question are assigned dynamically by the scoring engine (see SCORING.md), NOT stored here, so the question pool stays flexible.",
+    "questionsPerModule": 30,
+    "servedPerAttempt": 15
+  },
+  "modules": {
+    "phishing": [
+      {
+        "id": "phishing-q1",
+        "question": "After identifying a suspicious email as a phishing attempt, what is the recommended next step?",
+        "options": [
+          "Forward it to all your colleagues to warn them.",
+          "Mark it as spam and delete it.",
+          "Reply to the sender telling them you know it's a scam.",
+          "Report it to your IT/Security department using the official reporting channel."
+        ],
+        "correctIndex": 3,
+        "explanation": "Reporting phishing to IT/Security lets them analyze the email, block the sender, and protect the whole organization. Marking as spam or deleting is insufficient."
+      },
+      {
+        "id": "phishing-q2",
+        "question": "What should you do if you accidentally click a link in a phishing email?",
+        "options": [
+          "Immediately restart your computer.",
+          "Disconnect from the internet and report it to IT/Security right away.",
+          "Delete the email from your inbox and trash.",
+          "Run an antivirus scan and hope for the best."
+        ],
+        "correctIndex": 1,
+        "explanation": "Disconnecting can stop malware spreading or 'phoning home'. Reporting immediately lets the security team act to protect you and the company."
+      },
+      {
+        "id": "phishing-q3",
+        "question": "Which of these is the BIGGEST red flag for a phishing email?",
+        "options": [
+          "The email contains the company's official logo.",
+          "The sender's email address is from a public domain (like @gmail.com) but claims to be a bank.",
+          "The email is addressed to you by your first name.",
+          "The email offers you a discount on a future purchase."
+        ],
+        "correctIndex": 1,
+        "explanation": "Legitimate businesses email from their official corporate domain, not a free public one. A mismatched sender domain is a very strong phishing indicator."
+      },
+      {
+        "id": "phishing-q4",
+        "question": "You receive an email from 'Netflix' with the subject 'Your account is on hold'. It asks you to click a link to update your payment details. What is the safest course of action?",
+        "options": [
+          "Click the link and enter your details; you don't want to miss your shows.",
+          "Ignore the email and assume it's a mistake.",
+          "Open a new browser window, go to the official Netflix website, and check your account status there.",
+          "Reply to the email asking for confirmation."
+        ],
+        "correctIndex": 2,
+        "explanation": "Never trust links in unexpected account-security emails. Go directly to the official website through a trusted method to verify any claims."
+      },
+      {
+        "id": "phishing-q5",
+        "question": "What does 'spear phishing' refer to?",
+        "options": [
+          "Phishing that targets a specific individual using personalized information.",
+          "Phishing sent to millions of random addresses.",
+          "Phishing that only happens over the phone.",
+          "A phishing email with a fish-themed logo."
+        ],
+        "correctIndex": 0,
+        "explanation": "Spear phishing is highly targeted, using personal details (name, role, employer) to make the scam far more convincing than mass phishing."
+      },
+      {
+        "id": "phishing-q6",
+        "question": "You hover over a link in an email and the status bar shows a different URL than the visible text. What does this most likely indicate?",
+        "options": [
+          "A harmless display glitch.",
+          "The link may be disguised to send you to a malicious site.",
+          "The email is definitely safe because it has a link.",
+          "Your browser needs updating."
+        ],
+        "correctIndex": 1,
+        "explanation": "Mismatched display text and actual URL is a classic phishing trick to hide a malicious destination behind trustworthy-looking text."
+      },
+      {
+        "id": "phishing-q7",
+        "question": "Which subject line is the strongest sign of a phishing attempt?",
+        "options": [
+          "Weekly team newsletter",
+          "URGENT: Your account will be deleted in 24 hours - verify NOW",
+          "Meeting notes from yesterday",
+          "Your monthly invoice is attached"
+        ],
+        "correctIndex": 1,
+        "explanation": "Manufactured urgency and threats ('verify NOW or lose access') are designed to make you act before thinking. That pressure is a hallmark of phishing."
+      },
+      {
+        "id": "phishing-q8",
+        "question": "What is 'whaling' in the context of phishing?",
+        "options": [
+          "Phishing targeting senior executives or high-value individuals.",
+          "Sending phishing emails about marine life.",
+          "A type of antivirus software.",
+          "Phishing that uses very large attachments."
+        ],
+        "correctIndex": 0,
+        "explanation": "Whaling targets 'big fish' such as CEOs and CFOs, often to authorize fraudulent payments or release sensitive data."
+      },
+      {
+        "id": "phishing-q9",
+        "question": "An email claims to be from your IT department and asks you to 'confirm your password' by replying. What should you do?",
+        "options": [
+          "Reply with your password since it's the IT department.",
+          "Never share your password; legitimate IT will never ask for it this way. Verify via a known channel.",
+          "Change your password to something simpler first.",
+          "Forward it to a colleague to ask their opinion."
+        ],
+        "correctIndex": 1,
+        "explanation": "Legitimate IT teams never ask for your password by email. Any such request is a credential-harvesting attempt. Verify through a known, official channel."
+      },
+      {
+        "id": "phishing-q10",
+        "question": "Which of the following best describes 'clone phishing'?",
+        "options": [
+          "Copying a legitimate email but replacing links/attachments with malicious ones.",
+          "Creating a fake social media clone account.",
+          "Cloning a hard drive to steal data.",
+          "Sending the same email twice by mistake."
+        ],
+        "correctIndex": 0,
+        "explanation": "Clone phishing duplicates a real, previously-sent email and swaps in malicious links or attachments, exploiting the recipient's familiarity with the original."
+      },
+      {
+        "id": "phishing-q11",
+        "question": "You get an email with an attachment named 'Invoice_2024.pdf.exe'. What is concerning about it?",
+        "options": [
+          "Nothing, PDFs are always safe.",
+          "The double extension hides that it's actually an executable program, not a PDF.",
+          "The year in the filename is wrong.",
+          "It should be a .docx instead."
+        ],
+        "correctIndex": 1,
+        "explanation": "A double extension like '.pdf.exe' disguises an executable as a document. Running it can install malware. Be extremely cautious of such files."
+      },
+      {
+        "id": "phishing-q12",
+        "question": "What is the safest way to verify an unexpected email that appears to be from your bank?",
+        "options": [
+          "Call the phone number provided in the email.",
+          "Click the link in the email to log in.",
+          "Contact the bank using the number on the back of your card or their official website.",
+          "Reply to the email asking if it's real."
+        ],
+        "correctIndex": 2,
+        "explanation": "Always use contact details you obtain independently (card, official site), never the ones provided in a suspicious message, which may route you to the scammer."
+      },
+      {
+        "id": "phishing-q13",
+        "question": "Why do phishing emails often contain spelling and grammar errors?",
+        "options": [
+          "The senders are not native speakers, and errors can also filter for less cautious targets.",
+          "It makes the email look more professional.",
+          "Email systems automatically add errors.",
+          "It is required by anti-spam laws."
+        ],
+        "correctIndex": 0,
+        "explanation": "Errors can stem from non-native authors, and some scammers use them deliberately so only less observant people respond, improving their 'yield'."
+      },
+      {
+        "id": "phishing-q14",
+        "question": "A pop-up appears saying 'Your computer is infected! Call this number immediately.' What is this?",
+        "options": [
+          "A legitimate Windows security alert.",
+          "A scareware/tech-support scam designed to trick you into calling.",
+          "A normal browser notification.",
+          "Proof your antivirus is working."
+        ],
+        "correctIndex": 1,
+        "explanation": "Real security software does not tell you to phone a number. These pop-ups are scareware aiming to get money or remote access. Close the browser; don't call."
+      },
+      {
+        "id": "phishing-q15",
+        "question": "What is 'pharming'?",
+        "options": [
+          "Redirecting users from a legitimate website to a fake one, often via DNS manipulation.",
+          "Growing crops with technology.",
+          "A method of organic email marketing.",
+          "Sending bulk promotional emails."
+        ],
+        "correctIndex": 0,
+        "explanation": "Pharming silently redirects you to a fraudulent site even when you type the correct address, by poisoning DNS or host files, to steal credentials."
+      },
+      {
+        "id": "phishing-q16",
+        "question": "You receive a LinkedIn message with a job offer and a link to 'complete your application'. The link goes to an unfamiliar domain. What should you do?",
+        "options": [
+          "Enter your details quickly before the job is taken.",
+          "Be cautious; verify the company and recruiter independently before clicking or sharing anything.",
+          "Share your bank details so they can set up payroll.",
+          "Forward your passwords to confirm your identity."
+        ],
+        "correctIndex": 1,
+        "explanation": "Job-offer phishing is common. Verify the recruiter and company through official channels; never share credentials or financial details via an unsolicited link."
+      },
+      {
+        "id": "phishing-q17",
+        "question": "Which practice most reduces the damage if you fall for a phishing attack on one account?",
+        "options": [
+          "Using the same password everywhere for consistency.",
+          "Using unique passwords and enabling 2FA on each account.",
+          "Writing all passwords in one email to yourself.",
+          "Never logging out of accounts."
+        ],
+        "correctIndex": 1,
+        "explanation": "Unique passwords plus 2FA mean a single compromised credential doesn't unlock your other accounts, containing the breach."
+      },
+      {
+        "id": "phishing-q18",
+        "question": "An email says you've won a lottery you never entered and must pay a 'processing fee' to claim it. This is:",
+        "options": [
+          "A legitimate prize notification.",
+          "An advance-fee scam; legitimate lotteries don't charge winners upfront.",
+          "A reason to celebrate and pay quickly.",
+          "A standard tax procedure."
+        ],
+        "correctIndex": 1,
+        "explanation": "Advance-fee scams promise a large reward for a small upfront payment that you'll never recoup. You cannot win a lottery you never entered."
+      },
+      {
+        "id": "phishing-q19",
+        "question": "What information in an email header can help identify spoofing?",
+        "options": [
+          "The font used in the email body.",
+          "The actual sending server and 'Return-Path' compared to the claimed sender.",
+          "The number of words in the subject.",
+          "The color of the company logo."
+        ],
+        "correctIndex": 1,
+        "explanation": "Header fields like Return-Path and the originating server reveal whether the real source matches the displayed sender, exposing spoofing."
+      },
+      {
+        "id": "phishing-q20",
+        "question": "A vendor emails that their bank details have changed and asks you to send the next payment to a new account. What is the correct action?",
+        "options": [
+          "Update the details and pay immediately.",
+          "Call the vendor on a previously known, verified number to confirm the change.",
+          "Reply to the email to confirm.",
+          "Ignore it entirely and never pay the vendor again."
+        ],
+        "correctIndex": 1,
+        "explanation": "Bank-detail-change requests are a top Business Email Compromise tactic. Always verify via a trusted, previously-known phone number before changing payment info."
+      },
+      {
+        "id": "phishing-q21",
+        "question": "Which of these is NOT typically a sign of a phishing email?",
+        "options": [
+          "A personalized greeting using your correct full name and recent order number.",
+          "Urgent threats of account closure.",
+          "Requests for sensitive information.",
+          "Mismatched or suspicious sender domains."
+        ],
+        "correctIndex": 0,
+        "explanation": "While not a guarantee of safety, accurate personalization is less typical of mass phishing. Urgency, info requests, and bad domains are classic red flags."
+      },
+      {
+        "id": "phishing-q22",
+        "question": "What is the main risk of enabling 'remote content' or images in a suspicious email?",
+        "options": [
+          "It can confirm to the sender that your address is active and tracked.",
+          "It makes the email load slower.",
+          "It changes your email font.",
+          "There is no risk at all."
+        ],
+        "correctIndex": 0,
+        "explanation": "Tracking pixels in remote images can tell the sender your address is live and that you opened the email, marking you for more attacks."
+      },
+      {
+        "id": "phishing-q23",
+        "question": "An email from 'support@paypa1.com' asks you to verify your account. What is suspicious here?",
+        "options": [
+          "Nothing, it's the real PayPal.",
+          "The domain uses a number '1' to imitate 'paypal' - a lookalike domain.",
+          "PayPal never sends emails.",
+          "The word 'support' is not allowed."
+        ],
+        "correctIndex": 1,
+        "explanation": "'paypa1.com' substitutes a '1' for an 'l' to impersonate paypal.com. Lookalike (typosquatting) domains are a common phishing technique."
+      },
+      {
+        "id": "phishing-q24",
+        "question": "Why is it risky to use the 'unsubscribe' link in a suspicious spam/phishing email?",
+        "options": [
+          "It always works perfectly and is safe.",
+          "It can confirm your address is active or lead to a malicious page.",
+          "It will subscribe you to more lists automatically by law.",
+          "It deletes your email account."
+        ],
+        "correctIndex": 1,
+        "explanation": "In phishing/spam, 'unsubscribe' links may validate your address to attackers or point to malware. For untrusted senders, mark as spam instead."
+      },
+      {
+        "id": "phishing-q25",
+        "question": "What is 'business email compromise' (BEC)?",
+        "options": [
+          "When your business email runs out of storage.",
+          "A scam impersonating executives or vendors to trick staff into transfers or data disclosure.",
+          "A software bug in email clients.",
+          "A type of email backup."
+        ],
+        "correctIndex": 1,
+        "explanation": "BEC uses spoofed or compromised business accounts to impersonate trusted parties and authorize fraudulent payments or leak sensitive information."
+      },
+      {
+        "id": "phishing-q26",
+        "question": "A text-only email with no links, from a known colleague, asks you to 'urgently buy gift cards for a client and send the codes'. What should you do?",
+        "options": [
+          "Buy them immediately to help your colleague.",
+          "Verify directly with the colleague by phone or in person; gift-card requests are a common scam.",
+          "Reply with your manager's email so they can ask them instead.",
+          "Send the codes and ask for reimbursement later."
+        ],
+        "correctIndex": 1,
+        "explanation": "Gift-card requests are a classic BEC/social-engineering scam, even without links. Verify out-of-band before acting, regardless of who it appears to be from."
+      },
+      {
+        "id": "phishing-q27",
+        "question": "Which email authentication standards help detect spoofed senders?",
+        "options": [
+          "HTTP, FTP, and SSH.",
+          "SPF, DKIM, and DMARC.",
+          "HTML, CSS, and JS.",
+          "JPEG, PNG, and GIF."
+        ],
+        "correctIndex": 1,
+        "explanation": "SPF, DKIM, and DMARC are email authentication mechanisms that help verify a message genuinely came from the domain it claims, reducing spoofing."
+      },
+      {
+        "id": "phishing-q28",
+        "question": "You're unsure if an email is phishing. What is the most prudent default action?",
+        "options": [
+          "Click links to test where they go.",
+          "Do not click anything; verify through official channels or report to IT.",
+          "Forward it to all colleagues to decide together.",
+          "Reply asking the sender to prove they're legitimate."
+        ],
+        "correctIndex": 1,
+        "explanation": "When in doubt, don't interact. Verifying independently or reporting to IT avoids triggering malicious links or tipping off attackers."
+      },
+      {
+        "id": "phishing-q29",
+        "question": "What makes mobile devices a growing target for phishing?",
+        "options": [
+          "Phones can't get phishing at all.",
+          "Smaller screens hide full URLs and sender details, making scams harder to spot.",
+          "Phones automatically block all phishing.",
+          "Mobile email is encrypted so it's always safe."
+        ],
+        "correctIndex": 1,
+        "explanation": "On mobile, truncated URLs and hidden header details make it easier to miss red flags, so phishing on phones is increasingly effective."
+      },
+      {
+        "id": "phishing-q30",
+        "question": "A colleague reports a phishing email that you also received. What is the best team practice?",
+        "options": [
+          "Stay silent so you don't look paranoid.",
+          "Report it to IT/Security too, so they can assess scope and block it organization-wide.",
+          "Delete yours and forget about it.",
+          "Reply to the attacker to warn them you reported it."
+        ],
+        "correctIndex": 1,
+        "explanation": "Multiple reports help security gauge a campaign's reach and respond faster. Reporting (not deleting silently) strengthens organizational defense."
+      }
+    ],
+    "passwords-2fa": [
+      {
+        "id": "passwords-q1",
+        "question": "What is the most effective way to manage unique, complex passwords for all your accounts?",
+        "options": [
+          "Write them down in a notebook.",
+          "Use a trusted password manager application.",
+          "Use the same password everywhere but change it monthly.",
+          "Use variations of your pet's name."
+        ],
+        "correctIndex": 1,
+        "explanation": "Password managers securely create, store, and autofill unique strong passwords for every account, eliminating reuse and memorization."
+      },
+      {
+        "id": "passwords-q2",
+        "question": "Which password example follows best practices for strength and uniqueness?",
+        "options": [
+          "YourCompany123",
+          "P@sswordForWork!",
+          "aPpLePi3&C0ff33!",
+          "QwertY@123"
+        ],
+        "correctIndex": 2,
+        "explanation": "'aPpLePi3&C0ff33!' is long, complex, and avoids common patterns, making it highly resistant to cracking; the others use predictable patterns."
+      },
+      {
+        "id": "passwords-q3",
+        "question": "Which of the following is the WEAKEST password?",
+        "options": [
+          "Fg#9k$2(j@1Po!",
+          "Summer2024!",
+          "MyDogFido123",
+          "Tr0ub4dor&3"
+        ],
+        "correctIndex": 1,
+        "explanation": "'Summer2024!' follows a predictable word+year+symbol pattern that automated tools guess quickly, unlike a truly random string."
+      },
+      {
+        "id": "passwords-q4",
+        "question": "What is the primary benefit of Two-Factor Authentication (2FA)?",
+        "options": [
+          "It makes your password stronger.",
+          "It prevents your password from being stolen.",
+          "It adds a second layer of security, making your account inaccessible even if your password is stolen.",
+          "It automatically logs you into your accounts."
+        ],
+        "correctIndex": 2,
+        "explanation": "2FA requires a second factor in addition to your password, so a stolen password alone can't grant access."
+      },
+      {
+        "id": "passwords-q5",
+        "question": "Which 2FA method is generally considered the MOST secure for everyday users?",
+        "options": [
+          "SMS text message codes.",
+          "Hardware security keys (e.g., FIDO2/U2F).",
+          "Security questions.",
+          "Email codes."
+        ],
+        "correctIndex": 1,
+        "explanation": "Hardware security keys resist phishing and SIM-swap attacks, making them stronger than SMS, email, or knowledge-based factors."
+      },
+      {
+        "id": "passwords-q6",
+        "question": "Why is SMS-based 2FA weaker than an authenticator app?",
+        "options": [
+          "SMS is slower to arrive.",
+          "SMS can be intercepted via SIM swapping or SS7 attacks.",
+          "Authenticator apps cost money.",
+          "SMS codes are longer and harder to type."
+        ],
+        "correctIndex": 1,
+        "explanation": "Attackers can hijack your number through SIM swapping or exploit telecom flaws to intercept SMS codes; app-based TOTP isn't tied to your phone number."
+      },
+      {
+        "id": "passwords-q7",
+        "question": "What is a 'passphrase' and why can it be strong?",
+        "options": [
+          "A single short word; it's strong because it's memorable.",
+          "A sequence of several random words; length makes it hard to crack yet easy to remember.",
+          "Your name plus your birth year.",
+          "A password written in another language."
+        ],
+        "correctIndex": 1,
+        "explanation": "A multi-word passphrase like 'correct-horse-battery-staple' gains strength from length and entropy while remaining memorable."
+      },
+      {
+        "id": "passwords-q8",
+        "question": "What does 'credential stuffing' exploit?",
+        "options": [
+          "Weak Wi-Fi passwords.",
+          "Password reuse across multiple sites.",
+          "Outdated antivirus software.",
+          "Physical access to a computer."
+        ],
+        "correctIndex": 1,
+        "explanation": "Credential stuffing takes leaked username/password pairs and tries them on other sites, succeeding wherever people reused the same password."
+      },
+      {
+        "id": "passwords-q9",
+        "question": "You receive a 2FA code you didn't request. What does this likely mean?",
+        "options": [
+          "A harmless system test.",
+          "Someone may have your password and is trying to log in - change it immediately.",
+          "Your phone is malfunctioning.",
+          "You should share the code to cancel it."
+        ],
+        "correctIndex": 1,
+        "explanation": "An unrequested code suggests someone is attempting to log in with your password. Don't share the code; change your password and review account security."
+      },
+      {
+        "id": "passwords-q10",
+        "question": "What is the main weakness of using security questions like 'What is your mother's maiden name?'",
+        "options": [
+          "They are too long to answer.",
+          "Answers are often public, guessable, or found on social media.",
+          "They expire too quickly.",
+          "They require special hardware."
+        ],
+        "correctIndex": 1,
+        "explanation": "Knowledge-based answers are frequently discoverable through research or social media, making security questions a weak authentication factor."
+      },
+      {
+        "id": "passwords-q11",
+        "question": "What does 'TOTP' stand for in authenticator apps?",
+        "options": [
+          "Time-based One-Time Password.",
+          "Total Online Theft Prevention.",
+          "Two-Operator Transfer Protocol.",
+          "Temporary Office Token Pass."
+        ],
+        "correctIndex": 0,
+        "explanation": "TOTP (Time-based One-Time Password) generates short-lived codes that change every 30 seconds, used by apps like Google Authenticator and Authy."
+      },
+      {
+        "id": "passwords-q12",
+        "question": "How does a password manager help protect against phishing sites?",
+        "options": [
+          "It emails you warnings.",
+          "It only autofills credentials on the exact matching legitimate domain.",
+          "It blocks all websites by default.",
+          "It changes your password every hour."
+        ],
+        "correctIndex": 1,
+        "explanation": "Because managers match the stored domain precisely, they won't autofill on a lookalike phishing domain, giving you a silent warning that something's wrong."
+      },
+      {
+        "id": "passwords-q13",
+        "question": "What is a 'brute-force' attack on a password?",
+        "options": [
+          "Physically forcing open a laptop.",
+          "Systematically trying many combinations until the correct one is found.",
+          "Calling the user to ask for it.",
+          "Guessing based on a single hint."
+        ],
+        "correctIndex": 1,
+        "explanation": "Brute force tries enormous numbers of combinations. Length and complexity exponentially increase the time required, defeating the attack."
+      },
+      {
+        "id": "passwords-q14",
+        "question": "Why should you avoid reusing your email password on other sites?",
+        "options": [
+          "Email passwords are special and can't be reused technically.",
+          "Your email can reset other accounts, so its compromise can cascade everywhere.",
+          "It slows down your inbox.",
+          "Reuse is fine if the email is from a big provider."
+        ],
+        "correctIndex": 1,
+        "explanation": "Your email is the recovery hub for most accounts. If its password leaks and is reused, attackers can reset and seize many other accounts."
+      },
+      {
+        "id": "passwords-q15",
+        "question": "What are 'passkeys' designed to do?",
+        "options": [
+          "Replace passwords with cryptographic keys tied to your device and biometrics.",
+          "Store passwords in plain text.",
+          "Generate longer passwords automatically.",
+          "Share passwords between friends."
+        ],
+        "correctIndex": 0,
+        "explanation": "Passkeys use public-key cryptography unlocked by device biometrics/PIN, removing shared secrets and resisting phishing and credential theft."
+      },
+      {
+        "id": "passwords-q16",
+        "question": "A website forces a 90-day password change with no other reason. Modern guidance says:",
+        "options": [
+          "Frequent forced rotation is always best.",
+          "Forced periodic changes can lead to weaker, patterned passwords; change on evidence of compromise instead.",
+          "Never change passwords under any circumstances.",
+          "Change passwords daily for safety."
+        ],
+        "correctIndex": 1,
+        "explanation": "Current guidance (e.g., NIST) discourages arbitrary forced rotation, which often yields predictable variants. Change when there's a real risk of compromise."
+      },
+      {
+        "id": "passwords-q17",
+        "question": "What is the risk of saving passwords directly in your browser on a shared computer?",
+        "options": [
+          "No risk; browsers are fully secure.",
+          "Anyone using that profile may view or use the saved passwords.",
+          "It makes websites load slower.",
+          "It automatically shares them online."
+        ],
+        "correctIndex": 1,
+        "explanation": "On a shared or unlocked profile, stored browser passwords can be viewed or used by others. Use a dedicated manager and never save on shared machines."
+      },
+      {
+        "id": "passwords-q18",
+        "question": "What does it mean if a service stores passwords using 'hashing and salting'?",
+        "options": [
+          "They keep your password in plain text.",
+          "Passwords are transformed irreversibly with a unique salt, so leaks are far harder to crack.",
+          "They text you the password.",
+          "They store passwords in a spreadsheet."
+        ],
+        "correctIndex": 1,
+        "explanation": "Hashing converts passwords into irreversible values; a unique salt per user prevents precomputed (rainbow table) attacks, protecting leaked data."
+      },
+      {
+        "id": "passwords-q19",
+        "question": "You must share access to an account with a teammate. What is the safest approach?",
+        "options": [
+          "Text them the password.",
+          "Use the platform's role/permission features or a password manager's secure sharing.",
+          "Write it on a sticky note on their monitor.",
+          "Email it with the subject 'PASSWORD'."
+        ],
+        "correctIndex": 1,
+        "explanation": "Native team permissions or a manager's encrypted sharing avoid exposing the raw secret and let you revoke access cleanly later."
+      },
+      {
+        "id": "passwords-q20",
+        "question": "What is 'multi-factor authentication' (MFA) compared to 2FA?",
+        "options": [
+          "They are unrelated.",
+          "MFA uses two or more factors; 2FA is MFA with exactly two.",
+          "MFA is weaker than 2FA.",
+          "MFA only means using two passwords."
+        ],
+        "correctIndex": 1,
+        "explanation": "MFA means two or more independent factors (something you know/have/are). 2FA is the specific case of exactly two factors."
+      },
+      {
+        "id": "passwords-q21",
+        "question": "Which is the strongest combination of authentication factors?",
+        "options": [
+          "A password and a security question.",
+          "A password (know) and a hardware key (have).",
+          "Two different passwords.",
+          "A username and a password."
+        ],
+        "correctIndex": 1,
+        "explanation": "Combining different factor types - something you know plus something you have - is far stronger than two of the same type, like two knowledge factors."
+      },
+      {
+        "id": "passwords-q22",
+        "question": "What should you do if a service you use announces a data breach?",
+        "options": [
+          "Nothing, breaches don't matter.",
+          "Change that password (and anywhere it was reused) and enable 2FA.",
+          "Delete your computer.",
+          "Wait a year before acting."
+        ],
+        "correctIndex": 1,
+        "explanation": "After a breach, change the affected password immediately, update any reuses of it, and enable 2FA to limit attacker access."
+      },
+      {
+        "id": "passwords-q23",
+        "question": "Why is password length generally more important than adding one special character?",
+        "options": [
+          "Special characters are illegal.",
+          "Each added character multiplies the possible combinations far more than symbol tricks on a short password.",
+          "Length doesn't matter at all.",
+          "Symbols slow down typing."
+        ],
+        "correctIndex": 1,
+        "explanation": "Entropy grows with length; a long passphrase typically beats a short password with a few symbols, which attackers' rules anticipate."
+      },
+      {
+        "id": "passwords-q24",
+        "question": "What is a 'dictionary attack'?",
+        "options": [
+          "Reading a physical dictionary.",
+          "Trying common words and known passwords rather than every random combination.",
+          "Translating passwords between languages.",
+          "An attack on library systems only."
+        ],
+        "correctIndex": 1,
+        "explanation": "Dictionary attacks try lists of common words, leaked passwords, and patterns - which is why predictable, word-based passwords fall fast."
+      },
+      {
+        "id": "passwords-q25",
+        "question": "Where is the SAFEST place to store your password manager's master password?",
+        "options": [
+          "In a text file on your desktop.",
+          "Memorized (and optionally a copy in a secure offline location like a safe).",
+          "On a sticky note on your laptop.",
+          "In an email to yourself."
+        ],
+        "correctIndex": 1,
+        "explanation": "The master password should be memorized; if you keep a backup, store it offline and physically secured, never in a digital file or email."
+      },
+      {
+        "id": "passwords-q26",
+        "question": "An app offers 'Login with Google/Apple'. What is a security benefit of this?",
+        "options": [
+          "It shares your Google password with the app.",
+          "You avoid creating another password, leveraging the provider's strong auth and 2FA.",
+          "It removes the need for any security.",
+          "It makes your account public."
+        ],
+        "correctIndex": 1,
+        "explanation": "Federated login means no new password to leak; you rely on a well-secured provider account (ideally with 2FA) rather than the app's own store."
+      },
+      {
+        "id": "passwords-q27",
+        "question": "What is 'SIM swapping' and why does it threaten SMS 2FA?",
+        "options": [
+          "Switching phone cases.",
+          "An attacker ports your number to their SIM to receive your SMS codes.",
+          "Upgrading your data plan.",
+          "Swapping apps between phones."
+        ],
+        "correctIndex": 1,
+        "explanation": "In SIM swapping, attackers trick the carrier into moving your number to their device, intercepting SMS codes and bypassing SMS-based 2FA."
+      },
+      {
+        "id": "passwords-q28",
+        "question": "Which habit most improves your overall account security with least effort?",
+        "options": [
+          "Changing passwords daily.",
+          "Using a password manager plus 2FA on important accounts.",
+          "Memorizing one strong password for everything.",
+          "Disabling all logins."
+        ],
+        "correctIndex": 1,
+        "explanation": "A manager (unique strong passwords) combined with 2FA on key accounts gives the biggest security gain for minimal ongoing effort."
+      },
+      {
+        "id": "passwords-q29",
+        "question": "What is the danger of an account with a strong password but NO 2FA if the site is breached?",
+        "options": [
+          "None, a strong password is always enough.",
+          "If the password leaks or is phished, there's no second barrier to stop access.",
+          "The password becomes stronger automatically.",
+          "The site will reset it for you instantly."
+        ],
+        "correctIndex": 1,
+        "explanation": "Without 2FA, a leaked or phished password is the only barrier. 2FA adds a second factor that protects you even if the password is exposed."
+      },
+      {
+        "id": "passwords-q30",
+        "question": "You're setting up 2FA and the site offers 'backup/recovery codes'. What should you do with them?",
+        "options": [
+          "Ignore them; you won't need them.",
+          "Store them securely offline so you can regain access if you lose your device.",
+          "Post them in a group chat.",
+          "Use them as your new password."
+        ],
+        "correctIndex": 1,
+        "explanation": "Recovery codes let you back in if you lose your 2FA device. Store them securely and offline; never share them or use them as a password."
+      }
+    ],
+    "malware-ransomware": [
+      {
+        "id": "malware-q1",
+        "question": "What is the defining characteristic of a ransomware attack?",
+        "options": [
+          "It steals your password.",
+          "It slows down your computer.",
+          "It encrypts your files and demands a payment for their release.",
+          "It displays unwanted pop-up ads."
+        ],
+        "correctIndex": 2,
+        "explanation": "Ransomware's goal is extortion: it encrypts your files and demands a ransom, usually in cryptocurrency, for the decryption key."
+      },
+      {
+        "id": "malware-q2",
+        "question": "Why is it crucial to keep your operating system and applications updated?",
+        "options": [
+          "To get new features and a better user interface.",
+          "To fix security vulnerabilities that malware can exploit.",
+          "To ensure compatibility with new websites.",
+          "To make your software run faster."
+        ],
+        "correctIndex": 1,
+        "explanation": "Updates patch security holes attackers target. Outdated software is a primary vector for malware delivery."
+      },
+      {
+        "id": "malware-q3",
+        "question": "What is the single most effective way to recover from a ransomware attack without paying the ransom?",
+        "options": [
+          "Unplugging your computer from the internet.",
+          "Running an antivirus scan after the attack.",
+          "Having recent, secure backups of your important files.",
+          "Negotiating with the attackers for a lower price."
+        ],
+        "correctIndex": 2,
+        "explanation": "Clean backups let you restore files without paying, neutralizing the attacker's leverage. They're central to ransomware resilience."
+      },
+      {
+        "id": "malware-q4",
+        "question": "Which of these is NOT a common way malware can infect a computer?",
+        "options": [
+          "Through official software updates from trusted vendors.",
+          "By clicking malicious links in phishing emails.",
+          "Downloading cracked software from untrusted websites.",
+          "Exploiting security vulnerabilities in outdated software."
+        ],
+        "correctIndex": 0,
+        "explanation": "Legitimate vendor updates fix flaws, not introduce malware. Malware spreads via phishing, malicious downloads, and unpatched vulnerabilities."
+      },
+      {
+        "id": "malware-q5",
+        "question": "What is a 'trojan' in cybersecurity?",
+        "options": [
+          "Malware disguised as legitimate software to trick you into running it.",
+          "A type of firewall.",
+          "A secure backup method.",
+          "An antivirus program."
+        ],
+        "correctIndex": 0,
+        "explanation": "A trojan masquerades as something useful or harmless, but once run it delivers a malicious payload, named after the Trojan horse."
+      },
+      {
+        "id": "malware-q6",
+        "question": "What distinguishes a computer 'worm' from a virus?",
+        "options": [
+          "Worms are harmless.",
+          "Worms self-replicate and spread across networks without needing a host file or user action.",
+          "Worms only affect printers.",
+          "Worms require you to open an attachment every time."
+        ],
+        "correctIndex": 1,
+        "explanation": "Worms propagate automatically across networks on their own, whereas viruses attach to files and typically need user action to spread."
+      },
+      {
+        "id": "malware-q7",
+        "question": "What is 'spyware' designed to do?",
+        "options": [
+          "Speed up your computer.",
+          "Secretly collect information about you, such as keystrokes or browsing habits.",
+          "Back up your files.",
+          "Block advertisements."
+        ],
+        "correctIndex": 1,
+        "explanation": "Spyware covertly monitors and exfiltrates information - keystrokes, credentials, browsing - often without any visible sign."
+      },
+      {
+        "id": "malware-q8",
+        "question": "Your files suddenly have strange extensions and there's a 'README_DECRYPT.txt' demanding Bitcoin. What's happening, and what's the first step?",
+        "options": [
+          "A normal update; just restart.",
+          "A ransomware infection; disconnect the device from the network and report to IT immediately.",
+          "A browser theme change; ignore it.",
+          "Pay the Bitcoin right away."
+        ],
+        "correctIndex": 1,
+        "explanation": "These are ransomware signs. Isolate the machine from the network to limit spread and report to IT; don't rush to pay."
+      },
+      {
+        "id": "malware-q9",
+        "question": "Why should you avoid downloading 'cracked' or pirated software?",
+        "options": [
+          "It's slower to install.",
+          "It's frequently bundled with malware and offers no security updates.",
+          "It uses more disk space.",
+          "It looks unprofessional."
+        ],
+        "correctIndex": 1,
+        "explanation": "Pirated software is a common malware carrier and never receives legitimate security patches, exposing you to ongoing risk."
+      },
+      {
+        "id": "malware-q10",
+        "question": "What is a 'rootkit'?",
+        "options": [
+          "A gardening tool.",
+          "Malware that hides deep in the system to maintain stealthy, privileged access.",
+          "A type of backup software.",
+          "A browser extension for security."
+        ],
+        "correctIndex": 1,
+        "explanation": "Rootkits embed at a low level to conceal their presence and give attackers persistent, privileged control while evading detection."
+      },
+      {
+        "id": "malware-q11",
+        "question": "What is the safest practice for handling USB drives of unknown origin?",
+        "options": [
+          "Plug them in to see what's on them.",
+          "Do not plug them into your devices; hand them to IT/Security.",
+          "Share them with colleagues first.",
+          "Use them only on your work laptop."
+        ],
+        "correctIndex": 1,
+        "explanation": "Unknown USBs can auto-deliver malware ('baiting'). Never plug them in; give them to IT, who can examine them safely."
+      },
+      {
+        "id": "malware-q12",
+        "question": "What is a 'zero-day' vulnerability?",
+        "options": [
+          "A bug that takes zero days to fix.",
+          "A flaw unknown to the vendor, with no patch available yet.",
+          "A virus that activates at midnight.",
+          "A password that expires daily."
+        ],
+        "correctIndex": 1,
+        "explanation": "A zero-day is a vulnerability the vendor hasn't patched (zero days to prepare), making it especially dangerous until a fix is released."
+      },
+      {
+        "id": "malware-q13",
+        "question": "Beyond backups, what reduces ransomware impact across an organization?",
+        "options": [
+          "Giving every user admin rights.",
+          "Network segmentation and least-privilege access to limit spread.",
+          "Disabling all antivirus.",
+          "Using one shared password."
+        ],
+        "correctIndex": 1,
+        "explanation": "Segmentation and least privilege contain an infection to a small area instead of letting it spread freely across the whole network."
+      },
+      {
+        "id": "malware-q14",
+        "question": "What is 'adware', and when does it become a security concern?",
+        "options": [
+          "Software that displays ads; it's concerning when it tracks you or bundles other malware.",
+          "A type of antivirus.",
+          "A secure email client.",
+          "A backup utility."
+        ],
+        "correctIndex": 0,
+        "explanation": "Adware shows ads but can cross into spyware territory by tracking behavior or arriving alongside more harmful software."
+      },
+      {
+        "id": "malware-q15",
+        "question": "Why is the 3-2-1 backup rule recommended against ransomware?",
+        "options": [
+          "It means 3 passwords, 2 logins, 1 device.",
+          "3 copies of data, on 2 media types, with 1 copy offsite/offline.",
+          "It's a phone unlock pattern.",
+          "It refers to update frequency."
+        ],
+        "correctIndex": 1,
+        "explanation": "3-2-1 (three copies, two media types, one offsite/offline) ensures a clean, unreachable backup survives even if local copies are encrypted."
+      },
+      {
+        "id": "malware-q16",
+        "question": "An antivirus 'definition update' does what?",
+        "options": [
+          "Changes the program's color theme.",
+          "Updates the database of known threats so it can detect newer malware.",
+          "Deletes your files.",
+          "Slows the computer permanently."
+        ],
+        "correctIndex": 1,
+        "explanation": "Definition updates refresh the signatures the antivirus uses to recognize threats, so it can catch recently discovered malware."
+      },
+      {
+        "id": "malware-q17",
+        "question": "What is 'fileless malware'?",
+        "options": [
+          "Malware that comes as a single small file.",
+          "Malware that runs in memory using legitimate system tools, leaving little on disk.",
+          "A harmless type of software.",
+          "Malware stored only on USB drives."
+        ],
+        "correctIndex": 1,
+        "explanation": "Fileless malware operates in memory and abuses built-in tools (like PowerShell), making it harder for traditional file-scanning to detect."
+      },
+      {
+        "id": "malware-q18",
+        "question": "Why should everyday work be done from a standard (non-admin) account?",
+        "options": [
+          "Admin accounts are slower.",
+          "Limiting privileges reduces what malware can do if it runs.",
+          "Standard accounts have better graphics.",
+          "It's required to access email."
+        ],
+        "correctIndex": 1,
+        "explanation": "Without admin rights, malware that executes is constrained, often unable to install system-wide or alter critical settings."
+      },
+      {
+        "id": "malware-q19",
+        "question": "A program you didn't install starts at boot and uses high CPU/network. This could indicate:",
+        "options": [
+          "A normal system feature.",
+          "Possible malware (e.g., a cryptominer or bot); investigate and scan.",
+          "Your screen brightness is too high.",
+          "The keyboard needs cleaning."
+        ],
+        "correctIndex": 1,
+        "explanation": "Unknown auto-start programs consuming resources can be malware such as cryptominers or botnet clients. Investigate, scan, and report."
+      },
+      {
+        "id": "malware-q20",
+        "question": "What is 'ransomware-as-a-service' (RaaS)?",
+        "options": [
+          "A legitimate cloud backup service.",
+          "A criminal model where developers lease ransomware kits to other attackers.",
+          "An antivirus subscription.",
+          "A data recovery company."
+        ],
+        "correctIndex": 1,
+        "explanation": "RaaS lets less-skilled criminals rent ready-made ransomware and infrastructure, sharing profits with the developers and widening the threat."
+      },
+      {
+        "id": "malware-q21",
+        "question": "Should you pay the ransom in a ransomware attack?",
+        "options": [
+          "Always pay immediately.",
+          "Generally no - it funds crime and doesn't guarantee recovery; consult IT/law enforcement.",
+          "Pay double to be safe.",
+          "Pay only on weekends."
+        ],
+        "correctIndex": 1,
+        "explanation": "Paying funds criminals and offers no guarantee of getting data back. Rely on backups and involve IT and, where appropriate, authorities."
+      },
+      {
+        "id": "malware-q22",
+        "question": "What is a 'botnet'?",
+        "options": [
+          "A network of robots in a factory.",
+          "A network of infected devices controlled remotely to perform attacks.",
+          "A secure VPN service.",
+          "A type of antivirus engine."
+        ],
+        "correctIndex": 1,
+        "explanation": "A botnet is many compromised machines under an attacker's control, used for spam, DDoS, or spreading further malware."
+      },
+      {
+        "id": "malware-q23",
+        "question": "How can macros in documents pose a malware risk?",
+        "options": [
+          "Macros can't run code.",
+          "Malicious macros can execute code to download or install malware when enabled.",
+          "Macros only change fonts.",
+          "Macros are always blocked by default forever."
+        ],
+        "correctIndex": 1,
+        "explanation": "Office macros can run scripts; attackers use them to fetch and install malware. Only enable macros from trusted, expected sources."
+      },
+      {
+        "id": "malware-q24",
+        "question": "What is the purpose of 'sandboxing' a suspicious file?",
+        "options": [
+          "To delete it instantly.",
+          "To run it in an isolated environment to observe behavior without risking the real system.",
+          "To email it to the sender.",
+          "To compress it for storage."
+        ],
+        "correctIndex": 1,
+        "explanation": "A sandbox executes the file in isolation so analysts can watch for malicious behavior without endangering the production system."
+      },
+      {
+        "id": "malware-q25",
+        "question": "Which is the best response if your antivirus flags and quarantines a file?",
+        "options": [
+          "Immediately restore it and run it.",
+          "Leave it quarantined and verify with IT before any action.",
+          "Disable the antivirus.",
+          "Email the file to colleagues to test."
+        ],
+        "correctIndex": 1,
+        "explanation": "Quarantine isolates the threat. Don't restore or run it; confirm with IT, who can analyze and decide on safe handling."
+      },
+      {
+        "id": "malware-q26",
+        "question": "What does 'EDR' (Endpoint Detection and Response) provide beyond traditional antivirus?",
+        "options": [
+          "Only ad blocking.",
+          "Continuous monitoring, behavior-based detection, and response capabilities on devices.",
+          "Faster internet.",
+          "Free software licenses."
+        ],
+        "correctIndex": 1,
+        "explanation": "EDR adds continuous telemetry, behavioral detection, and tools to investigate and contain threats, going beyond signature-based antivirus."
+      },
+      {
+        "id": "malware-q27",
+        "question": "Why is disabling 'autorun/autoplay' for external media a good idea?",
+        "options": [
+          "It makes media load faster.",
+          "It prevents malware on a drive from launching automatically when connected.",
+          "It improves video quality.",
+          "It's required for backups."
+        ],
+        "correctIndex": 1,
+        "explanation": "Autorun can execute code on inserted media automatically. Disabling it stops a malicious drive from infecting you on connection."
+      },
+      {
+        "id": "malware-q28",
+        "question": "A 'logic bomb' is malware that:",
+        "options": [
+          "Explodes physically.",
+          "Triggers its malicious action when specific conditions are met (e.g., a date).",
+          "Improves system logic.",
+          "Only affects calculators."
+        ],
+        "correctIndex": 1,
+        "explanation": "A logic bomb lies dormant until a trigger condition - such as a date or event - is met, then executes its harmful payload."
+      },
+      {
+        "id": "malware-q29",
+        "question": "What is the safest source for installing mobile apps?",
+        "options": [
+          "Random links sent by text.",
+          "Official app stores, while still checking permissions and reviews.",
+          "Any website offering free APKs.",
+          "Email attachments."
+        ],
+        "correctIndex": 1,
+        "explanation": "Official stores vet apps (imperfectly), so they're far safer than sideloaded files from unknown sites. Still review permissions and ratings."
+      },
+      {
+        "id": "malware-q30",
+        "question": "After cleaning a malware infection, why should you change your passwords?",
+        "options": [
+          "Passwords expire after cleaning automatically.",
+          "Malware may have stolen credentials before removal, so they should be considered compromised.",
+          "It speeds up the computer.",
+          "It's never necessary."
+        ],
+        "correctIndex": 1,
+        "explanation": "Many malware types harvest credentials. After removal, assume passwords were captured and change them (from a clean device) and enable 2FA."
+      }
+    ],
+    "vishing-smishing": [
+      {
+        "id": "vishing-q1",
+        "question": "You receive a text from an unknown number: 'Your bank account has been locked due to suspicious activity. Click here to unlock it: [link]'. What should you do?",
+        "options": [
+          "Click the link immediately to secure your account.",
+          "Reply 'STOP' to the text message.",
+          "Delete the message and contact your bank using their official website or app.",
+          "Call the phone number the text came from."
+        ],
+        "correctIndex": 2,
+        "explanation": "This is smishing. The link leads to a fake credential-stealing site. Verify by contacting the bank through an official channel you find yourself."
+      },
+      {
+        "id": "vishing-q2",
+        "question": "A caller claims to be from 'Microsoft Tech Support' and says they've detected a virus, asking to remotely access your machine. You should:",
+        "options": [
+          "Follow their instructions, as Microsoft is a trusted company.",
+          "Ask for their employee ID number to verify them.",
+          "Politely hang up the phone.",
+          "Give them your IP address so they can run a scan."
+        ],
+        "correctIndex": 2,
+        "explanation": "Legitimate tech firms don't make unsolicited virus calls. This is a scam to seize control or steal data. The safe action is to hang up."
+      },
+      {
+        "id": "vishing-q3",
+        "question": "What is the key difference between Phishing, Vishing, and Smishing?",
+        "options": [
+          "The type of information they try to steal.",
+          "The country they originate from.",
+          "The medium they use: email, voice call, or SMS text message.",
+          "The level of danger they pose."
+        ],
+        "correctIndex": 2,
+        "explanation": "All are social engineering; they differ by channel: phishing (email), vishing (voice), and smishing (SMS)."
+      },
+      {
+        "id": "vishing-q4",
+        "question": "What does 'vishing' specifically refer to?",
+        "options": [
+          "Phishing via voice calls.",
+          "Phishing via video.",
+          "Phishing via fax.",
+          "Phishing via vending machines."
+        ],
+        "correctIndex": 0,
+        "explanation": "Vishing is 'voice phishing' - scams conducted over phone calls to extract information or money."
+      },
+      {
+        "id": "vishing-q5",
+        "question": "A recorded call says your 'car warranty is expiring' and presses you to act now. This is likely:",
+        "options": [
+          "A helpful reminder from your dealer.",
+          "A robocall scam using urgency to harvest payment or personal info.",
+          "A government notice.",
+          "Your insurance company."
+        ],
+        "correctIndex": 1,
+        "explanation": "Warranty robocalls are classic vishing, using pressure and vague claims to collect payment details or personal data. Hang up."
+      },
+      {
+        "id": "vishing-q6",
+        "question": "Why is 'caller ID' not reliable proof of who is calling?",
+        "options": [
+          "Caller ID is always accurate.",
+          "Attackers can spoof caller ID to display any name or number.",
+          "Caller ID only works on landlines.",
+          "Caller ID shows the caller's address."
+        ],
+        "correctIndex": 1,
+        "explanation": "Caller ID spoofing lets scammers fake a trusted name/number (even your bank's), so it can't verify identity. Call back on a known number."
+      },
+      {
+        "id": "vishing-q7",
+        "question": "A text claims a package delivery failed and asks you to pay a small 're-delivery fee' via a link. What is this?",
+        "options": [
+          "A normal courier process.",
+          "A smishing scam to steal card details or install malware.",
+          "A government tax.",
+          "A loyalty reward."
+        ],
+        "correctIndex": 1,
+        "explanation": "Delivery-fee smishing exploits the popularity of online shopping. The link harvests payment info or pushes malware. Verify with the courier directly."
+      },
+      {
+        "id": "vishing-q8",
+        "question": "Someone calls claiming to be your grandchild in trouble, urgently needing money and secrecy. This is:",
+        "options": [
+          "Always genuine; send money immediately.",
+          "A classic 'grandparent'/emergency vishing scam; verify through known family contacts.",
+          "A bank verification call.",
+          "A charity request."
+        ],
+        "correctIndex": 1,
+        "explanation": "Emergency-impersonation scams pressure victims with urgency and secrecy. Hang up and verify via known family contacts before doing anything."
+      },
+      {
+        "id": "vishing-q9",
+        "question": "What's the safest response to a caller asking you to 'verify your identity' by reading out an OTP they just sent you?",
+        "options": [
+          "Read the code; they asked nicely.",
+          "Never share an OTP; legitimate organizations won't ask you to read it to them.",
+          "Read half the code only.",
+          "Text the code instead of saying it."
+        ],
+        "correctIndex": 1,
+        "explanation": "An OTP is for you alone. Anyone asking you to read it is trying to hijack your account or transaction. Never share it."
+      },
+      {
+        "id": "vishing-q10",
+        "question": "A text says 'We noticed a login from a new device. If this wasn't you, click here.' The link domain looks odd. What should you do?",
+        "options": [
+          "Click to secure your account.",
+          "Don't click; open the app/site directly to check security alerts.",
+          "Reply with your password.",
+          "Forward it to friends."
+        ],
+        "correctIndex": 1,
+        "explanation": "Fake security-alert smishing relies on fear. Don't click; verify by opening the official app or typing the known address yourself."
+      },
+      {
+        "id": "vishing-q11",
+        "question": "Why do vishing scammers often create a sense of urgency or fear?",
+        "options": [
+          "To be polite.",
+          "To pressure victims into acting before they think critically.",
+          "Because calls are expensive.",
+          "To follow legal scripts."
+        ],
+        "correctIndex": 1,
+        "explanation": "Urgency and fear short-circuit careful thinking, pushing victims to comply quickly - a core social-engineering tactic in vishing."
+      },
+      {
+        "id": "vishing-q12",
+        "question": "A caller says they're from your bank's 'fraud department' and need your full card number and PIN to 'stop fraud'. You should:",
+        "options": [
+          "Provide the details to stop the fraud.",
+          "Refuse; banks never ask for your full PIN. Hang up and call the number on your card.",
+          "Give only the PIN.",
+          "Give only the card number."
+        ],
+        "correctIndex": 1,
+        "explanation": "Banks never ask for your full PIN. This is vishing. Hang up and call the official number on your card to check your account."
+      },
+      {
+        "id": "vishing-q13",
+        "question": "What is 'smishing' short for?",
+        "options": [
+          "Smart phishing.",
+          "SMS phishing - phishing via text messages.",
+          "Small phishing.",
+          "Social media phishing."
+        ],
+        "correctIndex": 1,
+        "explanation": "Smishing combines 'SMS' and 'phishing' - fraudulent text messages designed to steal information or money."
+      },
+      {
+        "id": "vishing-q14",
+        "question": "How can scammers make a vishing call seem to come from a local or official number?",
+        "options": [
+          "They can't; numbers are fixed.",
+          "Through caller ID spoofing.",
+          "By moving physically nearby.",
+          "By using a louder phone."
+        ],
+        "correctIndex": 1,
+        "explanation": "Spoofing tools let attackers display local or official-looking numbers to boost credibility, so a familiar number isn't proof of legitimacy."
+      },
+      {
+        "id": "vishing-q15",
+        "question": "A text offers a too-good-to-be-true reward 'just pay shipping' with your card. This is most likely:",
+        "options": [
+          "A genuine giveaway.",
+          "A scam to capture card details (and possibly recurring charges).",
+          "A bank promotion.",
+          "A tax refund."
+        ],
+        "correctIndex": 1,
+        "explanation": "'Free prize, just pay shipping' smishing captures card data and may enroll you in hidden recurring charges. Treat it as a scam."
+      },
+      {
+        "id": "vishing-q16",
+        "question": "What should you do before calling back a number from a voicemail claiming to be your bank?",
+        "options": [
+          "Call it immediately.",
+          "Verify by using the official number from your card or statement instead.",
+          "Text the number first.",
+          "Search the number on social media and trust the first result."
+        ],
+        "correctIndex": 1,
+        "explanation": "The callback number could be the scammer's. Use the bank's official number from a trusted source to confirm any real issue."
+      },
+      {
+        "id": "vishing-q17",
+        "question": "Why are SMS links especially risky on phones?",
+        "options": [
+          "Phones can't open links.",
+          "Shortened or truncated URLs hide the real destination, and small screens obscure red flags.",
+          "SMS links are always safe.",
+          "Links cost extra money to tap."
+        ],
+        "correctIndex": 1,
+        "explanation": "Link shorteners and tiny screens make it hard to see the true URL, so malicious smishing links are easier to fall for on mobile."
+      },
+      {
+        "id": "vishing-q18",
+        "question": "A caller pressures you to buy gift cards to 'settle a tax debt' or 'avoid arrest'. This is:",
+        "options": [
+          "A valid government payment method.",
+          "A scam; agencies never demand gift cards and don't threaten instant arrest by phone.",
+          "A normal fine payment.",
+          "A charity drive."
+        ],
+        "correctIndex": 1,
+        "explanation": "No legitimate agency takes gift cards or threatens immediate arrest by phone. Gift-card demands are a hallmark of vishing scams."
+      },
+      {
+        "id": "vishing-q19",
+        "question": "What is a good general rule when you receive an unexpected call asking for sensitive info?",
+        "options": [
+          "Comply if they sound official.",
+          "Hang up and call back using a number you independently trust.",
+          "Give partial information to be safe.",
+          "Stay on the line as long as possible."
+        ],
+        "correctIndex": 1,
+        "explanation": "Independently calling back a trusted number defeats spoofing and pressure, letting you confirm whether the request is genuine."
+      },
+      {
+        "id": "vishing-q20",
+        "question": "Scammers sometimes call right after sending a smishing text. Why combine the two?",
+        "options": [
+          "To waste their own time.",
+          "Multiple channels build credibility and pressure ('we texted you, now we're calling').",
+          "Texts and calls cancel out.",
+          "It's required by law."
+        ],
+        "correctIndex": 1,
+        "explanation": "Cross-channel contact creates a false sense of legitimacy and urgency, making the social-engineering more convincing."
+      },
+      {
+        "id": "vishing-q21",
+        "question": "What's the risk of pressing buttons or speaking when a robocall asks you to 'press 1' or say 'yes'?",
+        "options": [
+          "No risk at all.",
+          "It confirms an active line (more calls) and recordings of 'yes' can be misused.",
+          "It blocks future calls.",
+          "It reports the scammer automatically."
+        ],
+        "correctIndex": 1,
+        "explanation": "Responding flags your number as live, inviting more scam calls, and a recorded 'yes' may be misused. It's safest to just hang up."
+      },
+      {
+        "id": "vishing-q22",
+        "question": "An automated text says your streaming subscription payment failed; update your card via the link. Best action?",
+        "options": [
+          "Update via the link quickly.",
+          "Log in to the service directly (not via the link) to check billing.",
+          "Reply with your card number.",
+          "Call the number in the text."
+        ],
+        "correctIndex": 1,
+        "explanation": "Payment-failure smishing mimics real services. Check billing by opening the official app/site yourself rather than trusting the link."
+      },
+      {
+        "id": "vishing-q23",
+        "question": "Why might an attacker research you on social media before a vishing call?",
+        "options": [
+          "To send you a friend request.",
+          "To use real details (employer, recent purchase) and sound convincingly legitimate.",
+          "To improve their typing.",
+          "It has no effect."
+        ],
+        "correctIndex": 1,
+        "explanation": "Personal details gleaned from social media make the pretext believable, a technique that blends OSINT with vishing for higher success."
+      },
+      {
+        "id": "vishing-q24",
+        "question": "What should organizations train staff to do about unexpected calls requesting fund transfers?",
+        "options": [
+          "Act immediately to please the caller.",
+          "Verify through established internal procedures and known contacts before any transfer.",
+          "Transfer a smaller amount as a test.",
+          "Ignore all calls forever."
+        ],
+        "correctIndex": 1,
+        "explanation": "Callback verification and dual-control procedures stop vishing-driven fraud by confirming requests through trusted, independent channels."
+      },
+      {
+        "id": "vishing-q25",
+        "question": "A message claims to be from a government health service asking for your ID and bank details to 'process a benefit'. This is likely:",
+        "options": [
+          "A normal benefits process.",
+          "A smishing scam harvesting identity and financial data.",
+          "A required survey.",
+          "A software update."
+        ],
+        "correctIndex": 1,
+        "explanation": "Unsolicited requests for ID and bank details via text are classic identity-theft smishing. Verify only through official government channels."
+      },
+      {
+        "id": "vishing-q26",
+        "question": "What is the benefit of letting unknown calls go to voicemail?",
+        "options": [
+          "It's rude but harmless.",
+          "It lets you screen and verify before engaging, avoiding live-pressure tactics.",
+          "It blocks your number.",
+          "It charges the caller."
+        ],
+        "correctIndex": 1,
+        "explanation": "Screening removes the immediate pressure of a live call, giving you time to verify any claim before responding."
+      },
+      {
+        "id": "vishing-q27",
+        "question": "A text from 'your CEO' asks you to discreetly buy gift cards for a 'client reward'. What should you do?",
+        "options": [
+          "Buy them quietly as asked.",
+          "Verify directly with the CEO via a known channel; this is a common impersonation scam.",
+          "Reply asking how many.",
+          "Send the card codes first, ask later."
+        ],
+        "correctIndex": 1,
+        "explanation": "Executive-impersonation gift-card requests are a frequent scam. Always confirm through a known, trusted channel before acting."
+      },
+      {
+        "id": "vishing-q28",
+        "question": "Which is a strong technical defense against many scam calls and texts?",
+        "options": [
+          "Answering every call.",
+          "Using carrier/phone spam-filtering and reporting scam numbers.",
+          "Sharing your number publicly.",
+          "Disabling voicemail."
+        ],
+        "correctIndex": 1,
+        "explanation": "Built-in spam filtering and reporting reduce scam volume over time and help carriers block known fraudulent numbers."
+      },
+      {
+        "id": "vishing-q29",
+        "question": "If you suspect a call is a scam but aren't sure, what's the safest move?",
+        "options": [
+          "Share limited info to test them.",
+          "End the call and independently contact the organization they claimed to be.",
+          "Keep talking to gather clues.",
+          "Give a fake card number."
+        ],
+        "correctIndex": 1,
+        "explanation": "Ending the call and verifying independently avoids any risk from pressure or spoofing, confirming whether a real issue exists."
+      },
+      {
+        "id": "vishing-q30",
+        "question": "What core human trait do vishing and smishing both exploit?",
+        "options": [
+          "Mathematical ability.",
+          "Trust and emotional reactions like fear, urgency, or helpfulness.",
+          "Typing speed.",
+          "Musical talent."
+        ],
+        "correctIndex": 1,
+        "explanation": "Both attacks manipulate trust and emotions - fear, urgency, curiosity, or a desire to help - rather than breaking technology."
+      }
+    ],
+    "physical-security": [
+      {
+        "id": "physical-q1",
+        "question": "What is 'shoulder surfing'?",
+        "options": [
+          "A new web browsing technique.",
+          "Using a screen protector to block side views.",
+          "The act of observing someone's screen or keyboard to steal information.",
+          "A type of malware that watches your screen."
+        ],
+        "correctIndex": 2,
+        "explanation": "Shoulder surfing is a low-tech method of stealing passwords or PINs by simply watching over someone's shoulder."
+      },
+      {
+        "id": "physical-q2",
+        "question": "When working in a public coffee shop, what is the best way to protect your data on their Wi-Fi network?",
+        "options": [
+          "Only visit websites that use HTTPS.",
+          "Use a Virtual Private Network (VPN).",
+          "Ask the barista if the Wi-Fi is secure.",
+          "Connect only for a few minutes at a time."
+        ],
+        "correctIndex": 1,
+        "explanation": "A VPN encrypts all your traffic, creating a secure tunnel that prevents others on the same public network from snooping."
+      },
+      {
+        "id": "physical-q3",
+        "question": "What is the keyboard shortcut to quickly lock your computer screen on Windows?",
+        "options": [
+          "Ctrl + Alt + Delete",
+          "Alt + F4",
+          "Windows Key + L",
+          "Ctrl + L"
+        ],
+        "correctIndex": 2,
+        "explanation": "Windows Key + L instantly locks your screen - a critical habit whenever you step away to prevent unauthorized access."
+      },
+      {
+        "id": "physical-q4",
+        "question": "What is 'tailgating' (or 'piggybacking') in physical security?",
+        "options": [
+          "Following too closely while driving.",
+          "An unauthorized person following an authorized one through a secure door.",
+          "Backing up data to tape.",
+          "A type of network attack."
+        ],
+        "correctIndex": 1,
+        "explanation": "Tailgating is when someone without access slips through a secured entrance behind an authorized person, bypassing access controls."
+      },
+      {
+        "id": "physical-q5",
+        "question": "Why is it risky to leave your laptop unattended in a public place, even briefly?",
+        "options": [
+          "It might overheat.",
+          "It can be stolen or tampered with in seconds.",
+          "The battery drains faster.",
+          "The Wi-Fi disconnects."
+        ],
+        "correctIndex": 1,
+        "explanation": "Theft or tampering (e.g., plugging in a malicious device) can happen in moments. Keep devices with you or physically secured."
+      },
+      {
+        "id": "physical-q6",
+        "question": "What is the purpose of a 'privacy screen' filter on a laptop?",
+        "options": [
+          "To make the screen brighter.",
+          "To narrow the viewing angle so others beside you can't read it.",
+          "To block all light.",
+          "To speed up the display."
+        ],
+        "correctIndex": 1,
+        "explanation": "Privacy filters limit the viewing angle, defeating shoulder surfing in public spaces like planes, trains, and cafes."
+      },
+      {
+        "id": "physical-q7",
+        "question": "A stranger in business attire asks you to hold a secure door because their 'badge isn't working'. What's the secure response?",
+        "options": [
+          "Always help; they look professional.",
+          "Politely direct them to reception/security to be properly admitted.",
+          "Give them your badge.",
+          "Prop the door open for everyone."
+        ],
+        "correctIndex": 1,
+        "explanation": "Appearance isn't authorization. Directing them to security prevents tailgating, a common physical social-engineering tactic."
+      },
+      {
+        "id": "physical-q8",
+        "question": "Why should you use a VPN on public Wi-Fi even for 'just browsing'?",
+        "options": [
+          "It makes pages load faster.",
+          "Others on the network could intercept unencrypted traffic or run man-in-the-middle attacks.",
+          "It's required to connect.",
+          "It saves battery."
+        ],
+        "correctIndex": 1,
+        "explanation": "Public networks are untrusted; a VPN encrypts your traffic so attackers on the same Wi-Fi can't read or tamper with it."
+      },
+      {
+        "id": "physical-q9",
+        "question": "What is an 'evil twin' Wi-Fi attack?",
+        "options": [
+          "Two routers in one room.",
+          "A rogue hotspot mimicking a legitimate network to intercept your data.",
+          "A duplicate password.",
+          "A backup access point."
+        ],
+        "correctIndex": 1,
+        "explanation": "An evil twin is a fake access point named like a real one (e.g., 'CoffeeShop_WiFi') to lure you in and capture your traffic."
+      },
+      {
+        "id": "physical-q10",
+        "question": "Why should you avoid charging your phone at unknown public USB ports?",
+        "options": [
+          "They charge too slowly.",
+          "'Juice jacking' could transfer malware or steal data over the USB connection.",
+          "They overcharge the battery.",
+          "They are always broken."
+        ],
+        "correctIndex": 1,
+        "explanation": "Public USB ports can be rigged for 'juice jacking' to move malware or extract data. Use a wall adapter or a charge-only cable/data blocker."
+      },
+      {
+        "id": "physical-q11",
+        "question": "What is the best practice for handling sensitive printed documents at a shared office printer?",
+        "options": [
+          "Leave them in the tray for later.",
+          "Use secure/pull printing and collect them immediately.",
+          "Print extra copies for colleagues.",
+          "Recycle them without checking."
+        ],
+        "correctIndex": 1,
+        "explanation": "Secure 'pull' printing releases the job only when you authenticate at the device, preventing sensitive pages from sitting exposed in the tray."
+      },
+      {
+        "id": "physical-q12",
+        "question": "Why is a 'clean desk policy' a security measure?",
+        "options": [
+          "It looks tidy for visitors.",
+          "It prevents sensitive documents and notes from being seen or stolen.",
+          "It saves on cleaning costs.",
+          "It improves typing speed."
+        ],
+        "correctIndex": 1,
+        "explanation": "Clearing sensitive papers, notes, and media when away reduces the chance of unauthorized viewing, theft, or shoulder surfing."
+      },
+      {
+        "id": "physical-q13",
+        "question": "When traveling, where should you keep devices containing sensitive data?",
+        "options": [
+          "In checked luggage.",
+          "In your carry-on/possession, ideally encrypted.",
+          "With a stranger.",
+          "In the hotel lobby."
+        ],
+        "correctIndex": 1,
+        "explanation": "Checked bags can be lost, stolen, or accessed. Keep encrypted devices on you, and consider hotel safes for short periods."
+      },
+      {
+        "id": "physical-q14",
+        "question": "What does full-disk encryption protect against?",
+        "options": [
+          "Slow performance.",
+          "Data being read if the device is lost or stolen.",
+          "Email spam.",
+          "Screen glare."
+        ],
+        "correctIndex": 1,
+        "explanation": "Full-disk encryption renders stored data unreadable without the key, protecting information if the device is lost or stolen."
+      },
+      {
+        "id": "physical-q15",
+        "question": "A USB drive is left on your desk by an unknown person. The safest action is to:",
+        "options": [
+          "Plug it in to identify the owner.",
+          "Hand it to IT/Security without connecting it.",
+          "Use it for your own files.",
+          "Plug it into a colleague's machine."
+        ],
+        "correctIndex": 1,
+        "explanation": "Unknown drives can be 'baiting' traps. Don't connect them; give them to IT, who can examine them in a controlled way."
+      },
+      {
+        "id": "physical-q16",
+        "question": "Why enable a short auto-lock timeout on your devices?",
+        "options": [
+          "To save storage.",
+          "So an unattended device locks itself quickly, limiting exposure.",
+          "To improve camera quality.",
+          "To get more notifications."
+        ],
+        "correctIndex": 1,
+        "explanation": "A short timeout ensures the screen locks soon after inactivity, reducing the window for someone to access an unattended device."
+      },
+      {
+        "id": "physical-q17",
+        "question": "What is 'dumpster diving' in a security context?",
+        "options": [
+          "A water sport.",
+          "Searching discarded trash for sensitive information.",
+          "Deleting files permanently.",
+          "A backup strategy."
+        ],
+        "correctIndex": 1,
+        "explanation": "Attackers sift through discarded documents and media for useful data, which is why secure shredding and disposal matter."
+      },
+      {
+        "id": "physical-q18",
+        "question": "Why avoid discussing confidential work on a phone call in a crowded public area?",
+        "options": [
+          "It's impolite only.",
+          "Bystanders can overhear sensitive information ('eavesdropping').",
+          "Calls drop in crowds.",
+          "It drains battery."
+        ],
+        "correctIndex": 1,
+        "explanation": "Public conversations can be overheard, leaking confidential details. Move to a private space for sensitive discussions."
+      },
+      {
+        "id": "physical-q19",
+        "question": "What's a secure way to dispose of an old hard drive with sensitive data?",
+        "options": [
+          "Throw it in the bin.",
+          "Securely wipe and/or physically destroy it.",
+          "Sell it as-is online.",
+          "Leave it in a drawer indefinitely."
+        ],
+        "correctIndex": 1,
+        "explanation": "Deleting files isn't enough; data can be recovered. Cryptographic wiping or physical destruction ensures it's unrecoverable."
+      },
+      {
+        "id": "physical-q20",
+        "question": "On public Wi-Fi without a VPN, which activity is riskiest?",
+        "options": [
+          "Reading public news articles.",
+          "Logging into your bank or entering passwords.",
+          "Checking the weather.",
+          "Watching a public video."
+        ],
+        "correctIndex": 1,
+        "explanation": "Entering credentials or accessing financial accounts on untrusted Wi-Fi risks interception. Avoid it, or use a VPN, on public networks."
+      },
+      {
+        "id": "physical-q21",
+        "question": "What is the security purpose of a laptop cable lock?",
+        "options": [
+          "To organize cables.",
+          "To physically deter opportunistic theft in public or shared spaces.",
+          "To charge faster.",
+          "To improve Wi-Fi."
+        ],
+        "correctIndex": 1,
+        "explanation": "A cable lock tethers the device to a fixed object, deterring grab-and-go theft in places like libraries or open offices."
+      },
+      {
+        "id": "physical-q22",
+        "question": "Why should visitors in a secure facility be escorted and badged?",
+        "options": [
+          "For a warm welcome.",
+          "To control and monitor access, preventing unauthorized movement.",
+          "To sell them products.",
+          "It's only a formality."
+        ],
+        "correctIndex": 1,
+        "explanation": "Escorting and visitor badges ensure outsiders can't roam freely, reducing risks of theft, tampering, or data exposure."
+      },
+      {
+        "id": "physical-q23",
+        "question": "What does 'piggybacking' on Wi-Fi differ from when someone tailgates a door? (Choose the best general principle.)",
+        "options": [
+          "Both are unrelated to security.",
+          "Both involve gaining access by exploiting an authorized person or connection without proper authentication.",
+          "Both improve security.",
+          "Both require passwords."
+        ],
+        "correctIndex": 1,
+        "explanation": "The shared principle is unauthorized access via someone else's legitimate access - whether a held door or an open connection - bypassing proper checks."
+      },
+      {
+        "id": "physical-q24",
+        "question": "Before leaving your desk for lunch, what's the minimum security step?",
+        "options": [
+          "Turn off the monitor only.",
+          "Lock the screen (and secure sensitive papers).",
+          "Log everyone out of the building.",
+          "Nothing is needed."
+        ],
+        "correctIndex": 1,
+        "explanation": "Locking the screen prevents others from using your session; securing papers protects sensitive information while you're away."
+      },
+      {
+        "id": "physical-q25",
+        "question": "What risk do smart devices/IoT in a home office introduce?",
+        "options": [
+          "None at all.",
+          "Weakly secured devices can be entry points to your network.",
+          "They only use electricity.",
+          "They improve passwords."
+        ],
+        "correctIndex": 1,
+        "explanation": "Poorly secured IoT devices can be compromised and used to pivot into your network. Change defaults, update firmware, and segment them."
+      },
+      {
+        "id": "physical-q26",
+        "question": "Why is it unsafe to reuse a hotel/airport 'free Wi-Fi' login across trips without scrutiny?",
+        "options": [
+          "It's always perfectly safe.",
+          "Networks may be spoofed or insecure; treat every public network as untrusted.",
+          "It costs money.",
+          "It deletes your files."
+        ],
+        "correctIndex": 1,
+        "explanation": "Public networks vary and can be impersonated. Assume they're untrusted, use a VPN, and avoid sensitive logins without protection."
+      },
+      {
+        "id": "physical-q27",
+        "question": "What is a secure practice when stepping away from a video call on a shared device?",
+        "options": [
+          "Leave it unlocked and running.",
+          "Lock the device or at least pause/secure the session.",
+          "Hand it to a stranger.",
+          "Turn up the volume."
+        ],
+        "correctIndex": 1,
+        "explanation": "An unlocked shared device exposes your accounts and the call. Lock it or secure the session before stepping away."
+      },
+      {
+        "id": "physical-q28",
+        "question": "Why keep device operating systems patched as part of physical/remote security?",
+        "options": [
+          "Only for new emojis.",
+          "Patches close vulnerabilities that could be exploited if a device is accessed or on a hostile network.",
+          "To change wallpaper.",
+          "It has no security value."
+        ],
+        "correctIndex": 1,
+        "explanation": "Up-to-date systems resist exploitation, which matters especially for portable devices used on untrusted networks."
+      },
+      {
+        "id": "physical-q29",
+        "question": "What should you do if your work device is lost or stolen?",
+        "options": [
+          "Wait to see if it turns up.",
+          "Report it to IT/Security immediately so they can lock/wipe it and rotate credentials.",
+          "Buy a replacement quietly.",
+          "Ignore it if it was old."
+        ],
+        "correctIndex": 1,
+        "explanation": "Prompt reporting enables remote lock/wipe and credential changes, limiting data exposure from a lost or stolen device."
+      },
+      {
+        "id": "physical-q30",
+        "question": "What is the safest assumption about any network or device you don't fully control?",
+        "options": [
+          "It's secure until proven otherwise.",
+          "Treat it as potentially untrusted and protect your data accordingly.",
+          "It can't affect you.",
+          "It's always safe on weekdays."
+        ],
+        "correctIndex": 1,
+        "explanation": "A 'zero trust' mindset - assume untrusted by default - drives safer choices like encryption, VPNs, and avoiding sensitive actions on unknown systems."
+      }
+    ],
+    "data-handling": [
+      {
+        "id": "data-q1",
+        "question": "An employee's home address and phone number is an example of what kind of data?",
+        "options": [
+          "Public",
+          "Internal",
+          "Confidential / Personally Identifiable Information (PII)",
+          "Trivial"
+        ],
+        "correctIndex": 2,
+        "explanation": "PII can identify a specific individual, so it's confidential and must be protected to prevent identity theft and privacy violations."
+      },
+      {
+        "id": "data-q2",
+        "question": "What is the correct way to dispose of a printed document containing confidential client information?",
+        "options": [
+          "Tear it in half and put it in the recycling bin.",
+          "Put it in the regular trash can.",
+          "Use a cross-cut shredder.",
+          "Leave it on your desk for the cleaning crew to handle."
+        ],
+        "correctIndex": 2,
+        "explanation": "A cross-cut shredder makes documents extremely hard to reconstruct, the standard for secure disposal and protection against dumpster diving."
+      },
+      {
+        "id": "data-q3",
+        "question": "You realize you accidentally clicked a link in a suspicious email. What is the most important first step?",
+        "options": [
+          "Immediately run an antivirus scan.",
+          "Turn off your computer and hope for the best.",
+          "Don't tell anyone to avoid getting in trouble.",
+          "Immediately report the incident to your IT/Security department."
+        ],
+        "correctIndex": 3,
+        "explanation": "Time is critical in a potential breach. Security has tools to investigate and contain threats, but only if you report quickly."
+      },
+      {
+        "id": "data-q4",
+        "question": "What does the principle of 'least privilege' mean for data access?",
+        "options": [
+          "Everyone gets full access for convenience.",
+          "Users get only the access necessary to do their job.",
+          "Only managers can access anything.",
+          "Access is granted randomly."
+        ],
+        "correctIndex": 1,
+        "explanation": "Least privilege limits each user to the minimum access needed, reducing the damage if an account is compromised or misused."
+      },
+      {
+        "id": "data-q5",
+        "question": "What is the safest way to send a confidential file to an external partner?",
+        "options": [
+          "Email it as a plain attachment.",
+          "Use an approved encrypted/secure file-sharing method.",
+          "Post it on a public link.",
+          "Print and mail a copy to anyone."
+        ],
+        "correctIndex": 1,
+        "explanation": "Encrypted, access-controlled sharing protects confidential data in transit and at rest, unlike plain email or public links."
+      },
+      {
+        "id": "data-q6",
+        "question": "Why classify data into levels like Public, Internal, and Confidential?",
+        "options": [
+          "To make filing colorful.",
+          "So protection and handling rules match each data's sensitivity.",
+          "To slow down access.",
+          "It has no real purpose."
+        ],
+        "correctIndex": 1,
+        "explanation": "Classification ensures appropriate controls - more protection for sensitive data, less overhead for public data - and guides correct handling."
+      },
+      {
+        "id": "data-q7",
+        "question": "What is 'data minimization'?",
+        "options": [
+          "Compressing files to save space.",
+          "Collecting and retaining only the data you actually need.",
+          "Deleting all data immediately.",
+          "Making fonts smaller."
+        ],
+        "correctIndex": 1,
+        "explanation": "Data minimization reduces risk by limiting how much personal/sensitive data you gather and keep, shrinking the potential breach impact."
+      },
+      {
+        "id": "data-q8",
+        "question": "A colleague asks for client data they don't need for their role. What should you do?",
+        "options": [
+          "Share it to be helpful.",
+          "Decline and follow 'need-to-know'; escalate if unsure.",
+          "Share a partial copy.",
+          "Email it to be safe."
+        ],
+        "correctIndex": 1,
+        "explanation": "Need-to-know means sharing sensitive data only with those whose role requires it. Politely decline and verify legitimate need first."
+      },
+      {
+        "id": "data-q9",
+        "question": "What is the difference between 'encryption at rest' and 'encryption in transit'?",
+        "options": [
+          "They are the same thing.",
+          "At rest protects stored data; in transit protects data moving across networks.",
+          "At rest is for printers only.",
+          "In transit means deleting data."
+        ],
+        "correctIndex": 1,
+        "explanation": "At-rest encryption secures stored data on disks/databases; in-transit encryption (e.g., TLS) protects data as it travels over networks."
+      },
+      {
+        "id": "data-q10",
+        "question": "Why should you avoid storing company confidential data on personal cloud accounts?",
+        "options": [
+          "It's slower.",
+          "It bypasses security controls and may violate policy and data-protection laws.",
+          "It uses your personal storage quota.",
+          "It's always fine."
+        ],
+        "correctIndex": 1,
+        "explanation": "Personal accounts lack corporate controls and oversight, risking leaks and compliance breaches. Use approved, managed storage instead."
+      },
+      {
+        "id": "data-q11",
+        "question": "What is a 'data breach'?",
+        "options": [
+          "A scheduled backup.",
+          "Unauthorized access, disclosure, or loss of protected data.",
+          "A software update.",
+          "A type of encryption."
+        ],
+        "correctIndex": 1,
+        "explanation": "A breach is any unauthorized access to or disclosure/loss of protected information, often triggering legal reporting obligations."
+      },
+      {
+        "id": "data-q12",
+        "question": "When emailing several external clients at once, why use BCC instead of CC?",
+        "options": [
+          "BCC sends faster.",
+          "BCC hides recipients' addresses, preventing exposure of others' email/PII.",
+          "BCC adds encryption.",
+          "CC is not allowed."
+        ],
+        "correctIndex": 1,
+        "explanation": "Putting external recipients in CC exposes everyone's addresses (a PII leak). BCC keeps them private from one another."
+      },
+      {
+        "id": "data-q13",
+        "question": "What does GDPR primarily regulate?",
+        "options": [
+          "Internet speeds.",
+          "The protection and privacy of personal data of individuals in the EU/EEA.",
+          "Software licensing.",
+          "Email formatting."
+        ],
+        "correctIndex": 1,
+        "explanation": "The GDPR governs how organizations collect, process, and protect personal data of people in the EU/EEA, with strict rights and penalties."
+      },
+      {
+        "id": "data-q14",
+        "question": "What is 'pseudonymization' of data?",
+        "options": [
+          "Deleting data entirely.",
+          "Replacing identifying fields with tokens so data can't be tied to a person without extra info.",
+          "Encrypting Wi-Fi.",
+          "Printing data on paper."
+        ],
+        "correctIndex": 1,
+        "explanation": "Pseudonymization swaps identifiers for tokens, reducing direct identifiability while keeping data usable, with re-identification info held separately."
+      },
+      {
+        "id": "data-q15",
+        "question": "You find unencrypted customer PII in a shared drive open to all staff. What should you do?",
+        "options": [
+          "Leave it; it's convenient.",
+          "Report it and restrict access per least-privilege and classification policy.",
+          "Download a personal copy.",
+          "Email it to the whole team."
+        ],
+        "correctIndex": 1,
+        "explanation": "Over-exposed PII is a risk. Report it so access can be restricted appropriately and the data secured per policy."
+      },
+      {
+        "id": "data-q16",
+        "question": "Why is prompt incident reporting important for compliance?",
+        "options": [
+          "It isn't important.",
+          "Laws often require notifying regulators/affected people within strict timeframes.",
+          "It speeds up your computer.",
+          "It avoids paperwork."
+        ],
+        "correctIndex": 1,
+        "explanation": "Regulations like GDPR impose tight breach-notification deadlines. Fast internal reporting enables timely, compliant response."
+      },
+      {
+        "id": "data-q17",
+        "question": "What is the safest practice for old data you no longer need?",
+        "options": [
+          "Keep everything forever.",
+          "Securely delete or archive it per the retention policy.",
+          "Copy it to a personal drive.",
+          "Post it publicly."
+        ],
+        "correctIndex": 1,
+        "explanation": "Following retention/disposal policy reduces breach exposure and meets legal requirements; keeping unneeded data is a liability."
+      },
+      {
+        "id": "data-q18",
+        "question": "What does 'need-to-know' combined with 'least privilege' achieve?",
+        "options": [
+          "Maximum access for all.",
+          "Sensitive data is accessible only to those who require it for their role.",
+          "No one can access anything.",
+          "Faster internet."
+        ],
+        "correctIndex": 1,
+        "explanation": "Together they ensure access is both role-justified (need-to-know) and minimal (least privilege), limiting exposure and misuse."
+      },
+      {
+        "id": "data-q19",
+        "question": "Why should screenshots or exports of sensitive dashboards be handled carefully?",
+        "options": [
+          "They use lots of memory.",
+          "They create uncontrolled copies of sensitive data that can leak.",
+          "They are illegal everywhere.",
+          "They never contain real data."
+        ],
+        "correctIndex": 1,
+        "explanation": "Exports and screenshots create copies outside protected systems, which can be forwarded or lost, leaking sensitive information."
+      },
+      {
+        "id": "data-q20",
+        "question": "A vendor requests a full data export 'for analysis' beyond what's contractually agreed. What's the right step?",
+        "options": [
+          "Send everything quickly.",
+          "Verify the legitimate scope and approvals before sharing any data.",
+          "Share half now.",
+          "Email it without checking."
+        ],
+        "correctIndex": 1,
+        "explanation": "Data sharing must match agreed scope and approvals. Verify legitimacy and authorization before releasing any data to third parties."
+      },
+      {
+        "id": "data-q21",
+        "question": "What is the purpose of an 'access review' or recertification?",
+        "options": [
+          "To add more users.",
+          "To periodically confirm people still need the access they have and revoke excess.",
+          "To change passwords.",
+          "To speed up logins."
+        ],
+        "correctIndex": 1,
+        "explanation": "Regular access reviews catch and remove unnecessary or outdated permissions, enforcing least privilege over time."
+      },
+      {
+        "id": "data-q22",
+        "question": "Why avoid using real customer data in test/development environments?",
+        "options": [
+          "It's harder to read.",
+          "Test environments are usually less secure, risking exposure of real PII.",
+          "It runs slower.",
+          "It's always required."
+        ],
+        "correctIndex": 1,
+        "explanation": "Lower-security test systems can leak real PII. Use anonymized/synthetic data for testing to reduce breach risk."
+      },
+      {
+        "id": "data-q23",
+        "question": "What is a 'data subject access request' (DSAR) under privacy laws?",
+        "options": [
+          "A request to delete the database.",
+          "An individual's right to see what personal data an organization holds about them.",
+          "A software license request.",
+          "A type of marketing email."
+        ],
+        "correctIndex": 1,
+        "explanation": "Privacy laws like GDPR let individuals request access to their personal data, and organizations must respond within set timeframes."
+      },
+      {
+        "id": "data-q24",
+        "question": "Why should confidential conversations not be held over unsecured messaging apps for work?",
+        "options": [
+          "They cost money.",
+          "They may lack proper encryption, retention, and oversight controls.",
+          "They are too fast.",
+          "They can't send text."
+        ],
+        "correctIndex": 1,
+        "explanation": "Unsanctioned apps may lack encryption, logging, and governance, creating compliance gaps and data-leak risks. Use approved channels."
+      },
+      {
+        "id": "data-q25",
+        "question": "What does 'integrity' mean among the CIA triad (Confidentiality, Integrity, Availability)?",
+        "options": [
+          "Data is kept secret.",
+          "Data remains accurate and unaltered except by authorized changes.",
+          "Data is always online.",
+          "Data is deleted regularly."
+        ],
+        "correctIndex": 1,
+        "explanation": "Integrity ensures data isn't improperly modified, so it stays accurate and trustworthy; only authorized, tracked changes occur."
+      },
+      {
+        "id": "data-q26",
+        "question": "A report must be shared externally but contains a few sensitive fields. Best approach?",
+        "options": [
+          "Send it as-is.",
+          "Redact or remove the sensitive fields before sharing.",
+          "Add more sensitive data for context.",
+          "Refuse to share anything ever."
+        ],
+        "correctIndex": 1,
+        "explanation": "Redacting or removing sensitive fields lets you share necessary information while protecting confidential data."
+      },
+      {
+        "id": "data-q27",
+        "question": "Why must access to confidential data be logged/audited?",
+        "options": [
+          "To slow users down.",
+          "To detect misuse and support investigations and compliance.",
+          "To increase storage.",
+          "It serves no purpose."
+        ],
+        "correctIndex": 1,
+        "explanation": "Audit logs create accountability, help detect unauthorized access, and provide evidence for investigations and regulatory compliance."
+      },
+      {
+        "id": "data-q28",
+        "question": "What is the risk of forwarding a work email thread containing PII to a personal account?",
+        "options": [
+          "No risk.",
+          "It moves sensitive data outside protected systems, risking leaks and policy/legal violations.",
+          "It improves backup.",
+          "It speeds up email."
+        ],
+        "correctIndex": 1,
+        "explanation": "Forwarding to personal accounts removes corporate protections and may breach policy and data-protection laws, exposing PII."
+      },
+      {
+        "id": "data-q29",
+        "question": "When a third party processes personal data on your behalf, what's typically required?",
+        "options": [
+          "Nothing formal.",
+          "A data processing agreement defining responsibilities and safeguards.",
+          "Only a phone call.",
+          "A social media post."
+        ],
+        "correctIndex": 1,
+        "explanation": "Privacy laws require contracts (e.g., DPAs) that bind processors to protect data and define obligations, ensuring accountability."
+      },
+      {
+        "id": "data-q30",
+        "question": "What is the overall goal of good data handling?",
+        "options": [
+          "To make work harder.",
+          "To protect confidentiality, integrity, and availability while meeting legal obligations.",
+          "To collect as much data as possible.",
+          "To avoid all backups."
+        ],
+        "correctIndex": 1,
+        "explanation": "Sound data handling safeguards the CIA triad and ensures compliance, protecting both individuals and the organization."
+      }
+    ],
+    "social-engineering": [
+      {
+        "id": "social-q1",
+        "question": "What is the primary goal of a 'pretexting' attack?",
+        "options": [
+          "To infect your computer with ransomware.",
+          "To create a fabricated scenario to trick you into revealing sensitive information.",
+          "To guess your password using automated tools.",
+          "To physically steal your laptop."
+        ],
+        "correctIndex": 1,
+        "explanation": "Pretexting invents a believable scenario (the pretext) so victims divulge information or take actions they normally wouldn't."
+      },
+      {
+        "id": "social-q2",
+        "question": "You find a USB drive in the company parking lot. What is the safest course of action?",
+        "options": [
+          "Plug it into your computer to see who it belongs to so you can return it.",
+          "Plug it into a public computer at a library to check its contents safely.",
+          "Throw it in the trash.",
+          "Give it to your IT or Security department."
+        ],
+        "correctIndex": 3,
+        "explanation": "This is 'baiting'. The drive may carry malware. IT/Security can examine it safely; never plug unknown drives into any computer."
+      },
+      {
+        "id": "social-q3",
+        "question": "You receive an urgent email from your company's CEO asking you to immediately wire $50,000 to a new vendor. The email address looks correct. What should you do?",
+        "options": [
+          "Process the wire transfer immediately to avoid upsetting the CEO.",
+          "Reply to the email asking for the invoice.",
+          "Call the CEO or speak to them in person to verify the request.",
+          "Forward the email to the finance department to handle."
+        ],
+        "correctIndex": 2,
+        "explanation": "This is classic Business Email Compromise. Verify unusual or urgent financial requests through a separate, trusted channel before acting."
+      },
+      {
+        "id": "social-q4",
+        "question": "What is 'baiting' in social engineering?",
+        "options": [
+          "Sending a phishing email.",
+          "Luring victims with something enticing (like a free USB or download) that delivers malware.",
+          "Calling to ask for a password.",
+          "Watching someone type."
+        ],
+        "correctIndex": 1,
+        "explanation": "Baiting dangles an attractive item - a 'free' drive or download - to trick victims into an action that compromises security."
+      },
+      {
+        "id": "social-q5",
+        "question": "Which human emotion do social engineers most often exploit with 'urgency'?",
+        "options": [
+          "Boredom.",
+          "Fear/anxiety, prompting hasty action.",
+          "Happiness.",
+          "Curiosity only."
+        ],
+        "correctIndex": 1,
+        "explanation": "Urgency triggers fear and pressure, pushing victims to act quickly without the scrutiny that would reveal the scam."
+      },
+      {
+        "id": "social-q6",
+        "question": "What is 'quid pro quo' in social engineering?",
+        "options": [
+          "A legal term only.",
+          "Offering a benefit or service in exchange for information or access.",
+          "A type of firewall.",
+          "A password format."
+        ],
+        "correctIndex": 1,
+        "explanation": "Quid pro quo trades a perceived favor (e.g., 'free IT help') for credentials or access, manipulating the target into cooperating."
+      },
+      {
+        "id": "social-q7",
+        "question": "How can attackers use AI voice cloning in social engineering?",
+        "options": [
+          "They can't clone voices.",
+          "To impersonate executives or relatives in calls demanding money or actions.",
+          "To improve call quality.",
+          "To translate languages only."
+        ],
+        "correctIndex": 1,
+        "explanation": "AI can mimic a known voice convincingly, enabling fraudulent calls that pressure victims into transfers or disclosures. Verify independently."
+      },
+      {
+        "id": "social-q8",
+        "question": "An attacker calls pretending to be IT and asks you to install 'remote support software'. What should you do?",
+        "options": [
+          "Install it; IT knows best.",
+          "Verify the request through official IT channels before installing anything.",
+          "Give them your password instead.",
+          "Disable your antivirus first."
+        ],
+        "correctIndex": 1,
+        "explanation": "Impersonating IT is common. Confirm via known internal channels; never install remote-access tools or share credentials on an unsolicited request."
+      },
+      {
+        "id": "social-q9",
+        "question": "What is the best defense against social engineering overall?",
+        "options": [
+          "Better antivirus only.",
+          "A skeptical, verify-first mindset and following established procedures.",
+          "Faster internet.",
+          "Longer passwords only."
+        ],
+        "correctIndex": 1,
+        "explanation": "Since social engineering targets people, healthy skepticism plus verification and clear procedures are the strongest defenses."
+      },
+      {
+        "id": "social-q10",
+        "question": "Why is 'authority' (e.g., posing as a boss or official) effective for attackers?",
+        "options": [
+          "People ignore authority.",
+          "People tend to comply with perceived authority figures, especially under pressure.",
+          "Authority slows attacks.",
+          "It has no effect."
+        ],
+        "correctIndex": 1,
+        "explanation": "Many people defer to authority, so impersonating a boss or official lowers resistance, particularly when combined with urgency."
+      },
+      {
+        "id": "social-q11",
+        "question": "What does 'tailgating' rely on socially?",
+        "options": [
+          "Technical hacking.",
+          "People's politeness in holding doors for others.",
+          "Strong passwords.",
+          "Antivirus gaps."
+        ],
+        "correctIndex": 1,
+        "explanation": "Tailgating exploits courtesy - holding a secure door - to gain physical entry without proper authentication."
+      },
+      {
+        "id": "social-q12",
+        "question": "An online 'friend' you've never met asks for increasingly personal/financial details over weeks. This may be:",
+        "options": [
+          "Normal friendship.",
+          "A long-con social-engineering or romance scam building trust to exploit you.",
+          "A bank procedure.",
+          "A survey."
+        ],
+        "correctIndex": 1,
+        "explanation": "Gradual trust-building to extract money or data is a hallmark of romance/pig-butchering scams. Be cautious with unmet contacts."
+      },
+      {
+        "id": "social-q13",
+        "question": "Why do attackers research targets on social media (OSINT) before an attack?",
+        "options": [
+          "To send memes.",
+          "To craft believable, personalized pretexts that increase success.",
+          "To improve grammar.",
+          "It's irrelevant."
+        ],
+        "correctIndex": 1,
+        "explanation": "Open-source intelligence supplies real details (role, projects, contacts) that make pretexts and lures far more convincing."
+      },
+      {
+        "id": "social-q14",
+        "question": "A message exploits 'scarcity' ('only 2 spots left, act now!'). How does this manipulate you?",
+        "options": [
+          "It doesn't.",
+          "Fear of missing out pressures quick, less-careful decisions.",
+          "It improves the offer's quality.",
+          "It slows you down helpfully."
+        ],
+        "correctIndex": 1,
+        "explanation": "Scarcity triggers FOMO, nudging victims to act fast and skip verification - a common manipulation lever."
+      },
+      {
+        "id": "social-q15",
+        "question": "What should you do if an unexpected request asks you to bypass normal security procedures 'just this once'?",
+        "options": [
+          "Bypass them to be helpful.",
+          "Refuse and verify; pressure to skip procedures is a red flag.",
+          "Bypass only small rules.",
+          "Ask the requester for permission to skip."
+        ],
+        "correctIndex": 1,
+        "explanation": "Attackers push people to make exceptions. Pressure to bypass controls is a warning sign; stick to procedures and verify."
+      },
+      {
+        "id": "social-q16",
+        "question": "How does 'social proof' get used in scams?",
+        "options": [
+          "By citing fake reviews or 'others already did this' to lower your guard.",
+          "By improving security.",
+          "By blocking messages.",
+          "It isn't used."
+        ],
+        "correctIndex": 0,
+        "explanation": "Claiming that 'everyone else complied' or showing fake endorsements exploits social proof to make a scam feel safe and normal."
+      },
+      {
+        "id": "social-q17",
+        "question": "An attacker impersonates a new employee needing 'urgent help' accessing systems. Best response?",
+        "options": [
+          "Grant access quickly.",
+          "Verify their identity and authorization through official onboarding/IT processes.",
+          "Share your own login.",
+          "Email credentials to them."
+        ],
+        "correctIndex": 1,
+        "explanation": "Impersonating a new hire is a known tactic. Confirm identity and access rights via proper channels before granting anything."
+      },
+      {
+        "id": "social-q18",
+        "question": "Why are 'helpful' employees sometimes a security weak point?",
+        "options": [
+          "They work too slowly.",
+          "A desire to help can be exploited to bypass verification.",
+          "They never follow rules.",
+          "They dislike customers."
+        ],
+        "correctIndex": 1,
+        "explanation": "Attackers weaponize helpfulness, so even well-meaning staff may skip checks. Training balances helpfulness with verification."
+      },
+      {
+        "id": "social-q19",
+        "question": "What is 'reverse social engineering'?",
+        "options": [
+          "Undoing an attack.",
+          "Making the victim seek out the attacker for 'help', then exploiting that trust.",
+          "A backup method.",
+          "A type of encryption."
+        ],
+        "correctIndex": 1,
+        "explanation": "The attacker engineers a problem and poses as the fixer, so the victim initiates contact, lending the attacker credibility."
+      },
+      {
+        "id": "social-q20",
+        "question": "A caller already knows some real details about you and uses them to seem legitimate. You should:",
+        "options": [
+          "Trust them since they know details.",
+          "Stay cautious; attackers often have partial info from breaches/OSINT. Verify independently.",
+          "Share more details to confirm.",
+          "Give them your password."
+        ],
+        "correctIndex": 1,
+        "explanation": "Knowing some facts doesn't prove legitimacy - data is often gathered from breaches or social media. Verify through trusted channels."
+      },
+      {
+        "id": "social-q21",
+        "question": "Why is security awareness training a key control against social engineering?",
+        "options": [
+          "It replaces firewalls.",
+          "It helps people recognize and resist manipulation tactics.",
+          "It speeds up computers.",
+          "It's only for IT staff."
+        ],
+        "correctIndex": 1,
+        "explanation": "Because the target is human judgment, training that teaches recognition and verification meaningfully reduces successful attacks."
+      },
+      {
+        "id": "social-q22",
+        "question": "An email creates fear ('your account is compromised!') then offers a 'fix' link. This combines which tactics?",
+        "options": [
+          "Humor and patience.",
+          "Fear plus a convenient solution to rush you into clicking.",
+          "Generosity only.",
+          "No tactics."
+        ],
+        "correctIndex": 1,
+        "explanation": "Pairing fear with an easy 'fix' pressures victims to click without scrutiny - a classic phishing/social-engineering combo."
+      },
+      {
+        "id": "social-q23",
+        "question": "What's the safest way to handle an unsolicited request for an org chart or employee list?",
+        "options": [
+          "Send it; it's harmless.",
+          "Treat it as potential reconnaissance and verify the requester's legitimacy and need.",
+          "Post it publicly.",
+          "Add personal phone numbers too."
+        ],
+        "correctIndex": 1,
+        "explanation": "Such info aids targeting. Attackers gather it for pretexts, so verify legitimacy and necessity before sharing internal details."
+      },
+      {
+        "id": "social-q24",
+        "question": "Why might an attacker dress as a delivery person or contractor?",
+        "options": [
+          "For comfort.",
+          "To exploit trust and gain physical access to a facility.",
+          "It's required by law.",
+          "To improve security."
+        ],
+        "correctIndex": 1,
+        "explanation": "A plausible uniform and story lower suspicion, enabling physical social engineering like tailgating or planting devices."
+      },
+      {
+        "id": "social-q25",
+        "question": "A 'survey' calls asking to confirm your bank, employer, and ID 'for verification'. This is likely:",
+        "options": [
+          "A legitimate survey.",
+          "A pretexting attempt to harvest identity/financial data.",
+          "A required census.",
+          "A loyalty program."
+        ],
+        "correctIndex": 1,
+        "explanation": "Surveys requesting sensitive identifiers are a pretexting tactic. Don't disclose; verify any real need through official channels."
+      },
+      {
+        "id": "social-q26",
+        "question": "What is the value of a 'verify out-of-band' rule for sensitive requests?",
+        "options": [
+          "It slows everything down needlessly.",
+          "Confirming via a different, trusted channel defeats impersonation and spoofing.",
+          "It only works for email.",
+          "It shares more data."
+        ],
+        "correctIndex": 1,
+        "explanation": "Out-of-band verification (e.g., calling a known number) confirms requests independently, neutralizing spoofed emails/calls."
+      },
+      {
+        "id": "social-q27",
+        "question": "Why do attackers exploit 'reciprocity' (doing you a small favor first)?",
+        "options": [
+          "It has no effect.",
+          "People feel obliged to return favors, making them more likely to comply.",
+          "It improves security.",
+          "It blocks scams."
+        ],
+        "correctIndex": 1,
+        "explanation": "A small favor creates a sense of obligation, which attackers leverage to extract information or access in return."
+      },
+      {
+        "id": "social-q28",
+        "question": "An IT 'audit' email asks everyone to confirm credentials via a form 'for compliance'. Best action?",
+        "options": [
+          "Fill it out promptly.",
+          "Don't submit credentials; verify with IT - real audits don't collect passwords via forms.",
+          "Submit a fake password.",
+          "Forward it to all staff to comply together."
+        ],
+        "correctIndex": 1,
+        "explanation": "Legitimate audits never harvest passwords through forms. This is credential phishing; verify with IT and never submit credentials."
+      },
+      {
+        "id": "social-q29",
+        "question": "What mindset best protects against social engineering without harming productivity?",
+        "options": [
+          "Trust everyone fully.",
+          "Be helpful but verify sensitive or unusual requests.",
+          "Refuse all requests.",
+          "Ignore all emails."
+        ],
+        "correctIndex": 1,
+        "explanation": "Balancing helpfulness with verification of sensitive/unusual requests stops manipulation while keeping work flowing."
+      },
+      {
+        "id": "social-q30",
+        "question": "After spotting a social-engineering attempt, what should you do?",
+        "options": [
+          "Keep it to yourself.",
+          "Report it to IT/Security so they can warn others and respond.",
+          "Engage the attacker further.",
+          "Delete all evidence."
+        ],
+        "correctIndex": 1,
+        "explanation": "Reporting helps security warn colleagues, block the actor, and improve defenses against an active campaign."
+      }
+    ],
+    "crypto-scams": [
+      {
+        "id": "crypto-q1",
+        "question": "Someone you met online a few months ago suggests you invest in a new crypto trading platform that guarantees a 20% weekly return. They even show you screenshots of their profits. What should you do?",
+        "options": [
+          "Start with a small investment to test the waters.",
+          "Ask them for more details about how the platform works.",
+          "Recognize this as a likely 'pig butchering' scam and cut off contact.",
+          "Borrow money to maximize your potential returns."
+        ],
+        "correctIndex": 2,
+        "explanation": "This is a classic pig-butchering scam: trust built over time plus fake platforms and fabricated profits to lure large investments."
+      },
+      {
+        "id": "crypto-q2",
+        "question": "You receive an email from a popular crypto exchange saying your account needs verification and asks you to enter your 12-word seed phrase. What is the correct action?",
+        "options": [
+          "Enter the seed phrase to ensure your account isn't locked.",
+          "Ignore the email, as legitimate exchanges will NEVER ask for your seed phrase.",
+          "Reply to the email asking why they need it.",
+          "Forward the email to a friend for advice."
+        ],
+        "correctIndex": 1,
+        "explanation": "Your seed phrase is the master key to your wallet. No legitimate exchange asks for it; anyone who does is trying to steal your funds."
+      },
+      {
+        "id": "crypto-q3",
+        "question": "A famous entrepreneur tweets that they are giving back to the community and will double any Bitcoin sent to a specific address. What is this?",
+        "options": [
+          "A legitimate promotional giveaway.",
+          "A common giveaway scam, often using compromised verified accounts.",
+          "A smart contract testing phase.",
+          "An exclusive investment opportunity."
+        ],
+        "correctIndex": 1,
+        "explanation": "'Send crypto, get double back' is a giveaway scam, frequently run via hacked verified accounts. Crypto sent is never returned."
+      },
+      {
+        "id": "crypto-q4",
+        "question": "What is a cryptocurrency 'seed phrase' (recovery phrase)?",
+        "options": [
+          "A password hint.",
+          "A set of words that can fully restore and control your wallet.",
+          "A type of crypto coin.",
+          "A 2FA code."
+        ],
+        "correctIndex": 1,
+        "explanation": "The seed phrase recreates your wallet and its private keys. Anyone with it controls your funds, so it must never be shared."
+      },
+      {
+        "id": "crypto-q5",
+        "question": "Why are cryptocurrency transactions especially attractive to scammers?",
+        "options": [
+          "They are reversible anytime.",
+          "They are typically irreversible and can be pseudonymous.",
+          "Banks refund them easily.",
+          "They are slow and traceable to names."
+        ],
+        "correctIndex": 1,
+        "explanation": "Irreversibility and pseudonymity mean victims usually can't claw back funds, making crypto a favored target for fraud."
+      },
+      {
+        "id": "crypto-q6",
+        "question": "What is a 'rug pull' in crypto?",
+        "options": [
+          "A networking cable issue.",
+          "Developers abandon a project and run off with investors' funds.",
+          "A secure wallet feature.",
+          "A type of mining."
+        ],
+        "correctIndex": 1,
+        "explanation": "In a rug pull, creators hype a token, attract investment, then drain liquidity and disappear, leaving holders with worthless tokens."
+      },
+      {
+        "id": "crypto-q7",
+        "question": "An app store listing looks like your crypto wallet but has few reviews and a slightly different developer name. What's the risk?",
+        "options": [
+          "None; all wallet apps are safe.",
+          "It may be a fake wallet designed to steal your seed phrase or funds.",
+          "It just loads slowly.",
+          "It uses more battery."
+        ],
+        "correctIndex": 1,
+        "explanation": "Fake wallet apps mimic real ones to capture seed phrases or keys. Verify the official developer and download links carefully."
+      },
+      {
+        "id": "crypto-q8",
+        "question": "What is the safest way to store large crypto holdings long-term?",
+        "options": [
+          "On an exchange with a weak password.",
+          "In a hardware (cold) wallet you control, with the seed phrase secured offline.",
+          "In a screenshot on your phone.",
+          "Shared with a friend for safekeeping."
+        ],
+        "correctIndex": 1,
+        "explanation": "Cold storage (hardware wallets) keeps keys offline and in your control; the seed phrase must be stored securely offline, never digitally."
+      },
+      {
+        "id": "crypto-q9",
+        "question": "A 'support agent' in a crypto Telegram group DMs you first, offering to fix your wallet issue. This is likely:",
+        "options": [
+          "Helpful official support.",
+          "A scam; legitimate support rarely DMs first and never needs your seed phrase.",
+          "A required verification.",
+          "A community reward."
+        ],
+        "correctIndex": 1,
+        "explanation": "Unsolicited DMs from 'support' are a classic crypto scam. Real support doesn't message first or ask for seed phrases/keys."
+      },
+      {
+        "id": "crypto-q10",
+        "question": "What does 'not your keys, not your coins' mean?",
+        "options": [
+          "You should lose your keys.",
+          "If you don't control the private keys, you don't truly control the assets.",
+          "Keys are unnecessary.",
+          "Coins are free."
+        ],
+        "correctIndex": 1,
+        "explanation": "If a third party (e.g., an exchange) holds your keys, your access depends on them. Self-custody means you control the keys and thus the coins."
+      },
+      {
+        "id": "crypto-q11",
+        "question": "A website promises 'guaranteed' high daily returns for staking your crypto with them. This is a red flag because:",
+        "options": [
+          "High guaranteed returns are normal.",
+          "Guaranteed high returns are characteristic of Ponzi/HYIP scams.",
+          "Staking is illegal.",
+          "Returns are always guaranteed."
+        ],
+        "correctIndex": 1,
+        "explanation": "No legitimate investment guarantees high returns. 'Guaranteed' daily yields signal a Ponzi or high-yield investment scam."
+      },
+      {
+        "id": "crypto-q12",
+        "question": "What is 'phishing' specific to crypto often after?",
+        "options": [
+          "Your favorite color.",
+          "Your seed phrase, private keys, or wallet credentials.",
+          "Your step count.",
+          "Your music playlist."
+        ],
+        "correctIndex": 1,
+        "explanation": "Crypto phishing targets seed phrases, private keys, and exchange logins, since these grant direct control over funds."
+      },
+      {
+        "id": "crypto-q13",
+        "question": "Before connecting your wallet to a new DeFi site, what should you do?",
+        "options": [
+          "Approve everything immediately.",
+          "Verify the site's legitimacy and review what permissions/approvals it requests.",
+          "Share your seed phrase.",
+          "Disable your antivirus."
+        ],
+        "correctIndex": 1,
+        "explanation": "Malicious dApps can request token approvals that drain wallets. Verify the site and scrutinize approval requests before connecting."
+      },
+      {
+        "id": "crypto-q14",
+        "question": "A scammer claims they accidentally sent you crypto and asks you to send it back to a different address. This may be:",
+        "options": [
+          "A genuine mistake to help with.",
+          "A scam (e.g., using stolen funds) to manipulate you; verify carefully and be cautious.",
+          "A bank transfer.",
+          "A tax refund."
+        ],
+        "correctIndex": 1,
+        "explanation": "'Accidental transfer' ploys can involve stolen funds or manipulation. Be cautious; don't act on pressure or send funds to unknown addresses."
+      },
+      {
+        "id": "crypto-q15",
+        "question": "Why should you double-check the recipient address before sending crypto?",
+        "options": [
+          "Addresses change daily.",
+          "Malware can swap copied addresses, and transactions are irreversible.",
+          "It's just a formality.",
+          "Addresses don't matter."
+        ],
+        "correctIndex": 1,
+        "explanation": "Clipboard-hijacking malware can replace a pasted address. Since transactions can't be reversed, always verify the full address."
+      },
+      {
+        "id": "crypto-q16",
+        "question": "What is an 'airdrop' scam?",
+        "options": [
+          "A legitimate free token distribution always.",
+          "Fake 'free token' offers that require connecting a wallet or paying a fee to steal funds.",
+          "A weather event.",
+          "A mining reward."
+        ],
+        "correctIndex": 1,
+        "explanation": "Scam airdrops lure users to connect wallets or pay 'fees', enabling theft. Treat unexpected 'free token' claims with suspicion."
+      },
+      {
+        "id": "crypto-q17",
+        "question": "Pressure to 'invest now or miss out' on a crypto opportunity is a sign of:",
+        "options": [
+          "A great deal.",
+          "Manipulation using urgency/FOMO common in scams.",
+          "Normal investing.",
+          "Government policy."
+        ],
+        "correctIndex": 1,
+        "explanation": "Urgency and FOMO are manipulation tactics. Legitimate investing allows due diligence; pressure to rush signals a likely scam."
+      },
+      {
+        "id": "crypto-q18",
+        "question": "What is the danger of 'fake exchange' websites?",
+        "options": [
+          "They load slowly.",
+          "They mimic real exchanges to steal logins, funds, or seed phrases.",
+          "They use too many ads.",
+          "They are perfectly safe."
+        ],
+        "correctIndex": 1,
+        "explanation": "Fake exchanges copy legitimate sites to capture credentials and drain deposits. Verify URLs and use bookmarks for trusted sites."
+      },
+      {
+        "id": "crypto-q19",
+        "question": "A 'recovery service' contacts you promising to retrieve crypto you lost to a scam, for an upfront fee. This is likely:",
+        "options": [
+          "A reliable rescue.",
+          "A secondary scam targeting victims; upfront-fee 'recovery' is usually fraudulent.",
+          "A government program.",
+          "A bank service."
+        ],
+        "correctIndex": 1,
+        "explanation": "Recovery-fee scams prey on prior victims, taking more money. Be highly skeptical of anyone guaranteeing fund recovery for a fee."
+      },
+      {
+        "id": "crypto-q20",
+        "question": "Why verify a token's contract address from official sources before buying?",
+        "options": [
+          "Addresses are random.",
+          "Scammers create fake tokens with similar names; the wrong contract can be a trap.",
+          "It's not necessary.",
+          "All tokens are identical."
+        ],
+        "correctIndex": 1,
+        "explanation": "Impostor tokens mimic legitimate ones. Confirming the official contract address prevents buying a worthless or malicious copycat."
+      },
+      {
+        "id": "crypto-q21",
+        "question": "What is a secure habit for your seed phrase backup?",
+        "options": [
+          "Store it in a cloud note.",
+          "Keep it offline (e.g., written and secured), never digital or shared.",
+          "Email it to yourself.",
+          "Post it in a private chat."
+        ],
+        "correctIndex": 1,
+        "explanation": "Digital copies can be hacked. Store the seed phrase offline and physically secured; never email, photograph, or share it."
+      },
+      {
+        "id": "crypto-q22",
+        "question": "An investment 'mentor' shows a flashy dashboard with rising profits and urges bigger deposits. This pattern matches:",
+        "options": [
+          "Standard brokerage.",
+          "Pig-butchering/investment fraud using fabricated gains.",
+          "A savings account.",
+          "A government bond."
+        ],
+        "correctIndex": 1,
+        "explanation": "Fabricated dashboards and pressure to deposit more are hallmarks of pig-butchering scams designed to maximize your losses."
+      },
+      {
+        "id": "crypto-q23",
+        "question": "Why is enabling 2FA on a crypto exchange account important?",
+        "options": [
+          "It changes your coins.",
+          "It adds a barrier so a stolen password alone can't access your funds.",
+          "It increases returns.",
+          "It's purely cosmetic."
+        ],
+        "correctIndex": 1,
+        "explanation": "2FA protects exchange accounts so that even a leaked or phished password isn't enough for an attacker to log in and withdraw."
+      },
+      {
+        "id": "crypto-q24",
+        "question": "A QR code from an untrusted source is presented to 'receive' or 'verify' crypto. Risk?",
+        "options": [
+          "None.",
+          "It may point to a malicious address or site, leading to loss of funds.",
+          "It improves speed.",
+          "It adds rewards."
+        ],
+        "correctIndex": 1,
+        "explanation": "Malicious QR codes can encode attacker addresses or phishing links. Verify the destination before scanning or sending."
+      },
+      {
+        "id": "crypto-q25",
+        "question": "What's the safest response to a celebrity 'live stream' promising to double crypto sent during the event?",
+        "options": [
+          "Send quickly before it ends.",
+          "Recognize it as a giveaway scam (often hijacked channels) and ignore it.",
+          "Send a small test amount.",
+          "Share it with friends to join."
+        ],
+        "correctIndex": 1,
+        "explanation": "These 'double your crypto' streams use stolen/spoofed channels. It's a scam; never send crypto expecting more in return."
+      },
+      {
+        "id": "crypto-q26",
+        "question": "Why be cautious of crypto 'signals' groups guaranteeing profits for a subscription?",
+        "options": [
+          "They are always accurate.",
+          "Guaranteed-profit claims and pump-and-dump dynamics often harm subscribers.",
+          "Subscriptions are free.",
+          "They are regulated banks."
+        ],
+        "correctIndex": 1,
+        "explanation": "Paid 'signals' often facilitate pump-and-dumps or simply fail to deliver. Guaranteed profits are a red flag, not a promise."
+      },
+      {
+        "id": "crypto-q27",
+        "question": "What does it mean to 'revoke token approvals' for your wallet?",
+        "options": [
+          "Delete your wallet.",
+          "Withdraw permissions you previously granted to dApps, reducing drain risk.",
+          "Buy more tokens.",
+          "Reset your password."
+        ],
+        "correctIndex": 1,
+        "explanation": "Revoking stale approvals stops previously authorized contracts from moving your tokens, an important hygiene step after using dApps."
+      },
+      {
+        "id": "crypto-q28",
+        "question": "A message says you must 'validate' or 'sync' your wallet by entering your seed phrase on a website. This is:",
+        "options": [
+          "A normal maintenance step.",
+          "A phishing attempt to steal your wallet; never enter a seed phrase on a website.",
+          "Required by blockchains.",
+          "A safety feature."
+        ],
+        "correctIndex": 1,
+        "explanation": "No legitimate process requires entering your seed phrase on a website. Such 'validation/sync' prompts are outright theft attempts."
+      },
+      {
+        "id": "crypto-q29",
+        "question": "Before investing in any crypto project, what's a prudent step?",
+        "options": [
+          "Skip research and follow hype.",
+          "Research the team, code, audits, and be skeptical of guarantees.",
+          "Invest your whole savings.",
+          "Trust anonymous tips."
+        ],
+        "correctIndex": 1,
+        "explanation": "Due diligence - examining the team, audits, and realistic claims - helps avoid scams and overhyped, fraudulent projects."
+      },
+      {
+        "id": "crypto-q30",
+        "question": "What is the single most important rule to protect your crypto wallet?",
+        "options": [
+          "Share your seed phrase with support when asked.",
+          "Never share your seed phrase or private keys with anyone, ever.",
+          "Keep your seed phrase in email.",
+          "Post your wallet address as a password."
+        ],
+        "correctIndex": 1,
+        "explanation": "Your seed phrase/private keys are absolute control of your funds. Never share them with anyone or enter them anywhere but your own wallet setup."
+      }
+    ]
+  }
+}

@@ -3,14 +3,14 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
 import {
-  ShieldCheck, LayoutDashboard, User, Award, FileText, BookOpen,
+  ShieldCheck, LayoutDashboard, User, Award, FileText, BookOpen, GraduationCap,
   Sun, Moon, LogOut, ChevronLeft, ChevronRight,
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/browser";
-import { useState } from "react";
 
 const NAV_ITEMS = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/learn", label: "Learn", icon: GraduationCap },
   { href: "/profile", label: "Profile", icon: User },
   { href: "/badges", label: "Badges", icon: Award },
   { href: "/certificate", label: "Certificate", icon: FileText },

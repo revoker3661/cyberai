@@ -3,6 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { Sidebar } from "@/components/shell/Sidebar";
 import { MobileNav } from "@/components/shell/MobileNav";
 import { SidebarWrapper } from "@/components/shell/SidebarWrapper";
+import { FloatingAssistant } from "@/components/ai/FloatingAssistant";
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
   const supabase = await createClient();
@@ -28,6 +29,9 @@ export default async function AppLayout({ children }: { children: React.ReactNod
           {children}
         </div>
       </main>
+
+      {/* Global page-aware AI assistant */}
+      <FloatingAssistant />
     </div>
   );
 }

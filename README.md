@@ -83,11 +83,17 @@ The wireframe for the crypto module advertises 800 total points, but the visible
 ### Level titles Lv1–Lv3 inferred
 Wireframes only show Lv4 ("Security Architect") and Lv5 ("Cyber Sentinel"). Levels 1–3 titles are inferred and noted in `content.json`.
 
-### Confidence doesn't affect score
-The confidence selector (Confident / Just Guessing) has no point modifier. It feeds exclusively into the AI Smart Quiz Coach to generate richer "blind spot" analysis.
+### Confidence bonus scoring (1.25×)
+Correct + Confident answers earn 25% extra points (e.g. 36 pts base → 45 pts). Correct + Guessing earns base points. Wrong answers show the missed points as a negative (e.g. `-36 pts`) for clear feedback. The `CONFIDENCE_BONUS_MULTIPLIER = 1.25` is applied server-side in `save-progress` — never trusted from the client. Confidence data also feeds the AI Smart Quiz Coach for richer "blind spot" analysis.
 
-### Retake overwrites score
-Re-taking a quiz upserts `module_progress`, replacing the previous score. Keeps the data model simple.
+### Retake keeps best score
+Re-taking a quiz only saves if the new score is higher or the previous attempt failed. A passed score is never downgraded. Keeps the data model simple while preserving achievement integrity.
+
+### 240-question bank with anti-cheat shuffle
+Each module has 30 questions. Each attempt Fisher-Yates shuffles the pool and serves 15. Option order is also shuffled per question. The server stores served question IDs + option order map and recomputes correctness by text identity — a client cannot forge a `selectedIndex` to fabricate a correct answer.
+
+### Learn tab (creative addition beyond wireframes)
+A `/learn` route was added that isn't in the wireframes. It presents a Coursera-style two-column layout: left panel lists all 8 modules with progress indicators; right panel renders the selected module's full lesson content. Lets users review material without re-entering the quiz flow.
 
 ### Static question bank + AI overlay
 Quiz questions are from `content.json` (deterministic). AI adds coaching, personalization, and practice on top — never replaces core content. Prevents hallucinated security advice and ensures wireframe fidelity.

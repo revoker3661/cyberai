@@ -1,0 +1,923 @@
+{
+  "_meta": {
+    "description": "Coursera-style learning content for CyberAI. Each module has a left-panel list of learning items (readings + videos) grouped under a section, plus the existing quiz. Item types: 'reading' (rich text content rendered in the main panel) and 'video' (embedded YouTube). VIDEO LINKS BELOW ARE STARTING PLACEHOLDERS from reputable channels - VERIFY each loads and REPLACE with your own/preferred videos before submitting. estMinutes drives the '• X min' label. The first video per module is the primary explainer.",
+    "itemTypes": [
+      "reading",
+      "video"
+    ],
+    "videoEmbedNote": "Embed via https://www.youtube.com/embed/{videoId}. Store only the videoId; build the URL in code. Replace any that don't load.",
+    "completionNote": "Each item can be marked complete ('Mark as completed'); a module's lessons are 'done' when all items are complete. This is separate from quiz pass (70%). Both lesson-complete and quiz-pass can be shown; certificate gating stays on quiz pass per SCORING.md."
+  },
+  "modules": {
+    "phishing": {
+      "sectionTitle": "Module 1 · Phishing: The Lure (Email)",
+      "sectionSubtitle": "Spotting and stopping email-based attacks",
+      "items": [
+        {
+          "id": "phishing-read-intro",
+          "type": "reading",
+          "title": "Welcome & what is phishing",
+          "estMinutes": 8,
+          "body": [
+            {
+              "type": "paragraph",
+              "text": "Welcome to the Phishing module. Phishing is the most common cyber attack in the world, and it works by targeting people rather than computers. In this module you'll learn to recognise the lures attackers use, understand why they work, and build the habits that keep you and your organisation safe."
+            },
+            {
+              "type": "heading",
+              "text": "What is phishing?"
+            },
+            {
+              "type": "paragraph",
+              "text": "Phishing is a fraudulent attempt to obtain sensitive information — usernames, passwords, card details — by disguising as a trustworthy entity in an electronic communication, most often email. The attacker's goal is to get you to click a malicious link, open an infected attachment, or hand over information directly."
+            },
+            {
+              "type": "paragraph",
+              "text": "Phishing succeeds because it exploits human psychology: trust, urgency, fear, and curiosity. A well-crafted phishing email doesn't look like an attack — it looks like a routine message from your bank, a colleague, or a service you use every day."
+            },
+            {
+              "type": "callout",
+              "style": "info",
+              "text": "Two-thirds of data breaches involve a human element. Learning to spot phishing is one of the highest-impact security skills you can develop."
+            }
+          ]
+        },
+        {
+          "id": "phishing-video-main",
+          "type": "video",
+          "title": "Phishing explained",
+          "estMinutes": 5,
+          "videoId": "WNVTGTrWcvw",
+          "videoSource": "Security Quotient — 'Phishing: A game of deception'",
+          "verifyReplace": true,
+          "description": "A short animated explainer on how phishing attacks deceive users and what to watch for."
+        },
+        {
+          "id": "phishing-read-redflags",
+          "type": "reading",
+          "title": "Red flags of a phishing email",
+          "estMinutes": 10,
+          "body": [
+            {
+              "type": "paragraph",
+              "text": "Most phishing emails share a set of tell-tale signs. Learn these and you'll spot the majority of attacks before they do any harm."
+            },
+            {
+              "type": "bullets",
+              "items": [
+                {
+                  "title": "Urgent or threatening language",
+                  "text": "'Account suspended', 'Unauthorized login', 'Act within 24 hours'. Manufactured urgency rushes you into clicking before you think."
+                },
+                {
+                  "title": "Generic greetings",
+                  "text": "'Dear Customer' or 'Dear User' instead of your name can indicate a mass attack."
+                },
+                {
+                  "title": "Mismatched sender address",
+                  "text": "The display name says 'PayPal' but the actual address is 'secure-update@paypal-service123.com'. Always check the full email address, not just the name."
+                },
+                {
+                  "title": "Suspicious links",
+                  "text": "Hover (don't click) to reveal the true destination URL. Lookalike domains (paypa1.com) and shortened links hide malicious sites."
+                },
+                {
+                  "title": "Unexpected attachments",
+                  "text": "Especially files with double extensions like 'invoice.pdf.exe'. Never open attachments you weren't expecting."
+                },
+                {
+                  "title": "Spelling and grammar errors",
+                  "text": "Obvious mistakes can signal a scam — though polished phishing exists too, so absence of errors isn't proof of safety."
+                }
+              ]
+            },
+            {
+              "type": "callout",
+              "style": "warning",
+              "text": "Attackers often combine several of these — urgency PLUS a suspicious link PLUS a request for information. The more red flags, the higher the risk."
+            }
+          ]
+        },
+        {
+          "id": "phishing-read-defense",
+          "type": "reading",
+          "title": "Your best defense & reporting",
+          "estMinutes": 8,
+          "body": [
+            {
+              "type": "heading",
+              "text": "The golden rule: verify, don't trust"
+            },
+            {
+              "type": "paragraph",
+              "text": "If an email seems suspicious, it probably is. Do not click links or download attachments. If you think a message might be legitimate, navigate to the company's website directly in a new browser tab — never via the email's link — and log in there."
+            },
+            {
+              "type": "heading",
+              "text": "If you clicked something"
+            },
+            {
+              "type": "paragraph",
+              "text": "Don't panic, but act fast: disconnect from the internet to stop malware spreading, and report it to IT/Security immediately. Speed lets the security team contain any damage."
+            },
+            {
+              "type": "heading",
+              "text": "Always report"
+            },
+            {
+              "type": "paragraph",
+              "text": "Reporting phishing — even attempts you didn't fall for — lets security analyse the email, block the sender, and protect everyone. Multiple reports help them gauge the scale of a campaign. Reporting is a team defense, not just a personal one."
+            }
+          ]
+        }
+      ]
+    },
+    "passwords-2fa": {
+      "sectionTitle": "Module 2 · The Strong Vault: Passwords & 2FA",
+      "sectionSubtitle": "Building unbreakable account security",
+      "items": [
+        {
+          "id": "pw-read-intro",
+          "type": "reading",
+          "title": "Why passwords matter",
+          "estMinutes": 7,
+          "body": [
+            {
+              "type": "paragraph",
+              "text": "Your password is your first and most crucial line of defense. Attackers use automated software that can attempt millions of guesses per second, so simple, common, or personal passwords can be cracked almost instantly."
+            },
+            {
+              "type": "callout",
+              "style": "info",
+              "text": "The difference between a weak and a strong password is often the difference between a breached account and a safe one — and it costs you nothing to get right."
+            }
+          ]
+        },
+        {
+          "id": "pw-read-pillars",
+          "type": "reading",
+          "title": "The pillars of a strong password",
+          "estMinutes": 9,
+          "body": [
+            {
+              "type": "bullets",
+              "items": [
+                {
+                  "title": "Length is strength",
+                  "text": "Aim for at least 14 characters. Each additional character makes a password exponentially harder to crack — length matters more than swapping in a single symbol."
+                },
+                {
+                  "title": "Complexity helps",
+                  "text": "Mix uppercase, lowercase, numbers, and symbols. Avoid predictable patterns like 'word + year + !' (e.g. Summer2024!)."
+                },
+                {
+                  "title": "Uniqueness is non-negotiable",
+                  "text": "Never reuse passwords. A breach on one site exposes every account sharing that password — this is how 'credential stuffing' attacks work."
+                },
+                {
+                  "title": "Passphrases work",
+                  "text": "A sequence of random words (correct-horse-battery-staple) is both long and memorable, making it strong yet practical."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "pw-video-manager",
+          "type": "video",
+          "title": "Password managers explained",
+          "estMinutes": 6,
+          "videoId": "DVekqK25UzQ",
+          "videoSource": "Explainer — 'How Password Managers Work'",
+          "verifyReplace": true,
+          "description": "How password managers generate, store, and autofill unique strong passwords so you only remember one master password."
+        },
+        {
+          "id": "pw-read-manager",
+          "type": "reading",
+          "title": "Your secret weapon: the password manager",
+          "estMinutes": 7,
+          "body": [
+            {
+              "type": "paragraph",
+              "text": "It's impossible to remember dozens of unique, complex passwords — so don't try. A trusted password manager generates, stores, and autofills ultra-strong passwords for every account. You only memorise one master password."
+            },
+            {
+              "type": "paragraph",
+              "text": "Bonus protection: because a manager only autofills on the exact matching domain, it won't fill your credentials on a lookalike phishing site — giving you a silent warning that something is wrong."
+            }
+          ]
+        },
+        {
+          "id": "pw-video-2fa",
+          "type": "video",
+          "title": "Two-Factor Authentication explained",
+          "estMinutes": 4,
+          "videoId": "sPxAHV3P4IU",
+          "videoSource": "Common Craft — 'Two Factor Authentication Explained'",
+          "verifyReplace": true,
+          "description": "What 2FA is and why a second factor protects you even if your password is stolen."
+        },
+        {
+          "id": "pw-read-2fa",
+          "type": "reading",
+          "title": "Two-Factor Authentication (2FA/MFA)",
+          "estMinutes": 8,
+          "body": [
+            {
+              "type": "paragraph",
+              "text": "2FA is a security force-multiplier. It requires a second form of verification — like a code from your phone or a hardware key — in addition to your password. Even if an attacker steals your password, they can't get in without the second factor."
+            },
+            {
+              "type": "bullets",
+              "items": [
+                {
+                  "title": "Hardware keys are strongest",
+                  "text": "FIDO2/U2F security keys resist phishing and SIM-swap attacks."
+                },
+                {
+                  "title": "Authenticator apps are great",
+                  "text": "TOTP apps generate codes on your device, not tied to your phone number — safer than SMS."
+                },
+                {
+                  "title": "SMS is better than nothing",
+                  "text": "But it's vulnerable to SIM swapping. Use app or hardware 2FA where you can."
+                }
+              ]
+            },
+            {
+              "type": "callout",
+              "style": "warning",
+              "text": "If you ever receive a 2FA code you didn't request, someone likely has your password. Don't share the code — change your password immediately."
+            }
+          ]
+        }
+      ]
+    },
+    "malware-ransomware": {
+      "sectionTitle": "Module 3 · Malware & Ransomware Defense",
+      "sectionSubtitle": "Understanding and stopping malicious software",
+      "items": [
+        {
+          "id": "mw-read-intro",
+          "type": "reading",
+          "title": "Understanding malicious software",
+          "estMinutes": 8,
+          "body": [
+            {
+              "type": "paragraph",
+              "text": "Malware is any software designed to harm your system — it includes viruses, worms, trojans, spyware, and more. Ransomware is a particularly damaging type that encrypts all your files and holds them hostage until you pay a fee."
+            },
+            {
+              "type": "bullets",
+              "items": [
+                {
+                  "title": "Virus",
+                  "text": "Attaches to files and spreads when those files are run."
+                },
+                {
+                  "title": "Worm",
+                  "text": "Self-replicates across networks without needing a host file or user action."
+                },
+                {
+                  "title": "Trojan",
+                  "text": "Disguised as legitimate software to trick you into running it."
+                },
+                {
+                  "title": "Spyware",
+                  "text": "Secretly collects information like keystrokes and credentials."
+                },
+                {
+                  "title": "Ransomware",
+                  "text": "Encrypts your files and demands payment for the decryption key."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "mw-video-ransomware",
+          "type": "video",
+          "title": "Ransomware explained",
+          "estMinutes": 6,
+          "videoId": "Wd-T8-VlmhU",
+          "videoSource": "Cleared Systems — phishing/ransomware awareness",
+          "verifyReplace": true,
+          "description": "A concise overview of how ransomware works and how to defend against it."
+        },
+        {
+          "id": "mw-read-vectors",
+          "type": "reading",
+          "title": "Common infection vectors",
+          "estMinutes": 9,
+          "body": [
+            {
+              "type": "paragraph",
+              "text": "Knowing how malware gets in is half the battle. The vast majority of infections arrive through a small number of routes."
+            },
+            {
+              "type": "bullets",
+              "items": [
+                {
+                  "title": "Phishing emails",
+                  "text": "Clicking malicious links or opening infected attachments is the #1 way malware spreads."
+                },
+                {
+                  "title": "Malicious downloads",
+                  "text": "'Free' software, games, or cracked/pirated apps from untrusted sites are frequently bundled with malware."
+                },
+                {
+                  "title": "Unpatched software",
+                  "text": "Attackers exploit security holes in outdated operating systems, browsers, and apps. Keeping everything updated closes these doors."
+                },
+                {
+                  "title": "Infected USB drives",
+                  "text": "'Baiting' attacks leave malicious drives for curious people to plug in."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "mw-read-defense",
+          "type": "reading",
+          "title": "Your defensive strategy",
+          "estMinutes": 9,
+          "body": [
+            {
+              "type": "paragraph",
+              "text": "A multi-layered defense is key. No single control stops everything, so combine several."
+            },
+            {
+              "type": "bullets",
+              "items": [
+                {
+                  "title": "Back up regularly",
+                  "text": "Follow the 3-2-1 rule: 3 copies of your data, on 2 different media types, with 1 copy offsite/offline. Clean backups are your best defense against ransomware — they let you restore without paying."
+                },
+                {
+                  "title": "Patch everything",
+                  "text": "Keep your OS, browser, and apps fully updated so known vulnerabilities can't be exploited."
+                },
+                {
+                  "title": "Use reputable antivirus/EDR",
+                  "text": "Keep definitions current; modern EDR adds behaviour-based detection and response."
+                },
+                {
+                  "title": "Work with least privilege",
+                  "text": "Use a standard (non-admin) account day-to-day so malware that runs is limited in what it can do."
+                },
+                {
+                  "title": "Be cautious",
+                  "text": "Don't enable macros from unexpected documents; don't plug in unknown USB drives."
+                }
+              ]
+            },
+            {
+              "type": "callout",
+              "style": "warning",
+              "text": "Should you pay the ransom? Generally no — it funds crime and doesn't guarantee recovery. Rely on backups and involve IT and, where appropriate, law enforcement."
+            }
+          ]
+        }
+      ]
+    },
+    "vishing-smishing": {
+      "sectionTitle": "Module 4 · Vishing & Smishing (Non-Email Threats)",
+      "sectionSubtitle": "Phishing beyond the inbox: calls and texts",
+      "items": [
+        {
+          "id": "vs-read-intro",
+          "type": "reading",
+          "title": "Phishing beyond email",
+          "estMinutes": 7,
+          "body": [
+            {
+              "type": "paragraph",
+              "text": "Social engineering doesn't only happen in your inbox. Attackers also use phone calls and text messages to trick you. These are known as Vishing (Voice Phishing) and Smishing (SMS Phishing)."
+            },
+            {
+              "type": "bullets",
+              "items": [
+                {
+                  "title": "Vishing",
+                  "text": "Voice phishing — scams conducted over phone calls."
+                },
+                {
+                  "title": "Smishing",
+                  "text": "SMS phishing — fraudulent text messages."
+                }
+              ]
+            },
+            {
+              "type": "callout",
+              "style": "info",
+              "text": "Phishing, vishing, and smishing are all the same idea — social engineering — differing only in the channel: email, voice, or SMS."
+            }
+          ]
+        },
+        {
+          "id": "vs-read-tactics",
+          "type": "reading",
+          "title": "Common scams and tactics",
+          "estMinutes": 9,
+          "body": [
+            {
+              "type": "bullets",
+              "items": [
+                {
+                  "title": "Urgent bank alerts (smishing)",
+                  "text": "A text claims your account is frozen and links to a fake 'verify your identity' page that steals your login."
+                },
+                {
+                  "title": "Tech support scams (vishing)",
+                  "text": "An unsolicited call from 'Microsoft' or 'Apple' claims your computer is infected, aiming to get remote access or payment."
+                },
+                {
+                  "title": "Delivery-fee smishing",
+                  "text": "A text says a package delivery failed and asks for a small 're-delivery fee' via a link."
+                },
+                {
+                  "title": "Caller ID spoofing",
+                  "text": "Attackers fake the displayed number — even your bank's — so caller ID is never proof of identity."
+                },
+                {
+                  "title": "Emergency/impersonation",
+                  "text": "A caller pretends to be a relative in trouble, pressuring you for money and secrecy."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "vs-video-main",
+          "type": "video",
+          "title": "Vishing & smishing awareness",
+          "estMinutes": 4,
+          "videoId": "a2cTpJa50ic",
+          "videoSource": "Email/SMS security awareness explainer",
+          "verifyReplace": true,
+          "description": "How scammers use texts and calls to harvest personal information, and how to respond."
+        },
+        {
+          "id": "vs-read-respond",
+          "type": "reading",
+          "title": "How to respond",
+          "estMinutes": 8,
+          "body": [
+            {
+              "type": "heading",
+              "text": "Never trust, always verify"
+            },
+            {
+              "type": "paragraph",
+              "text": "Do not click links in suspicious texts. Hang up on unsolicited calls. If a message claims to be from a company you use, contact them directly using a phone number or website you know is legitimate — never the contact details provided in the message."
+            },
+            {
+              "type": "bullets",
+              "items": [
+                {
+                  "title": "Don't share OTPs",
+                  "text": "No legitimate organisation will ask you to read out a one-time passcode."
+                },
+                {
+                  "title": "Don't press buttons on robocalls",
+                  "text": "Responding confirms your number is active and invites more scams."
+                },
+                {
+                  "title": "Call back on a known number",
+                  "text": "Use the number on your card or the official website to verify any real issue."
+                },
+                {
+                  "title": "Beware gift-card requests",
+                  "text": "No real agency or boss legitimately demands payment in gift cards."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "physical-security": {
+      "sectionTitle": "Module 5 · Physical, Travel, & Remote Security",
+      "sectionSubtitle": "Protecting devices and data in the real world",
+      "items": [
+        {
+          "id": "ps-read-intro",
+          "type": "reading",
+          "title": "Security is not just digital",
+          "estMinutes": 7,
+          "body": [
+            {
+              "type": "paragraph",
+              "text": "Protecting information goes beyond firewalls and passwords. Physical security means protecting your devices and your screen from unauthorised access in the real world — at the office, while travelling, and when working remotely."
+            },
+            {
+              "type": "callout",
+              "style": "info",
+              "text": "A locked laptop on an encrypted drive is far safer than a powerful firewall protecting an unlocked, unattended machine."
+            }
+          ]
+        },
+        {
+          "id": "ps-read-office",
+          "type": "reading",
+          "title": "In the office and on the go",
+          "estMinutes": 9,
+          "body": [
+            {
+              "type": "bullets",
+              "items": [
+                {
+                  "title": "Lock your screen",
+                  "text": "Always lock when you step away, even for a moment. Windows: Win+L. Mac: Cmd+Ctrl+Q. Make it a reflex."
+                },
+                {
+                  "title": "Beware shoulder surfing",
+                  "text": "In cafes, airports, and trains, people can watch you type passwords or read sensitive data. A privacy screen filter narrows the viewing angle."
+                },
+                {
+                  "title": "Watch for tailgating",
+                  "text": "Don't let unknown people follow you through secure doors. Direct them to reception/security instead."
+                },
+                {
+                  "title": "Secure your devices",
+                  "text": "Never leave laptops or phones unattended in public. When travelling, keep them with you, not in checked luggage."
+                },
+                {
+                  "title": "Clean desk policy",
+                  "text": "Clear sensitive papers and media when you leave your desk."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "ps-video-wifi",
+          "type": "video",
+          "title": "Public Wi-Fi & VPN safety",
+          "estMinutes": 5,
+          "videoId": "VsLnSBg5640",
+          "videoSource": "Public Wi-Fi security explainer",
+          "verifyReplace": true,
+          "description": "Why public Wi-Fi is risky and how a VPN protects your connection."
+        },
+        {
+          "id": "ps-read-wifi",
+          "type": "reading",
+          "title": "The dangers of public Wi-Fi",
+          "estMinutes": 8,
+          "body": [
+            {
+              "type": "paragraph",
+              "text": "Public Wi-Fi is not secure. Attackers on the same network can potentially intercept your data, and 'evil twin' hotspots mimic legitimate networks to lure you in."
+            },
+            {
+              "type": "bullets",
+              "items": [
+                {
+                  "title": "Avoid sensitive logins",
+                  "text": "Don't access your bank or other sensitive accounts on public Wi-Fi unless protected."
+                },
+                {
+                  "title": "Use a VPN",
+                  "text": "A VPN encrypts ALL your traffic, creating a secure tunnel that stops snoopers on the same network."
+                },
+                {
+                  "title": "Treat every unknown network as untrusted",
+                  "text": "A 'zero trust' mindset drives safer choices by default."
+                },
+                {
+                  "title": "Avoid juice jacking",
+                  "text": "Don't charge at unknown public USB ports — use a wall adapter or a charge-only cable."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "data-handling": {
+      "sectionTitle": "Module 6 · Data Handling, Reporting, & Compliance",
+      "sectionSubtitle": "Classifying, protecting, and disposing of data",
+      "items": [
+        {
+          "id": "dh-read-classify",
+          "type": "reading",
+          "title": "Not all data is equal",
+          "estMinutes": 8,
+          "body": [
+            {
+              "type": "paragraph",
+              "text": "Data is classified by its sensitivity so that protection matches the risk. You have a responsibility to protect sensitive data appropriately."
+            },
+            {
+              "type": "bullets",
+              "items": [
+                {
+                  "title": "Public",
+                  "text": "Press releases, marketing material — safe to share openly."
+                },
+                {
+                  "title": "Internal",
+                  "text": "Org charts, internal memos — for staff, not the public."
+                },
+                {
+                  "title": "Confidential / PII",
+                  "text": "Personally Identifiable Information (names, addresses, IDs), financial and health records — must be strongly protected to prevent identity theft and privacy violations."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "dh-read-handling",
+          "type": "reading",
+          "title": "Secure handling and disposal",
+          "estMinutes": 9,
+          "body": [
+            {
+              "type": "bullets",
+              "items": [
+                {
+                  "title": "Need to know",
+                  "text": "Only access and share sensitive data with those who have a legitimate business need."
+                },
+                {
+                  "title": "Least privilege",
+                  "text": "Users should have only the access required for their role — reducing damage if an account is compromised."
+                },
+                {
+                  "title": "Secure storage",
+                  "text": "Keep confidential data on approved, encrypted systems — not personal devices or unsanctioned cloud accounts."
+                },
+                {
+                  "title": "Encrypt in transit and at rest",
+                  "text": "Use secure, encrypted methods to store and send sensitive data."
+                },
+                {
+                  "title": "Proper disposal",
+                  "text": "Shred physical documents (cross-cut). Securely wipe or destroy digital media — deleting to the trash isn't enough."
+                },
+                {
+                  "title": "Use BCC for group external email",
+                  "text": "Putting external recipients in CC exposes everyone's address — a PII leak."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "dh-video-compliance",
+          "type": "video",
+          "title": "Data protection & GDPR basics",
+          "estMinutes": 6,
+          "videoId": "j6wwBqfSk-o",
+          "videoSource": "GDPR / data protection explainer",
+          "verifyReplace": true,
+          "description": "A plain-English overview of data protection principles and why compliance matters."
+        },
+        {
+          "id": "dh-read-incident",
+          "type": "reading",
+          "title": "When things go wrong: incident reporting",
+          "estMinutes": 8,
+          "body": [
+            {
+              "type": "paragraph",
+              "text": "If you suspect a security incident — you clicked a phishing link, lost a work device, or see suspicious activity — report it immediately to the designated contact (IT, InfoSec, or your manager)."
+            },
+            {
+              "type": "paragraph",
+              "text": "Fast reporting is critical to minimising damage. Many privacy laws (like GDPR) also require organisations to notify regulators and affected people within strict timeframes, so your prompt internal report enables a compliant response."
+            },
+            {
+              "type": "callout",
+              "style": "warning",
+              "text": "Never hide an incident to avoid blame. Time is the most valuable resource during a breach — early reporting protects everyone."
+            }
+          ]
+        }
+      ]
+    },
+    "social-engineering": {
+      "sectionTitle": "Module 7 · Social Engineering & Modern Scams",
+      "sectionSubtitle": "How attackers exploit human psychology",
+      "items": [
+        {
+          "id": "se-read-human",
+          "type": "reading",
+          "title": "The human element",
+          "estMinutes": 7,
+          "body": [
+            {
+              "type": "paragraph",
+              "text": "Social engineering is the art of manipulating people into giving up confidential information. Attackers know that humans are often the weakest link in the security chain — it's frequently easier to trick a person than to break technology."
+            },
+            {
+              "type": "callout",
+              "style": "info",
+              "text": "Firewalls don't stop a convincing phone call. The best defense against social engineering is a skeptical, verify-first mindset."
+            }
+          ]
+        },
+        {
+          "id": "se-video-main",
+          "type": "video",
+          "title": "What is social engineering?",
+          "estMinutes": 4,
+          "videoId": "9U-JgdUkaTQ",
+          "videoSource": "Proofpoint Cybersecurity Education Series",
+          "verifyReplace": true,
+          "description": "How attackers manipulate trust, urgency, and fear to deceive their targets."
+        },
+        {
+          "id": "se-read-tactics",
+          "type": "reading",
+          "title": "Modern scam tactics",
+          "estMinutes": 10,
+          "body": [
+            {
+              "type": "bullets",
+              "items": [
+                {
+                  "title": "CEO fraud / BEC",
+                  "text": "An attacker impersonates an executive and urgently requests a wire transfer or sensitive data, usually targeting finance staff."
+                },
+                {
+                  "title": "Deepfakes & AI voice cloning",
+                  "text": "Scammers use AI to clone a voice and call demanding immediate money or authorisation. Verify independently."
+                },
+                {
+                  "title": "Baiting",
+                  "text": "Leaving an infected USB drive for a curious person to plug in."
+                },
+                {
+                  "title": "Quid pro quo",
+                  "text": "Offering a benefit (fake 'IT help') in exchange for access or information."
+                },
+                {
+                  "title": "Pretexting",
+                  "text": "Inventing a believable scenario — posing as a researcher, bank official, or new employee — to extract information."
+                },
+                {
+                  "title": "Psychological levers",
+                  "text": "Authority, urgency, scarcity, social proof, and reciprocity are all used to lower your guard."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "se-read-defense",
+          "type": "reading",
+          "title": "Defending against manipulation",
+          "estMinutes": 8,
+          "body": [
+            {
+              "type": "paragraph",
+              "text": "Always verify unusual requests — especially those involving money or sensitive data — through a secondary, trusted channel. If the 'CEO' emails for an urgent wire transfer, call them or speak in person to confirm."
+            },
+            {
+              "type": "bullets",
+              "items": [
+                {
+                  "title": "Verify out-of-band",
+                  "text": "Confirm via a different, known channel — this defeats spoofing and impersonation."
+                },
+                {
+                  "title": "Don't bypass procedures",
+                  "text": "Pressure to 'skip the rules just this once' is a major red flag."
+                },
+                {
+                  "title": "Be helpful but cautious",
+                  "text": "Balance helpfulness with verification of sensitive or unusual requests."
+                },
+                {
+                  "title": "Never plug in unknown devices",
+                  "text": "And be skeptical of unsolicited offers and 'support' that contacts you first."
+                },
+                {
+                  "title": "Report attempts",
+                  "text": "Reporting helps security warn others and respond to active campaigns."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "crypto-scams": {
+      "sectionTitle": "Module 8 · Financial & Cryptocurrency Scams",
+      "sectionSubtitle": "Protecting your money and digital assets",
+      "items": [
+        {
+          "id": "cs-read-rise",
+          "type": "reading",
+          "title": "The rise of crypto scams",
+          "estMinutes": 7,
+          "body": [
+            {
+              "type": "paragraph",
+              "text": "With the popularity of cryptocurrency, scammers have developed sophisticated methods to steal digital assets. Because crypto transactions are often irreversible and can be pseudonymous, they are a prime target for fraudsters — once funds are sent, they're usually gone."
+            },
+            {
+              "type": "callout",
+              "style": "warning",
+              "text": "Unlike a bank transfer, there is typically no 'undo' and no fraud department to claw back stolen crypto. Prevention is everything."
+            }
+          ]
+        },
+        {
+          "id": "cs-read-scams",
+          "type": "reading",
+          "title": "Common financial scams",
+          "estMinutes": 10,
+          "body": [
+            {
+              "type": "bullets",
+              "items": [
+                {
+                  "title": "Pig butchering (investment scams)",
+                  "text": "Scammers build a long-term relationship (often romantic or friendly) online, then push you to invest in a fake crypto platform. They show fabricated profits to encourage bigger deposits before vanishing."
+                },
+                {
+                  "title": "Fake exchanges & wallets",
+                  "text": "Malicious apps or websites mimic legitimate services. Once you deposit funds or enter your seed phrase, your assets are stolen."
+                },
+                {
+                  "title": "Tech support & refund scams",
+                  "text": "You're told you're owed a refund or your account is compromised, then guided to transfer funds or grant remote access."
+                },
+                {
+                  "title": "Giveaway scams",
+                  "text": "Fake 'celebrity' posts promise to double any crypto you send to an address. Crypto sent is never returned."
+                },
+                {
+                  "title": "Rug pulls",
+                  "text": "Developers hype a token, attract investment, then drain liquidity and disappear."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "cs-video-main",
+          "type": "video",
+          "title": "Crypto scams explained",
+          "estMinutes": 6,
+          "videoId": "8oKqYE6jWg0",
+          "videoSource": "Cryptocurrency scam awareness explainer",
+          "verifyReplace": true,
+          "description": "The most common crypto scams and how to avoid losing your funds."
+        },
+        {
+          "id": "cs-read-protect",
+          "type": "reading",
+          "title": "Protecting your assets",
+          "estMinutes": 8,
+          "body": [
+            {
+              "type": "heading",
+              "text": "The one rule above all"
+            },
+            {
+              "type": "paragraph",
+              "text": "Never share your wallet's seed phrase or private keys with anyone, ever. They are the master key to your funds. No legitimate exchange or support agent will ever ask for them — anyone who does is trying to steal from you."
+            },
+            {
+              "type": "bullets",
+              "items": [
+                {
+                  "title": "Be skeptical of guarantees",
+                  "text": "'Guaranteed' high returns or pressure to invest quickly are hallmarks of scams."
+                },
+                {
+                  "title": "Use established exchanges",
+                  "text": "Stick to well-known, reputable platforms and verify URLs carefully before logging in."
+                },
+                {
+                  "title": "Cold storage for large holdings",
+                  "text": "Keep significant crypto in a hardware wallet you control, with the seed phrase secured offline."
+                },
+                {
+                  "title": "Enable 2FA",
+                  "text": "Protect exchange accounts so a stolen password alone isn't enough."
+                },
+                {
+                  "title": "Double-check addresses",
+                  "text": "Clipboard-hijacking malware can swap addresses, and transactions can't be reversed."
+                }
+              ]
+            },
+            {
+              "type": "callout",
+              "style": "info",
+              "text": "If an offer sounds too good to be true — like doubling your money — it is a scam. Beware 'recovery services' too; they often re-target victims for another fee."
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
