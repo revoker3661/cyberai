@@ -142,12 +142,12 @@ export function ShareButton({ title, hexAccent, userName }: { title: string; hex
   async function handleShare() {
     const text = `I just earned the "${title}" badge on CyberAI! 🛡️ Improving my cybersecurity skills.`;
 
-    // Try share with canvas-generated badge image
+    // Try share with canvas-generated badge image — no text, image contains all info
     if (typeof navigator !== "undefined" && navigator.canShare) {
       const file = await buildBadgeImage(title, hexAccent, userName);
       if (file && navigator.canShare({ files: [file] })) {
         try {
-          await navigator.share({ files: [file], title: "CyberAI Badge", text });
+          await navigator.share({ files: [file], title: "CyberAI Badge" });
           return;
         } catch {}
       }

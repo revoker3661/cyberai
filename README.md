@@ -13,7 +13,7 @@ A gamified cybersecurity awareness training platform built for a hiring assessme
 
 | Layer | Choice | Why |
 |---|---|---|
-| Framework | Next.js 16 (App Router) + TypeScript strict | Server Components by default, zero-config Vercel deploy |
+| Framework | Next.js 15 (App Router) + TypeScript strict | Server Components by default, zero-config Vercel deploy |
 | Styling | Tailwind CSS | Utility-first, maps 1:1 to wireframe designs |
 | Auth + DB | Supabase (email/password + Postgres) | Free tier, built-in RLS, SSR-compatible client |
 | AI | Vercel AI SDK + Groq primary → Gemini Flash fallback | Free tier, provider-agnostic, 4-attempt fallback chain |
@@ -50,7 +50,8 @@ GOOGLE_GENERATIVE_AI_API_KEY=  # Free at aistudio.google.com
 1. Create a Supabase project
 2. Run `supabase/migrations/001_initial.sql` in the SQL editor
 3. Run `supabase/migrations/002_scoring_and_learn.sql` (adds `passed`, `max_served_points`, `served_question_ids`, `option_orders` columns)
-4. Enable email auth in Authentication → Providers
+4. Run `supabase/migrations/003_proctoring.sql` (adds `tab_switch_count` column for quiz integrity tracking)
+5. Enable email auth in Authentication → Providers
 
 ---
 
@@ -66,29 +67,33 @@ app/
   (app)/modules/[id]/lesson     ← Full lesson content + tutor button
   (app)/modules/[id]/quiz       ← Quiz engine (ssr:false via QuizClientWrapper)
   (app)/modules/[id]/review     ← Read-only quiz replay with stored answers
-  (app)/badges                  ← Badge grid — passed modules only, canvas share image
+  (app)/loading.tsx             ← App-wide loading spinner (instant navigation)
+  (app)/badges                  ← Badge grid — passed modules only, canvas share image + confetti
   (app)/certificate             ← Unlockable certificate (all 8 passed)
-  (app)/cheat-sheet             ← Passed-module takeaways only
+  (app)/cheat-sheet             ← AI Focus Areas panel + passed-module takeaways
   (app)/profile                 ← Stats: passed count, total pts, level, attainment
   api/ai/coach/                 ← Smart Quiz Coach (Cognitive Security Report)
   api/ai/tutor/                 ← Lesson-scoped floating tutor
   api/ai/assistant/             ← Floating AI Assistant (page-aware, multi-turn)
+  api/ai/focus/                 ← P1b Personalized Focus Areas (cheat-sheet panel)
   api/ai/phishing-sim/          ← Phishing email simulator
   api/ai/practice/              ← Adaptive practice MCQ generator
 
 components/
   shell/Sidebar.tsx             ← Always-dark sidebar, collapsible
   shell/MobileNav.tsx           ← Hamburger slide-over drawer
-  quiz/QuizEngine.tsx           ← Full quiz + results + coach panel
+  quiz/QuizEngine.tsx           ← Full quiz + proctoring lite + results + coach panel
   quiz/QuizClientWrapper.tsx    ← ssr:false wrapper to fix hydration mismatch
   ai/FloatingAssistant.tsx      ← Page-aware floating chat (hidden on quiz pages)
+  ai/FocusPanel.tsx             ← P1b collapsible AI focus areas (cheat-sheet)
   ui/ShareButton.tsx            ← Canvas badge image generator + Web Share API
+  ui/BadgesConfetti.tsx         ← canvas-confetti burst on badge page load
   ui/CertificateView.tsx        ← Ornate certificate with download/print/share
 
 lib/
-  content.ts / content.json    ← ALL lesson/quiz/cheatsheet content (source of truth)
-  question-bank.json           ← 240 questions (30 per module)
-  learning-content.json        ← Structured lesson content for FloatingAssistant
+  content.ts / content.json    ← Lesson sections, cheat-sheet items, module metadata (source of truth)
+  question-bank.json           ← 600 quiz questions (75 per module, served 15 per attempt)
+  learning-content.json        ← Structured reading items for FloatingAssistant page context
   game.ts                      ← Pure functions: scoring, level, attainment, shuffle
   supabase/server.ts           ← SSR Supabase client
   supabase/browser.ts          ← Client-side Supabase client
@@ -103,6 +108,7 @@ docs/
 supabase/migrations/
   001_initial.sql              ← Core tables, RLS policies
   002_scoring_and_learn.sql    ← Scoring columns + lesson_progress table
+  003_proctoring.sql           ← tab_switch_count column for quiz integrity
 ```
 
 ---
@@ -125,6 +131,9 @@ After every quiz, classifies your answers into:
 - **Known Gaps** (guessing + wrong) — aware of ignorance, easier to fix
 
 Generates a personalised "Cognitive Security Report" with summary + top recommendations. Confidence data from the quiz feeds directly into this analysis.
+
+### Personalized Focus Areas — `/cheat-sheet` (P1b)
+Above the static cheat-sheet cards, an AI-powered panel analyzes ALL attempted modules (not just passed ones) and returns 4–6 specific focus bullets targeting the user's weakest areas. Sent to `/api/ai/focus`; falls back gracefully if AI is unavailable. Collapsible UI with indigo gradient styling.
 
 ### Lesson Tutor (P0b)
 Floating chat on lesson pages. Restricted to lesson content only — refuses off-topic questions. 120-word response cap to stay scannable.
@@ -156,8 +165,8 @@ After quiz, sends wrong-answer topics to AI, receives 3 new MCQs targeting exact
 
 ## Key Engineering Decisions
 
-### 240-question bank with anti-cheat shuffle
-Each module has 30 questions in `question-bank.json`. Per attempt: Fisher-Yates shuffles the pool, serves 15, and shuffles each question's option order. The server stores `servedQuestionIds` + `optionOrders` (a map of questionId → shuffled option text array). Correctness is verified by **text identity** — the `selectedIndex` is meaningless without the original option order, so a client cannot fabricate a correct answer by manipulating the index.
+### 600-question bank with anti-cheat shuffle
+Each module has 75 questions in `question-bank.json` (600 total across 8 modules). Per attempt: Fisher-Yates shuffles the pool, serves 15, and shuffles each question's option order. The server stores `servedQuestionIds` + `optionOrders` (a map of questionId → shuffled option text array). Correctness is verified by **text identity** — the `selectedIndex` is meaningless without the original option order, so a client cannot fabricate a correct answer by manipulating the index. With 75 questions, candidates are extremely unlikely to see the same 15 twice across attempts.
 
 ### Quiz renders client-only (no SSR)
 `Math.random()` inside `buildServedQuestions()` runs on both server and client during Next.js hydration, producing different question orders → React hydration mismatch error. Fixed with `QuizClientWrapper` which uses `dynamic(..., { ssr: false })`. The wrapper must be a `"use client"` component because `ssr: false` is not allowed in Server Components.
@@ -177,8 +186,17 @@ Badges, Cheat Sheet, and Profile "Modules Completed" counter all filter by `pass
 ### 750 vs 800 pts — Crypto module wireframe inconsistency
 The crypto wireframe shows 800 pts total but question breakdown sums to 750. `4350/5100 = 85%` only works if crypto = 800. Resolution: `crypto-q3 = 300 pts`. Documented in `content.json`.
 
+### Proctoring lite — quiz integrity enforcement
+When a quiz loads the browser requests fullscreen. Two event listeners enforce focus: a `visibilitychange` listener detects tab switches, and a `fullscreenchange` listener detects ESC-key exits (which don't trigger `visibilitychange`). Both use a 1500ms activation delay via `let active = false` to prevent false-positive violations during the fullscreen mount animation. Each violation shows a dismissable warning (N/3); after 3 violations the quiz is terminated. On ESC, fullscreen is re-requested automatically after 100ms. The `tab_switch_count` is stored in `module_progress` (migration 003) and displayed as an integrity pill on the results screen. Sidebar and MobileNav return `null` on quiz routes so no navigation chrome appears in fullscreen.
+
+### canvas-confetti on badge unlock
+The badges page imports `BadgesConfetti` (`"use client"` component) which fires a two-sided confetti burst on mount when at least one badge is unlocked. Zero JS shipped to users with no badges.
+
+### Loading skeleton for instant navigation
+`app/(app)/loading.tsx` shows an indigo spinner during any server data fetch in the app group, eliminating the blank-screen delay on route navigation under `force-dynamic`.
+
 ### Static question bank + AI overlay
-Quiz questions are from `content.json` (deterministic, auditable). AI adds coaching, personalization, and practice on top — never replaces core content. Prevents hallucinated security advice and ensures wireframe fidelity.
+Quiz questions are served from `question-bank.json` (600 questions, 75 per module) — a static, deterministic bank. `content.json` holds lesson content and cheat-sheet text. AI adds coaching, personalization, and adaptive practice on top — it never generates core assessment questions. This prevents hallucinated security advice, ensures wireframe fidelity, and keeps scores auditable: every question and correct answer exists in a file that can be reviewed by subject matter experts.
 
 ---
 
@@ -196,7 +214,7 @@ Quiz questions are from `content.json` (deterministic, auditable). AI adds coach
 
 ## How I Used Claude Code
 
-See [docs/prompts-log.md](docs/prompts-log.md) for the full AI-assisted workflow log (20 prompts).
+See [docs/prompts-log.md](docs/prompts-log.md) for the full AI-assisted workflow log (30 prompts).
 
 Key practices:
 - Studied all 39 wireframe PNGs before writing any UI code

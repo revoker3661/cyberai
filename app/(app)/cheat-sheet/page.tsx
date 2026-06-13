@@ -5,6 +5,9 @@ import { MODULES } from "@/lib/content";
 import type { LucideIcon } from "lucide-react";
 import { BookOpen, CheckCircle, Mail, Lock, Zap, Phone, Globe, Trash2, Users, Bitcoin } from "lucide-react";
 import { PrintButton } from "@/components/ui/PrintButton";
+import { FocusPanel } from "@/components/ai/FocusPanel";
+
+const ALL_MODULES = MODULES;
 
 const ICON_MAP: Record<string, LucideIcon> = {
   mail: Mail, lock: Lock, zap: Zap, phone: Phone,
@@ -18,12 +21,23 @@ export default async function CheatSheetPage() {
 
   const { data: progressRows } = await supabase
     .from("module_progress")
-    .select("module_id")
-    .eq("user_id", user.id)
-    .eq("passed", true);
+    .select("module_id, score, max_served_points, passed")
+    .eq("user_id", user.id);
 
-  const completed = new Set((progressRows ?? []).map((r: { module_id: string }) => r.module_id));
-  const completedModules = MODULES.filter((m) => completed.has(m.id));
+  const allRows = (progressRows ?? []) as { module_id: string; score: number; max_served_points: number | null; passed: boolean }[];
+  const passedIds = new Set(allRows.filter((r) => r.passed).map((r) => r.module_id));
+  const completedModules = MODULES.filter((m) => passedIds.has(m.id));
+
+  // Build data for FocusPanel (all attempted modules)
+  const focusModules = allRows.map((r) => {
+    const mod = ALL_MODULES.find((m) => m.id === r.module_id);
+    const denom = r.max_served_points ?? mod?.maxPoints ?? 1;
+    return {
+      moduleTitle: mod?.title ?? r.module_id,
+      scorePercent: Math.round((r.score / denom) * 100),
+      passed: r.passed,
+    };
+  });
 
   return (
     <div className="max-w-2xl mx-auto space-y-6">
@@ -37,6 +51,11 @@ export default async function CheatSheetPage() {
           </p>
         </div>
       </div>
+
+      {/* P1b — Personalized Focus Areas (AI-powered, above cheat-sheet cards) */}
+      {focusModules.length > 0 && (
+        <FocusPanel modules={focusModules} />
+      )}
 
       {completedModules.length === 0 ? (
         <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-10 text-center">

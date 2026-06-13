@@ -143,3 +143,79 @@ This log tracks significant AI-assisted prompts used to build CyberAI. Required 
 > Update README.md to accurately describe the full current system: confidence scoring table, overconfidence penalty, 240-question bank, anti-cheat shuffle, QuizClientWrapper hydration fix, passed-only gating decisions, FloatingAssistant page-context system, badge canvas, Learn tab. Add prompts 16–19 to prompts-log.md. Create docs/PROJECT.md — a complete technical reference covering database schema, game mechanics, scoring system, AI architecture, file inventory, security model, and all engineering decisions.
 
 **Outcome:** README fully reflects current codebase state. Prompts log complete (20 entries). docs/PROJECT.md created as a comprehensive single-document reference for evaluators to understand every system in the project.
+
+---
+
+## 2026-06-13
+
+### Prompt 21 — Smooth page transitions (loading.tsx)
+> Next.js App Router pages with force-dynamic feel blank during server data fetching — no skeleton shown. Add a single loading.tsx in app/(app)/ to show an indigo spinner while any page fetches data from Supabase.
+
+**Outcome:** app/(app)/loading.tsx created. Indigo spinning ring + "Loading…" label appears on every app page navigation, eliminating the blank-screen delay between route transitions.
+
+---
+
+### Prompt 22 — Question bank expansion: 30 → 75 questions per module (600 total)
+> Current pool of 30 questions per module means repeat questions across attempts. Expand to 75 per module (600 total) to maximize variety — each attempt draws a fresh Fisher-Yates shuffle of 15 from a much larger pool. Write new questions covering topics not yet addressed in the original 30, maintaining single-correct-answer MCQ format with 4 options and an explanation.
+
+**Outcome:** 45 new questions per module added to question-bank.json (600 total, up from 240). _meta.questionsPerModule updated to 75. Each quiz attempt now has dramatically more variety — candidates are unlikely to see the same 15 questions twice.
+
+---
+
+### Prompt 23 — Proctoring lite: fullscreen + tab-switch detection + 3-strike termination
+> Add lightweight quiz integrity enforcement: (1) Request fullscreen when quiz loads. (2) Detect tab switches via document visibilitychange event. (3) Show a dismissable warning banner after each switch showing count (N/3). (4) After 3 switches, terminate the quiz session — show a "Quiz Terminated" screen with Retake/Review Lesson buttons. (5) Send tab_switch_count to save-progress API and store in module_progress. (6) Show tab-switch integrity badge on results screen (green "full focus" if 0, amber/red for switches detected).
+
+**Outcome:** QuizEngine has fullscreen request on mount, visibilitychange listener with ref-based counter to avoid stale closure, terminated-state UI, and warning banner. save-progress accepts and stores tab_switch_count. Results screen shows integrity pill. Migration 003 adds tab_switch_count column to module_progress.
+
+---
+
+### Prompt 24 — P1b Personalized Focus Areas on /cheat-sheet (SPEC §7)
+> SPEC §7 P1b requires: "On /cheat-sheet, ABOVE the static wireframe cards, render a 'Your Personalized Focus Areas' panel — send all module results (scores + blind-spot data) → returns 4–6 bullets targeting exactly what the user failed or guessed." Implement: (1) /api/ai/focus route — takes array of {moduleTitle, scorePercent, passed}, returns {focusAreas[], summary}. (2) FocusPanel client component — fetches focus on mount, shows numbered bullets, collapsible. (3) Cheat-sheet page queries score+passed data and passes it to FocusPanel above the static cards.
+
+**Outcome:** FocusPanel renders above cheat-sheet cards for any user who has attempted at least one module. AI generates 4-6 specific, named-module focus bullets. Panel is collapsible. Falls back gracefully if AI unavailable. Completes the final unimplemented SPEC AI feature.
+
+---
+
+### Prompt 25 — canvas-confetti on badge unlock (SPEC optional polish)
+> SPEC mentions canvas-confetti (badge unlock) as optional polish. Install canvas-confetti, create a BadgesConfetti client component that fires a two-sided burst when the badges page loads with at least one unlocked badge.
+
+**Outcome:** canvas-confetti installed. BadgesConfetti component fires dual confetti burst on badges page load when unlockedCount > 0. Server Component badges page imports and renders BadgesConfetti with the completed set size as the trigger count.
+
+---
+
+### Prompt 26 — Full documentation sync
+> All features added since Prompt 20 (loading, 75-question bank, proctoring lite, P1b focus areas, confetti) need to be reflected in README.md, docs/prompts-log.md, and docs/PROJECT.md so evaluators see the complete, accurate picture of the project.
+
+**Outcome:** prompts-log.md updated with entries 21–26. README.md updated with proctoring system, 75-question bank, P1b focus panel, confetti, and migration 003 setup step. PROJECT.md updated to reflect current architecture.
+
+---
+
+### Prompt 27 — Dark mode fix: Tailwind v4 @custom-variant
+
+> Theme toggle renders correctly but switching to light mode has no visual effect — the entire app stays dark regardless. Diagnosed root cause before touching code: Tailwind v4 dropped `tailwind.config.js darkMode: 'class'` — the `dark:` variant now uses `prefers-color-scheme` media query by default, not a CSS class. `next-themes` adds `.dark` to `<html>`, which Tailwind v4 ignores without explicit configuration. Fix: declare `@custom-variant dark (&:where(.dark, .dark *));` in `app/globals.css` — this tells Tailwind that any `dark:` utility should activate when `.dark` is present on any ancestor element. No component changes needed; the variant propagates globally.
+
+**Outcome:** Light/dark toggle works correctly across all pages. Single-line CSS fix with zero component changes — confirmed by testing toggle persistence across route navigation.
+
+---
+
+### Prompt 28 — Quiz proctoring hardening: sidebar, ESC key, false-positive
+
+> Three edge cases in the proctoring lite system needed fixing in one pass: (1) Sidebar and MobileNav render on all `(app)` routes — visible when quiz enters fullscreen, breaking the locked-environment UX. Fix: add `usePathname()` guard returning `null` on `/quiz` paths in both `SidebarWrapper` and `MobileNav`. (2) Pressing ESC exits fullscreen without triggering a violation — `visibilitychange` doesn't fire for ESC, only `fullscreenchange` does. Fix: second `useEffect` listening to `fullscreenchange`, counts violation and re-requests fullscreen via 100ms `setTimeout` (required because the request must follow the ESC gesture). (3) `requestFullscreen()` on mount triggers `visibilitychange` in some browsers during the fullscreen animation, producing a spurious warning before the user acts. Fix: `let active = false` flag set via `setTimeout(1500)` in both listeners — the delay outlasts the animation so the listeners are deaf during mount.
+
+**Outcome:** Quiz pages show zero navigation chrome in fullscreen. ESC key is detected as a violation and fullscreen re-enters automatically. No false-positive warning fires on initial quiz load.
+
+---
+
+### Prompt 29 — Learn section content gap fill (quiz–lesson alignment)
+
+> The question bank was expanded to 75 questions/module covering advanced topics the original lessons never addressed. Students would encounter questions on concepts they had no way to learn — a structural gap in the learning loop. Systematic approach: for each of the 8 modules, compared the full topic coverage of all 75 questions against the existing `content.json` lesson sections and `learning-content.json` reading items, then identified uncovered clusters. Added 2 new lesson sections and 2 new reading items per module (16 + 16 total) covering: spear/whaling/clone phishing, BEC, AiTM, SPF/DKIM/DMARC, consent phishing; password attack methods (brute force, credential stuffing, rainbow tables), MFA fatigue, passkeys, SIM swapping; rootkits, keyloggers, cryptojacking, fileless malware, zero-day, RaaS, supply chain attacks, lateral movement; AI voice cloning, OTP bots, pig butchering; RFID cloning, mantrap, secure media destruction; CIA Triad, GDPR rights (DSAR, DPIA, DPO), DLP, shadow IT; OSINT, org-chart harvesting, all 6 Cialdini principles; DeFi risks, smart contract vulnerabilities, wallet drainers, address poisoning, token approval revocation.
+
+**Outcome:** 16 new `lesson.sections` entries in `lib/content.json`, 16 new reading items in `lib/learning-content.json`. Every topic tested in the 600-question bank now has corresponding lesson coverage — the learn-before-quiz loop is complete. Both JSON files verified syntactically valid.
+
+---
+
+### Prompt 30 — Documentation final pass: prompts-log, AI_ARCHITECTURE.md, README accuracy
+
+> Three doc accuracy issues identified before submission: (1) `docs/AI_ARCHITECTURE.md` describes P1b Focus Areas as "Planned — reuses coach output shape" — it was implemented in Prompt 24, so the file is stale. (2) README tech stack table says "Next.js 16" — the actual version is 15. (3) prompts-log.md was missing entries 27–29 covering dark mode fix, proctoring hardening, and content gap fill. Fixed all three. README `## Live Demo` section updated with Vercel deployment URL after deploy.
+
+**Outcome:** `AI_ARCHITECTURE.md` accurately documents all 5 AI features as shipped. README version corrected. prompts-log complete at 30 entries covering the full build from scaffold to deployment.

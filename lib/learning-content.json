@@ -99,6 +99,40 @@
           ]
         },
         {
+          "id": "phishing-read-advanced-variants",
+          "type": "reading",
+          "title": "Advanced phishing variants",
+          "estMinutes": 10,
+          "body": [
+            { "type": "paragraph", "text": "Once you can spot a generic phishing email, attackers level up. These advanced variants are harder to detect because they are personalised, technically sophisticated, or exploit channels beyond your inbox." },
+            { "type": "bullets", "items": [
+              { "title": "Spear phishing", "text": "Personalised attacks using your name, role, company, or recent activity. Attackers gather this from LinkedIn, social media, and data breaches. The email feels like it was written specifically for you — because it was." },
+              { "title": "Whaling", "text": "Spear phishing aimed at executives (CEO, CFO, board members). The goal is large wire transfers, system access, or sensitive data. A convincing whaling email can cost an organisation millions." },
+              { "title": "Clone phishing", "text": "The attacker duplicates a legitimate email you previously received — same sender, same subject, same layout — and replaces the link or attachment with a malicious one. It appears to be a follow-up from a trusted source." },
+              { "title": "Quishing (QR code phishing)", "text": "Phishing via QR codes in emails or printed materials. QR codes hide the destination URL, bypassing most email link scanners. Never scan QR codes from unexpected emails." },
+              { "title": "Pharming", "text": "DNS poisoning redirects you to a fake website even when you type the correct URL. Your browser shows the right address but you're on the attacker's server." },
+              { "title": "Business Email Compromise (BEC)", "text": "Impersonation of an executive or supplier to redirect wire transfers or change payment details. Always verify payment changes through a separate, known phone number." }
+            ]},
+            { "type": "callout", "style": "warning", "text": "Spear phishing and BEC don't look like mass spam — they look like real emails from real people. Verification via a separate channel is the only reliable defence." }
+          ]
+        },
+        {
+          "id": "phishing-read-technical-defenses",
+          "type": "reading",
+          "title": "Email authentication & technical defenses",
+          "estMinutes": 8,
+          "body": [
+            { "type": "paragraph", "text": "Behind the scenes, several technical standards and attack techniques determine whether a phishing email reaches you at all — and what attackers do after they've taken your credentials." },
+            { "type": "bullets", "items": [
+              { "title": "SPF, DKIM & DMARC", "text": "Email authentication standards. SPF lists authorised sending servers. DKIM adds a cryptographic signature to emails. DMARC instructs receivers to quarantine or reject messages that fail SPF/DKIM. A DMARC policy of 'reject' stops most spoofed emails reaching inboxes." },
+              { "title": "AiTM (Adversary-in-the-Middle) phishing", "text": "A reverse-proxy intercepts your login, passing your credentials to the real site to complete authentication — but capturing your session cookie too. This bypasses standard 2FA. Phishing-resistant hardware keys (FIDO2/passkeys) are the only defence." },
+              { "title": "Consent phishing / OAuth phishing", "text": "Instead of stealing your password, attackers trick you into granting a malicious app full access to your Google or Microsoft account. Review app permissions regularly and revoke any you don't recognise." },
+              { "title": "Tracking pixels", "text": "Tiny 1x1 images loaded from an attacker's server when you open an email, confirming your email is active and revealing your IP address and device. Disable automatic image loading in your email client for unknown senders." }
+            ]},
+            { "type": "callout", "style": "info", "text": "AiTM attacks mean that even entering the correct password on what looks like a legitimate site can compromise your account. Always check browser security indicators and use hardware keys for critical accounts." }
+          ]
+        },
+        {
           "id": "phishing-read-defense",
           "type": "reading",
           "title": "Your best defense & reporting",
@@ -219,6 +253,40 @@
           "description": "What 2FA is and why a second factor protects you even if your password is stolen."
         },
         {
+          "id": "pw-read-attack-methods",
+          "type": "reading",
+          "title": "How attackers break passwords",
+          "estMinutes": 8,
+          "body": [
+            { "type": "paragraph", "text": "Understanding how attackers crack passwords helps you understand why certain habits — unique passwords, length over complexity, a password manager — matter so much." },
+            { "type": "bullets", "items": [
+              { "title": "Brute force", "text": "Automated tools try every possible character combination. An 8-character password can be cracked in hours; a 16-character passphrase takes centuries. Length is your single best protection." },
+              { "title": "Dictionary attacks", "text": "Attackers use wordlists of common passwords, words, names, and known substitutions (p@ssw0rd, L3t_me_1n). Avoid any word you'd find in a dictionary, even with substitutions." },
+              { "title": "Credential stuffing", "text": "When a website is breached, attackers test those username/password pairs on every other major service. If you reuse passwords, one breach compromises everything. Unique passwords for every account — which a password manager makes easy — is the only fix." },
+              { "title": "Password spraying", "text": "Rather than hammering one account (which triggers lockout), attackers try one common password against thousands of accounts. This evades lockout policies. Avoid predictable patterns like 'Company2024' or 'Welcome1'." },
+              { "title": "Rainbow table attacks", "text": "Pre-computed tables of hash values allow instant lookup of unsalted passwords. Systems add a unique random 'salt' to each password before hashing specifically to defeat rainbow tables — which is why modern password storage is far more secure than older systems." }
+            ]},
+            { "type": "callout", "style": "info", "text": "The most effective action you can take: use a password manager to generate and store a unique, long (20+ character) random password for every account." }
+          ]
+        },
+        {
+          "id": "pw-read-advanced-auth",
+          "type": "reading",
+          "title": "Advanced authentication: passkeys, SSO & SIM swapping",
+          "estMinutes": 9,
+          "body": [
+            { "type": "paragraph", "text": "Authentication is evolving. Understanding the latest attack techniques and the technology designed to defeat them keeps you ahead of attackers." },
+            { "type": "bullets", "items": [
+              { "title": "MFA fatigue / push bombing", "text": "An attacker who has your password sends repeated push notification approval requests to your phone, hoping you'll tap 'Approve' to make them stop. If you receive unexpected 2FA prompts, deny them and change your password immediately." },
+              { "title": "Passkeys", "text": "Passkeys replace passwords entirely using public-key cryptography. A private key stays on your device; a public key is on the website. You authenticate with your fingerprint or PIN locally — the private key never leaves your device, making passkeys completely phishing-resistant." },
+              { "title": "Single Sign-On (SSO)", "text": "One login (Google, Microsoft, Apple ID) grants access to many services. Enormously convenient, but it means your SSO account is extraordinarily valuable. Protect it with the strongest 2FA available — preferably a hardware security key." },
+              { "title": "SIM swapping", "text": "An attacker calls your mobile carrier, provides personal details gathered from social media or data breaches, and convinces them to port your number to a new SIM. They then receive all your SMS messages — including 2FA codes — and can reset your passwords. Use authenticator apps or hardware keys, never SMS 2FA, for important accounts." },
+              { "title": "Backup & recovery codes", "text": "When enabling 2FA, services provide single-use recovery codes. Print them and store them physically in a safe place. Never photograph them or store them in cloud notes — these codes bypass 2FA entirely and are as valuable as your password." }
+            ]},
+            { "type": "callout", "style": "warning", "text": "If you receive 2FA prompts you didn't initiate, treat it as an active attack. Deny the request, change your password, and check for suspicious account activity immediately." }
+          ]
+        },
+        {
           "id": "pw-read-2fa",
           "type": "reading",
           "title": "Two-Factor Authentication (2FA/MFA)",
@@ -336,6 +404,42 @@
                 }
               ]
             }
+          ]
+        },
+        {
+          "id": "mw-read-more-types",
+          "type": "reading",
+          "title": "More malware types you should know",
+          "estMinutes": 10,
+          "body": [
+            { "type": "paragraph", "text": "The malware landscape is far broader than viruses and ransomware. Understanding these additional types helps you recognise unusual system behaviour as a potential infection." },
+            { "type": "bullets", "items": [
+              { "title": "Rootkits", "text": "Hide deep in the operating system, often below the level antivirus can reach. They give attackers persistent, privileged access and can survive reboots. Detection often requires specialised bootable scanners or full OS reinstallation." },
+              { "title": "Keyloggers", "text": "Record every keystroke — capturing passwords, credit card numbers, private messages, and search queries. They can be software-installed via phishing or hardware-based (a physical device between keyboard and computer). Signs include unexpected network traffic." },
+              { "title": "Botnets", "text": "Your infected device joins a remotely controlled army of compromised machines used to send spam, launch DDoS attacks, or mine cryptocurrency. Your machine works for criminals while you bear the cost." },
+              { "title": "Cryptojacking", "text": "Malware silently uses your CPU or GPU to mine cryptocurrency for the attacker. Signs: unusually high CPU usage, slow performance, device running hot, and high electricity bills. Can arrive via malicious browser scripts (no installation needed) or installed malware." },
+              { "title": "Fileless malware", "text": "Lives entirely in memory — no file written to disk, making it invisible to traditional antivirus. It uses legitimate OS tools like PowerShell to carry out attacks. Behaviour-based Endpoint Detection and Response (EDR) is required to catch it." },
+              { "title": "Logic bombs", "text": "Dormant code hidden in legitimate software that activates when a specific condition is met — a date, a user action, or a file being deleted. Often planted by malicious insiders. Terminated employees' access should be revoked immediately." }
+            ]},
+            { "type": "callout", "style": "warning", "text": "Unusual system behaviour — high CPU with no obvious cause, unexpected network traffic, disabled security tools — should always be reported to IT even if you're not sure. Let the experts investigate." }
+          ]
+        },
+        {
+          "id": "mw-read-advanced-threats",
+          "type": "reading",
+          "title": "Advanced threats & incident response",
+          "estMinutes": 10,
+          "body": [
+            { "type": "paragraph", "text": "Modern malware attacks are increasingly sophisticated, industrialised, and targeted. Understanding these techniques helps you appreciate why layered defences and fast reporting are so critical." },
+            { "type": "bullets", "items": [
+              { "title": "Zero-day vulnerabilities", "text": "A software flaw unknown to the vendor — no patch exists. Attackers exploit zero-days before any defence is possible. Keeping software updated eliminates known vulnerabilities; behaviour-based security catches exploitation attempts for unknown ones." },
+              { "title": "Ransomware-as-a-Service (RaaS)", "text": "Criminal groups sell ransomware toolkits like a franchise. Non-technical criminals pay a subscription, launch attacks, and split ransoms with the developers. This has dramatically lowered the barrier to entry and explains the surge in attacks." },
+              { "title": "Double extortion", "text": "Modern ransomware steals data before encrypting it. Even if you restore from backup, attackers threaten to publish sensitive data publicly. Backup alone is no longer sufficient — you must also prevent the initial breach." },
+              { "title": "Supply chain attacks", "text": "Malware injected into a legitimate software update or third-party library you trust. The SolarWinds attack compromised thousands of organisations via a trusted software update. Vet suppliers and monitor for unexpected behaviour after updates." },
+              { "title": "Lateral movement", "text": "After infecting one machine, attackers probe your network to reach more valuable systems — spreading like a disease. Network segmentation, least-privilege accounts, and monitoring unusual internal connections limit how far they spread." },
+              { "title": "Indicators of Compromise (IoC)", "text": "Signs of infection: unexplained CPU/network spikes, new unknown processes, disabled antivirus, unusual outbound connections, or files appearing/disappearing. Report any of these immediately — early detection dramatically limits damage." }
+            ]},
+            { "type": "callout", "style": "info", "text": "If ransomware strikes: isolate the infected machine from the network immediately, do NOT pay the ransom, report to IT and law enforcement, and restore from clean offline backups." }
           ]
         },
         {
@@ -460,6 +564,38 @@
           "description": "How scammers use texts and calls to harvest personal information, and how to respond."
         },
         {
+          "id": "vs-read-ai-attacks",
+          "type": "reading",
+          "title": "AI-enhanced phone attacks",
+          "estMinutes": 8,
+          "body": [
+            { "type": "paragraph", "text": "Artificial intelligence has made vishing and smishing dramatically more convincing. These techniques were once the domain of sophisticated criminal groups — now they're widely available." },
+            { "type": "bullets", "items": [
+              { "title": "Voice cloning & deepfake audio", "text": "AI can clone a person's voice from just a few seconds of audio. Attackers clone executives, family members, or bank representatives and call you in real time. If a caller makes an urgent financial or access request, hang up and call the person back on a number you already have." },
+              { "title": "OTP bots", "text": "Automated systems call you pretending to be your bank, asking you to 'confirm' the one-time passcode just sent to your phone — relaying that code to an attacker logging in simultaneously. No legitimate organisation will ever ask you to read back a code you just received." },
+              { "title": "Hybrid smishing-to-vishing", "text": "A text message creates alarm ('Your account is at risk — call this number immediately'), then the follow-up call does the social engineering. The two-step process feels legitimate because you 'initiated' the call." },
+              { "title": "Pig butchering scams", "text": "Attackers build a relationship over weeks or months via text or messaging apps — posing as a romantic interest or new friend — before introducing an 'exclusive' crypto investment. Once money is invested, they vanish. The extended trust-building phase is what makes this devastatingly effective." }
+            ]},
+            { "type": "callout", "style": "warning", "text": "If anyone — including someone who sounds exactly like your manager or a family member — makes an urgent request for money or access credentials via a call you didn't initiate, hang up and verify via a known number." }
+          ]
+        },
+        {
+          "id": "vs-read-more-patterns",
+          "type": "reading",
+          "title": "More phone & SMS scam patterns",
+          "estMinutes": 7,
+          "body": [
+            { "type": "paragraph", "text": "Phone-based scams are constantly evolving. Familiarity with these patterns helps you recognise them before you become a victim." },
+            { "type": "bullets", "items": [
+              { "title": "Wangiri fraud", "text": "A missed call from an unfamiliar international number. Calling back connects to a premium-rate line, racking up large per-minute charges. Never return missed calls from numbers you don't recognise, especially from abroad." },
+              { "title": "Reverse vishing", "text": "Attackers send a fake alert — via email or SMS — with a 'security hotline' number to call. You call them, believing it's safe because you initiated it. Always find contact numbers from official websites, not from messages." },
+              { "title": "QR code smishing", "text": "SMS messages containing a QR code image instead of a text link. The URL is hidden inside the image, bypassing most SMS filters. Treat QR codes in unsolicited messages with the same scepticism as unknown links." },
+              { "title": "SIM swapping", "text": "An attacker calls your mobile carrier, provides personal details (gathered from social media or breaches), and convinces them to port your number to a new SIM. They then receive all your SMS messages — including 2FA codes — and can reset passwords. Protect against this by using app-based or hardware 2FA instead of SMS." }
+            ]},
+            { "type": "callout", "style": "info", "text": "The common thread across all phone scams: urgency + a request for action (call back, click, share a code, transfer money). Pause, verify independently, and never act on information provided in the suspicious message itself." }
+          ]
+        },
+        {
           "id": "vs-read-respond",
           "type": "reading",
           "title": "How to respond",
@@ -561,6 +697,39 @@
           "videoSource": "Public Wi-Fi security explainer",
           "verifyReplace": true,
           "description": "Why public Wi-Fi is risky and how a VPN protects your connection."
+        },
+        {
+          "id": "ps-read-access-control",
+          "type": "reading",
+          "title": "Access control & facility security",
+          "estMinutes": 9,
+          "body": [
+            { "type": "paragraph", "text": "Physical security controls protect the people, equipment, and data within your organisation. Understanding these measures helps you work within them effectively and spot when they're being bypassed." },
+            { "type": "bullets", "items": [
+              { "title": "Full-disk encryption", "text": "If a laptop is stolen, full-disk encryption (BitLocker on Windows, FileVault on Mac) makes data completely unreadable without the correct login credentials. Without it, data can be read by booting from a USB drive. Ensure it's enabled on all work devices." },
+              { "title": "RFID badge cloning", "text": "Access card readers that use proximity (RFID) can be skimmed from up to 30cm away using a hidden device in a pocket or bag. Anti-passback systems help by preventing a card from being used to enter if it wasn't used to exit — flagging cloned badges." },
+              { "title": "Mantrap / vestibule", "text": "A two-door airlock entry where only one door opens at a time. Used in high-security areas — you must be positively identified before the inner door opens, preventing tailgating completely." },
+              { "title": "Visitor management", "text": "All visitors should sign in with valid ID, receive a temporary visitor badge, and be escorted at all times in restricted areas. Never badge a visitor through without following the process — regardless of how official they appear." },
+              { "title": "Dumpster diving", "text": "Attackers search physical bins for printed documents, sticky notes, org charts, and customer data. Always shred sensitive documents before disposal using a cross-cut shredder. Never put confidential materials in recycling or general waste." },
+              { "title": "Printer output tray risk", "text": "Sensitive documents are frequently forgotten in shared printer output trays, visible to anyone who walks past. Collect prints immediately. Where available, use 'follow-you' printing — you authenticate at the printer before the job releases." }
+            ]},
+            { "type": "callout", "style": "warning", "text": "Physical security is as important as digital security. An attacker who can walk into your building has already bypassed most of your technical controls." }
+          ]
+        },
+        {
+          "id": "ps-read-disposal",
+          "type": "reading",
+          "title": "Device & data disposal",
+          "estMinutes": 7,
+          "body": [
+            { "type": "paragraph", "text": "Discarding or repurposing devices without proper data removal is one of the most common and avoidable sources of data breaches." },
+            { "type": "bullets", "items": [
+              { "title": "Secure media destruction", "text": "Deleting files or formatting a drive does not remove data — it only removes directory pointers. Secure disposal requires: software overwriting (writing random data multiple passes), degaussing (powerful magnets for magnetic drives), or physical destruction (shredding). Your IT team should handle this for all work devices." },
+              { "title": "IT asset disposal policy", "text": "Every device — including old PCs, mobiles, USB drives, and printers — must be formally decommissioned and wiped before leaving the organisation. A device sold or donated without proper wiping can expose years of sensitive business and personal data." },
+              { "title": "OSINT from discarded materials", "text": "Open Source Intelligence techniques can reconstruct org charts, internal projects, technology stacks, and customer names from discarded printouts, whiteboard photos, and even post-it notes. Physical information hygiene matters as much as digital hygiene." }
+            ]},
+            { "type": "callout", "style": "info", "text": "Never dispose of work devices yourself. Always return them to IT for formal decommissioning — this protects both you and the organisation." }
+          ]
         },
         {
           "id": "ps-read-wifi",
@@ -678,6 +847,44 @@
           "description": "A plain-English overview of data protection principles and why compliance matters."
         },
         {
+          "id": "dh-read-gdpr",
+          "type": "reading",
+          "title": "GDPR & privacy regulations deep dive",
+          "estMinutes": 12,
+          "body": [
+            { "type": "paragraph", "text": "Data protection law directly affects how you handle personal information at work. Understanding these concepts keeps your organisation compliant and protects the people whose data you process." },
+            { "type": "heading", "text": "The CIA Triad" },
+            { "type": "paragraph", "text": "The foundation of all information security: Confidentiality (only authorised people can access data), Integrity (data is accurate and unmodified), and Availability (data is accessible when needed). Every security control maps to one or more of these." },
+            { "type": "bullets", "items": [
+              { "title": "Right to erasure (right to be forgotten)", "text": "Under GDPR, individuals can request deletion of their personal data. Organisations must comply within one month unless a legal basis for retention exists. This obligation extends to backups and archives." },
+              { "title": "Data Subject Access Request (DSAR)", "text": "Any individual can request a copy of all personal data held about them. Organisations must respond within one month, free of charge for the first request. Failing to respond is a GDPR violation." },
+              { "title": "Data Protection Officer (DPO)", "text": "Organisations processing large volumes or sensitive categories of personal data must appoint a DPO — responsible for ensuring compliance and advising on data protection matters. Know who your DPO is." },
+              { "title": "Data Protection Impact Assessment (DPIA)", "text": "Required before starting high-risk processing activities — large-scale profiling, processing special category data, or systematic monitoring. A DPIA identifies and mitigates privacy risks proactively." },
+              { "title": "Controller vs Processor", "text": "The data controller decides why and how personal data is processed. The data processor handles it on the controller's behalf. Both have GDPR obligations; their relationship must be governed by a written Data Processing Agreement." },
+              { "title": "Purpose limitation", "text": "Data collected for one purpose cannot be used for a different purpose without fresh consent or another legal basis. Email addresses collected for order confirmations cannot be used for marketing without separate consent." },
+              { "title": "Privacy by design", "text": "Privacy protections should be built into systems from the start, not added later. Default settings should offer maximum privacy — users should opt in to less private options, not be forced to opt out." }
+            ]},
+            { "type": "callout", "style": "warning", "text": "GDPR fines can reach €20 million or 4% of global annual turnover — whichever is higher. Compliance is not optional." }
+          ]
+        },
+        {
+          "id": "dh-read-dlp-shadow",
+          "type": "reading",
+          "title": "Data loss prevention & shadow IT",
+          "estMinutes": 8,
+          "body": [
+            { "type": "paragraph", "text": "Even with strong policies, data can leave an organisation through technical failures, misconfigured tools, or well-intentioned workarounds. These topics cover practical controls and the risks of going outside approved systems." },
+            { "type": "bullets", "items": [
+              { "title": "Data Loss Prevention (DLP)", "text": "Software that monitors and controls data movement — blocking sensitive files from being emailed externally, uploaded to personal cloud storage, or copied to USB drives. DLP is a safety net that catches accidental data leaks and policy violations." },
+              { "title": "Shadow IT", "text": "Any application, service, or device used for work without IT approval — personal Dropbox, consumer WhatsApp for work messages, or a free SaaS tool. Shadow IT creates uncontrolled copies of organisational data outside security controls, often in breach of GDPR." },
+              { "title": "Data sovereignty", "text": "Data is subject to the laws of the country where it is physically stored. EU citizen personal data stored on US servers may violate GDPR unless specific safeguards (Standard Contractual Clauses, adequacy decisions) are in place." },
+              { "title": "Records of Processing Activities (ROPA)", "text": "A mandatory GDPR requirement for most organisations — a detailed record of all personal data processing: what's held, why, how long it's retained, who has access, and where it's stored. Regulators can request this at any time." },
+              { "title": "Pseudonymisation vs anonymisation", "text": "Pseudonymised data has identifiers replaced with codes — it's still personal data because re-identification is possible with the key. Truly anonymised data has identifiers irreversibly removed and falls outside GDPR. Most 'anonymised' datasets are actually pseudonymised." }
+            ]},
+            { "type": "callout", "style": "info", "text": "Before using any new tool or service for work — especially cloud services — check with IT. What feels like a productivity boost may create a serious compliance and security liability." }
+          ]
+        },
+        {
           "id": "dh-read-incident",
           "type": "reading",
           "title": "When things go wrong: incident reporting",
@@ -766,6 +973,40 @@
                 }
               ]
             }
+          ]
+        },
+        {
+          "id": "se-read-osint",
+          "type": "reading",
+          "title": "How attackers research targets (OSINT)",
+          "estMinutes": 8,
+          "body": [
+            { "type": "paragraph", "text": "Before an attacker contacts you, they spend significant time learning about you and your organisation. This research phase — using publicly available information — is called Open Source Intelligence, or OSINT." },
+            { "type": "bullets", "items": [
+              { "title": "What attackers harvest", "text": "LinkedIn profiles reveal job titles, responsibilities, reporting relationships, tools used, projects underway, and colleagues' names. Company websites list executives and offices. Job postings reveal internal tech stacks. Press releases announce upcoming changes. GitHub repos can expose internal architecture." },
+              { "title": "Org chart harvesting", "text": "LinkedIn makes it easy to map who reports to whom, who approves financial transactions, and who has system access. Attackers use this to craft BEC emails — knowing exactly who to impersonate and who to target." },
+              { "title": "The LinkedIn oversharing problem", "text": "Posting about internal system migrations, new software deployments, project names, or upcoming restructures gives attackers perfect pretexts. 'We're deploying Salesforce next month' becomes a convincing cover for a fake Salesforce support call." },
+              { "title": "Simulated phishing tests", "text": "Most organisations run simulated phishing campaigns to identify training gaps. If you click a simulated link, you'll receive targeted training — not punishment. These tests show where defences are weakest before real attackers exploit them." }
+            ]},
+            { "type": "callout", "style": "info", "text": "Before posting on LinkedIn or social media about your work, ask: could an attacker use this to craft a more convincing attack? Sharing project names, system migrations, or org changes may help attackers more than your network." }
+          ]
+        },
+        {
+          "id": "se-read-psychology",
+          "type": "reading",
+          "title": "The six psychological principles attackers exploit",
+          "estMinutes": 9,
+          "body": [
+            { "type": "paragraph", "text": "Social engineering works because it exploits fundamental aspects of human psychology. Psychologist Robert Cialdini identified six principles of influence — all of which attackers weaponise regularly." },
+            { "type": "bullets", "items": [
+              { "title": "Authority", "text": "People comply with requests from those in perceived authority. Attackers impersonate executives, IT teams, auditors, HMRC, or law enforcement. The antidote: verify identity through a separate, trusted channel regardless of how authoritative the contact seems." },
+              { "title": "Urgency", "text": "'Act now or your account will be closed' / 'I need this before end of day.' Manufactured time pressure prevents critical thinking and verification. Legitimate requests can always wait for proper verification." },
+              { "title": "Scarcity", "text": "'Only you can resolve this before the deadline.' Creating unique responsibility stops you from delegating, escalating, or double-checking." },
+              { "title": "Social proof", "text": "'Everyone else in the department has already submitted theirs.' If others have complied, it seems safe and normal. Attackers fabricate consensus to lower your guard." },
+              { "title": "Liking & reciprocity", "text": "Attackers build rapport — complimenting your work, finding common ground — or perform a small favour before making their real request. Humans feel obligated to return favours, even to near-strangers." },
+              { "title": "Security fatigue", "text": "Bombarded with alerts, 2FA prompts, and access requests, people eventually approve things without reading them. Attackers send repeated push MFA notifications hoping exhaustion causes you to approve. Never approve authentication requests you didn't initiate." }
+            ]},
+            { "type": "callout", "style": "warning", "text": "When you notice any of these six principles being applied — especially in combination — treat it as a red flag. Legitimate contacts don't need to pressure you. Slow down, verify, and report if something feels off." }
           ]
         },
         {
@@ -870,6 +1111,42 @@
           "videoSource": "Cryptocurrency scam awareness explainer",
           "verifyReplace": true,
           "description": "The most common crypto scams and how to avoid losing your funds."
+        },
+        {
+          "id": "cs-read-defi",
+          "type": "reading",
+          "title": "DeFi & advanced crypto risks",
+          "estMinutes": 10,
+          "body": [
+            { "type": "paragraph", "text": "Decentralised Finance (DeFi) offers powerful financial tools — but without the safeguards of traditional finance. Understanding these risks is essential before interacting with any DeFi protocol." },
+            { "type": "bullets", "items": [
+              { "title": "What DeFi means for risk", "text": "DeFi protocols run on smart contracts — self-executing code — with no central authority, no fraud department, and no customer support. If funds are stolen via an exploit or scam, there is typically no recourse. The code is the contract." },
+              { "title": "Smart contract vulnerabilities", "text": "Unaudited smart contracts often contain exploitable bugs. Attackers can drain entire liquidity pools in seconds. Only interact with protocols audited by reputable security firms — and even then, risk remains. Check audit reports on the protocol's official documentation." },
+              { "title": "Flash loan attacks", "text": "An attacker borrows a massive amount of cryptocurrency with no collateral (repaid within the same transaction), uses it to manipulate prices or exploit a protocol flaw, profits, and repays — all in milliseconds. A single transaction can drain millions from a protocol." },
+              { "title": "Yield farming scams", "text": "Promises of 100%, 500%, or 1000% APY are almost always Ponzi structures — 'yield' comes from new investors' money. When inflows stop, the protocol collapses. Early investors extract funds; everyone else loses everything." },
+              { "title": "Airdrop scams", "text": "You receive unexpected tokens in your wallet. To 'claim' them, a website asks you to connect your wallet and approve a transaction. That approval grants permission to drain your wallet. Never interact with tokens you didn't request or expect." },
+              { "title": "NFT scams & wash trading", "text": "Fake scarcity is manufactured by sellers trading NFTs between their own wallets to inflate price history, then selling to real buyers at inflated prices. Research unique buyers, transaction volume, and creator history before purchasing." }
+            ]},
+            { "type": "callout", "style": "warning", "text": "In DeFi, every wallet connection and transaction approval is a major security decision. If you don't understand exactly what a contract does, don't sign it." }
+          ]
+        },
+        {
+          "id": "cs-read-wallet-security",
+          "type": "reading",
+          "title": "Wallet & transaction security",
+          "estMinutes": 9,
+          "body": [
+            { "type": "paragraph", "text": "Cryptocurrency transactions are irreversible. This means attackers have developed highly targeted techniques to manipulate individual transactions and wallet interactions. Understanding these protects your funds." },
+            { "type": "bullets", "items": [
+              { "title": "Address poisoning", "text": "An attacker sends a tiny transaction from a wallet address that looks almost identical to one you frequently use — differing only in a few middle characters. When you copy-paste from your transaction history, you might copy the attacker's address. Always verify the complete address before sending any transaction." },
+              { "title": "Clipboard malware", "text": "Malware monitors your clipboard and silently replaces any copied cryptocurrency address with the attacker's address. You paste what appears correct, verify only the first and last characters, and send funds to the attacker. Verify the full address character by character, or use QR codes from trusted sources only." },
+              { "title": "Wallet drainers", "text": "Malicious smart contracts that, once you approve a single transaction, gain unlimited permission to withdraw assets from your wallet. Commonly found on fake NFT minting sites, phishing pages, and fraudulent DeFi protocols. Treat every approval as permanent — because it is, unless revoked." },
+              { "title": "Token approval revocation", "text": "Every DeFi interaction may grant a contract permission to spend your tokens indefinitely. These approvals persist even if you stop using the protocol. Regularly audit and revoke unnecessary approvals using tools like Revoke.cash — a compromised protocol can drain your wallet through an old approval." },
+              { "title": "Dusting attacks", "text": "Attackers send tiny amounts of cryptocurrency (dust) to many wallets to trace transaction patterns and link addresses to real identities. Once they know a wallet belongs to a specific person, they target them with personalised scams or phishing." },
+              { "title": "QR code crypto scams", "text": "Fake 'wallet verification' or 'sync' websites instruct you to scan a QR code with your wallet app. The QR code initiates a transaction sending your funds to the attacker, or authorises a drainer contract. Never scan a QR code to 'verify', 'sync', or 'recover' a cryptocurrency wallet." }
+            ]},
+            { "type": "callout", "style": "warning", "text": "Hardware wallets protect your private keys — but they cannot protect you from approving a malicious transaction. Read every transaction prompt carefully before signing." }
+          ]
         },
         {
           "id": "cs-read-protect",

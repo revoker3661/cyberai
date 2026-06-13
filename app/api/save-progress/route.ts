@@ -18,6 +18,7 @@ const bodySchema = z.object({
   servedQuestionIds: z.array(z.string()),
   optionOrders: z.record(z.string(), z.array(z.string())),
   maxServedPoints: z.number().int().positive(),
+  tabSwitchCount: z.number().int().min(0).default(0),
 });
 
 export async function POST(req: NextRequest) {
@@ -29,7 +30,7 @@ export async function POST(req: NextRequest) {
   const parsed = bodySchema.safeParse(body);
   if (!parsed.success) return NextResponse.json({ error: "Invalid body" }, { status: 400 });
 
-  const { moduleId, answers, servedQuestionIds, optionOrders, maxServedPoints } = parsed.data;
+  const { moduleId, answers, servedQuestionIds, optionOrders, maxServedPoints, tabSwitchCount } = parsed.data;
   const mod = getModule(moduleId);
   if (!mod) return NextResponse.json({ error: "Module not found" }, { status: 404 });
 
@@ -88,6 +89,7 @@ export async function POST(req: NextRequest) {
         answers,
         served_question_ids: servedQuestionIds,
         option_orders: optionOrders,
+        tab_switch_count: tabSwitchCount,
         completed_at: new Date().toISOString(),
       },
       { onConflict: "user_id,module_id" }

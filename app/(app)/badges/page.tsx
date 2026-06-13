@@ -6,6 +6,7 @@ import { MODULES } from "@/lib/content";
 import type { LucideIcon } from "lucide-react";
 import { ArrowLeft, Award, Lock, Mail, Zap, Phone, Globe, Trash2, Users, Bitcoin } from "lucide-react";
 import { ShareButton } from "@/components/ui/ShareButton";
+import { BadgesConfetti } from "@/components/ui/BadgesConfetti";
 
 const ICON_MAP: Record<string, LucideIcon> = {
   mail: Mail, lock: Lock, zap: Zap, phone: Phone,
@@ -47,6 +48,8 @@ export default async function BadgesPage() {
           <p className="text-sm text-gray-500 dark:text-gray-400">View and share your hard-earned achievements.</p>
         </div>
       </div>
+
+      <BadgesConfetti count={completed.size} />
 
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
         {MODULES.map((mod) => {

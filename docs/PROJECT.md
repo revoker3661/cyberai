@@ -61,7 +61,7 @@ Read Lesson → Take Quiz (15 questions) → See Score + AI Coach Report → Ear
 ## 2. Tech Stack
 
 ### Core Framework
-- **Next.js 16.2.9** with App Router — Server Components by default, nested layouts, route groups `(auth)` and `(app)`
+- **Next.js 15** with App Router — Server Components by default, nested layouts, route groups `(auth)` and `(app)`
 - **TypeScript strict mode** — `"strict": true` in tsconfig, zero `any` in production code
 - **Tailwind CSS** — utility-first styling matching wireframe designs exactly
 
@@ -106,15 +106,17 @@ cyberai/
 │   │   │   ├── lesson/page.tsx     Server Component — full lesson content
 │   │   │   ├── quiz/page.tsx       Server Component — renders QuizClientWrapper
 │   │   │   └── review/page.tsx     Server Component — read-only quiz replay
-│   │   ├── badges/page.tsx         Server Component — passed-only badge grid
+│   │   ├── loading.tsx             App-wide loading spinner (all (app) pages)
+│   │   ├── badges/page.tsx         Server Component — passed-only badge grid + confetti
 │   │   ├── certificate/page.tsx    Server Component — locked/unlocked certificate
-│   │   ├── cheat-sheet/page.tsx    Server Component — passed-only cheat sheet
+│   │   ├── cheat-sheet/page.tsx    Server Component — FocusPanel + passed-only cheat sheet
 │   │   └── profile/page.tsx        Server Component — training stats
 │   ├── api/
 │   │   ├── ai/
 │   │   │   ├── coach/route.ts      POST — Cognitive Security Report
 │   │   │   ├── tutor/route.ts      POST — Lesson-scoped tutor chat
 │   │   │   ├── assistant/route.ts  POST — Page-aware floating assistant
+│   │   │   ├── focus/route.ts      POST — P1b Personalized Focus Areas
 │   │   │   ├── phishing-sim/route.ts  POST — Phishing email generator
 │   │   │   └── practice/route.ts   POST — Adaptive practice MCQs
 │   │   └── save-progress/route.ts  POST — Server-side score computation + upsert
@@ -133,20 +135,22 @@ cyberai/
 │   ├── learn/
 │   │   └── LearnPlayer.tsx         Two-column learn layout (module list + lesson panel)
 │   ├── ai/
-│   │   └── FloatingAssistant.tsx   Persistent floating chat widget
+│   │   ├── FloatingAssistant.tsx   Persistent floating chat widget
+│   │   └── FocusPanel.tsx          P1b collapsible AI focus areas panel
 │   ├── dashboard/                  Dashboard-specific components
 │   └── ui/
 │       ├── ShareButton.tsx         Canvas badge generator + Web Share API
+│       ├── BadgesConfetti.tsx      canvas-confetti burst on badge unlock
 │       ├── CertificateView.tsx     Ornate certificate with download/print
 │       ├── CircularGauge.tsx       SVG score attainment gauge
 │       ├── PrintButton.tsx         window.print() trigger
 │       └── ThemeProvider.tsx       next-themes wrapper
 │
 ├── lib/
-│   ├── content.ts                  TypeScript types + exports from content.json
-│   ├── content.json                ALL lesson text, cheat sheets (source of truth)
-│   ├── question-bank.json          240 quiz questions (30 per module)
-│   ├── learning-content.json       Structured lesson content for FloatingAssistant
+│   ├── content.ts                  TypeScript types + typed exports from content.json
+│   ├── content.json                Lesson sections, cheat-sheet items, module metadata
+│   ├── question-bank.json          600 quiz questions (75 per module, served 15 per attempt)
+│   ├── learning-content.json       Structured reading items for FloatingAssistant page context
 │   ├── game.ts                     Pure functions: scoring, level, progress, shuffle
 │   ├── supabase/
 │   │   ├── server.ts               createClient() for Server Components + API routes
@@ -156,7 +160,8 @@ cyberai/
 │
 ├── supabase/migrations/
 │   ├── 001_initial.sql             Core tables + RLS policies
-│   └── 002_scoring_and_learn.sql   passed, max_served_points, served_question_ids, option_orders
+│   ├── 002_scoring_and_learn.sql   passed, max_served_points, served_question_ids, option_orders
+│   └── 003_proctoring.sql          tab_switch_count column on module_progress
 │
 ├── docs/
 │   ├── SPEC.md                     Original wireframe specification
@@ -188,6 +193,7 @@ Stores one row per user per module (upserted — best score kept).
 | `answers` | jsonb | Array of `{questionId, selectedIndex, correct, confidence, topic, chosenText, correctText}` |
 | `served_question_ids` | jsonb | Array of question IDs served in this attempt |
 | `option_orders` | jsonb | Map of `{questionId: [shuffled option texts]}` for anti-cheat verification |
+| `tab_switch_count` | integer | Number of tab switches detected during the quiz attempt (default 0) |
 | `completed_at` | timestamptz | Timestamp of last attempt |
 
 **RLS**: Users can only SELECT/INSERT/UPDATE their own rows (`user_id = auth.uid()`).
@@ -289,12 +295,14 @@ QuizPage (Server Component)
 The `ssr:false` split is required because `Math.random()` in `buildServedQuestions()` runs during Next.js hydration (even for client components), producing different question orders on server vs client → React hydration mismatch.
 
 ### Question Serving — `buildServedQuestions(mod)`
-1. Copy `mod.quiz` array (30 questions)
+1. Copy `mod.quiz` array (75 questions per module — 600 total in `question-bank.json`)
 2. Fisher-Yates shuffle the copy
 3. Take first 15 (QUIZ_SERVE_COUNT)
 4. For each question: shuffle options, find new index of correct answer
 5. Assign `allocatedPoints` from `allocatePoints(mod.maxPoints, 15)`
 6. Return as `ServedQuestion[]` with `servedOptions`, `servedCorrectIndex`, `allocatedPoints`
+
+With 75 questions per pool, each attempt of 15 is statistically unique — candidates are extremely unlikely to see the same set twice.
 
 ### Quiz State Machine
 States: `idle → question → locked (answered) → [next] → results`
@@ -319,6 +327,28 @@ Server rejects client score entirely. It recomputes:
 
 A forged `selectedIndex` is worthless without the original `optionOrders` map.
 
+### Proctoring Lite
+
+On quiz mount: `document.documentElement.requestFullscreen()` called (silently ignored if denied). Sidebar and MobileNav both return `null` when `pathname.includes("/quiz")` — no navigation chrome appears in fullscreen mode.
+
+Two independent `useEffect` listeners enforce focus integrity:
+
+**`visibilitychange` listener** — detects tab switches (Alt+Tab, browser tab change):
+- Uses `useRef` counter (`tabSwitchCountRef`) to avoid stale closure — event handler always reads current count without re-registration
+- Both listeners use a `let active = false` flag set via `setTimeout(1500ms)` — prevents a false-positive violation from `requestFullscreen()` triggering `visibilitychange` during its mount animation
+
+**`fullscreenchange` listener** — detects ESC key exits (which do NOT fire `visibilitychange`):
+- Fires when `document.fullscreenElement` becomes `null`
+- Counts as a violation + re-requests fullscreen after 100ms delay (required: the re-request must follow the ESC gesture)
+- If already at 3 violations, terminates instead of re-entering
+
+On each violation:
+1. `tabSwitchCountRef.current` incremented (ref, not state — avoids stale closure)
+2. `setTabSwitchCount(n)` → warning banner shown: "Focus violation detected — N/3"
+3. If `n >= 3`: `setQuizTerminated(true)` → renders termination screen with Retake / Review Lesson buttons
+
+`tab_switch_count` sent to `save-progress` and stored in `module_progress`. Results screen shows an integrity pill: green (0 violations), amber (1–2), red (3).
+
 ### Results Screen
 Shows:
 - Score ring (percentage, pass/fail color)
@@ -327,6 +357,7 @@ Shows:
 - `+N confidence bonus 🎯` (if any)
 - `−N overconfidence penalty` (if any)
 - Pass mark: `Math.round(0.70 × maxServedPoints) pts`
+- Integrity pill: tab switch count (green if 0, amber/red otherwise)
 - Per-question accordion: `+45 pts 🎯 · Confident` / `0 pts · Just Guessing` / `-7 pts · Confident`
 - AI Cognitive Security Report panel (async, loads after quiz save)
 
@@ -402,6 +433,23 @@ Scoped to lesson content. 120-word response cap. Refuses off-topic questions. Us
 
 #### `/api/ai/phishing-sim` — Phishing Simulator
 Generates a fake phishing email with embedded red flags (fictional brands/domains only). Returns `{emailHtml, redFlags[]}`. Grading is pure client-side — match user-clicked elements against returned `redFlags[]` IDs.
+
+#### `/api/ai/focus` — Personalized Focus Areas (P1b)
+**Input**:
+```typescript
+{ modules: { moduleTitle: string, scorePercent: number, passed: boolean }[] }
+```
+Called from `/cheat-sheet` page with ALL attempted modules (not just passed ones).
+
+**System prompt**: Analyze the user's performance across all attempted modules. Identify specific knowledge gaps from failed or low-scoring modules. Return 4–6 concrete, actionable focus bullets and a 1–2 sentence summary.
+
+**Output schema** (zod):
+```typescript
+{ focusAreas: string[], summary: string }
+```
+**Fallback**: `{ focusAreas: ["Review your lowest-scoring modules"], summary: "Keep working through the training." }`
+
+The `FocusPanel` client component renders these above the static cheat-sheet cards, with a collapsible toggle and indigo gradient styling.
 
 #### `/api/ai/practice` — Adaptive Practice
 After quiz failure, sends wrong-answer topic list → receives 3 new MCQs targeting those exact weaknesses. Unscored — purely reinforcement. Uses same `QuizQuestion` zod schema as static questions.
@@ -482,6 +530,8 @@ A badge unlocks when `module_progress.passed = true` for that module. Failing a 
 
 ### Badge Grid (badges/page.tsx)
 Server Component fetches `module_id` WHERE `passed = true`. Shows 8 badge cards — unlocked cards show the Share button, locked cards show "Complete to unlock".
+
+`BadgesConfetti` (`"use client"`) is rendered with `count={completed.size}`. On mount, if `count > 0`, fires a dual canvas-confetti burst from left and right sides. Zero JS overhead for users with no badges (early return in `useEffect`).
 
 ### Canvas Badge Image — `ShareButton.tsx`
 On share click, draws a 480×480px PNG badge in-browser using the Canvas API:
@@ -647,8 +697,8 @@ Every page has:
 ### Why `ssr:false` for QuizEngine?
 `buildServedQuestions()` calls `shuffleArray()` which uses `Math.random()`. In Next.js App Router, even `"use client"` components are SSR'd for the initial HTML payload. `Math.random()` returns different values on server vs client → hydration mismatch. Solution: `QuizClientWrapper` uses `dynamic(import QuizEngine, { ssr: false })`. The wrapper must itself be a Client Component (`"use client"`) because `ssr: false` is not allowed in Server Components.
 
-### Why 30 questions per module instead of 4 (wireframe)?
-The wireframes show 4 quiz questions per module. 4 questions is trivial to memorize — a user could pass by rote repetition. 30 questions with 15 served per attempt means each attempt is unique. The wireframe's 4 questions appear to be wireframe placeholders, not production intent.
+### Why 75 questions per module (600 total) instead of the wireframe's 4?
+The wireframes show 4 quiz questions per module as UI placeholders, not production intent. 4 questions is trivial to memorize — a user passes by rote after one attempt. 75 questions with 15 served per attempt means the combination space is C(75,15) ≈ 2 × 10¹⁴ — repeat questions across attempts are statistically negligible. The expanded bank also covers the full topic depth of each module, ensuring questions test real understanding rather than surface recall. Security training fails if the learner can game the system.
 
 ### Why confidence affects scoring?
 Pure correct/wrong scoring treats all wrong answers equally. Confidence data reveals cognitive state:
@@ -672,3 +722,18 @@ Groq free tier has very high throughput (131k tokens/minute) and fast inference 
 
 ### Why static question bank + AI overlay?
 A fully dynamic AI question generator would: (1) not match the wireframe (specific questions shown), (2) risk hallucinated security advice, (3) produce inconsistent scoring since answers would be AI-generated. The static bank is auditable, matches wireframes, and can't produce dangerous wrong answers. AI adds value through coaching, not through generating the core assessment content.
+
+### Why 75 questions per module (600 total) instead of 30?
+30 questions with 15 served means after 2 attempts a candidate has a decent chance of seeing every question. 75 questions with 15 served (~1 in C(75,15) combinations) makes repetition statistically negligible. Security training should challenge even repeat learners. The expanded bank covers topics only briefly mentioned in the original 30 — each new question targets a distinct sub-concept.
+
+### Why `useRef` for tab switch count in proctoring?
+`document.addEventListener("visibilitychange", handler)` captures the closure at registration time. If `handler` reads `tabSwitchCount` state directly, it reads the value from closure (always the initial value 0). Using `useRef` (`tabSwitchCountRef.current`) means the event handler always sees the current value without being re-registered. State (`useState`) is still updated in parallel for rendering the warning banner — the ref is the authoritative count, state drives the UI.
+
+### Why proctoring uses `visibilitychange` not `blur`/`focus`?
+`window.blur` fires for ANY focus loss — clicking the DevTools, switching to a different window on the same screen. `document.visibilitychange` fires only when the document becomes hidden (tab switch, minimize, OS switch). This is more accurate for "left the quiz tab" detection and avoids false positives from legitimate same-screen clicks.
+
+### Why P1b focuses on ALL attempted modules, not just passed?
+The cheat sheet itself only shows passed-module content (you earn it by passing). But the AI focus panel's whole purpose is to identify weak areas. If a user failed a module with 40%, that IS the priority focus area — excluding it would make the panel useless. Failed + low-scoring modules are exactly what the analysis should highlight. Passed modules with high scores are de-prioritized in the AI prompt.
+
+### Why `loading.tsx` instead of per-page skeletons?
+A single `app/(app)/loading.tsx` covers every page in the app group with zero per-page boilerplate. Since all pages use `force-dynamic` (real-time Supabase data), every navigation shows the spinner. A custom skeleton per page would be higher fidelity but adds maintenance burden — the generic spinner is acceptable for this training context and matches the "minimum viable polish" criterion.

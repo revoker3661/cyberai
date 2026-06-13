@@ -49,6 +49,26 @@
           {
             "heading": "3. Your Best Defense: Skepticism",
             "body": "The golden rule is: if an email seems suspicious, it probably is. Do not click any links or download attachments. If you think the email might be legitimate, navigate to the company's website directly in a new browser tab and log in from there. Report the phishing attempt to your IT department."
+          },
+          {
+            "heading": "4. Advanced Phishing Variants",
+            "bullets": [
+              { "title": "Spear Phishing", "text": "Unlike mass phishing, spear phishing is personalised — the attacker uses your name, job title, company, or recent activity to make the email convincing. This information is gathered from LinkedIn, social media, or data breaches." },
+              { "title": "Whaling", "text": "Whaling targets high-value individuals — CEOs, CFOs, board members. The stakes are higher because these targets can authorise large wire transfers or access critical systems." },
+              { "title": "Clone Phishing", "text": "The attacker duplicates a legitimate email you previously received and replaces the link or attachment with a malicious one. The sender address appears identical to the original." },
+              { "title": "Quishing (QR Code Phishing)", "text": "Phishing via QR codes embedded in emails or printed materials. Because QR codes hide the destination URL, many email scanners don't detect them as malicious." },
+              { "title": "Pharming", "text": "DNS poisoning that silently redirects you to a fake website even when you type the correct URL. Your browser shows the right address but you're on an attacker's server." },
+              { "title": "Business Email Compromise (BEC)", "text": "The attacker impersonates an executive or supplier to request urgent wire transfers or changes to payment details. BEC costs organisations billions annually — always verify payment requests through a separate, trusted channel." }
+            ]
+          },
+          {
+            "heading": "5. Email Authentication & Technical Defenses",
+            "bullets": [
+              { "title": "SPF, DKIM, and DMARC", "text": "These are email authentication standards. SPF specifies which servers can send email for your domain. DKIM adds a cryptographic signature. DMARC tells receivers what to do when SPF or DKIM fails (quarantine or reject). A DMARC failure warning in your email client is a strong sign of spoofing." },
+              { "title": "AiTM (Adversary-in-the-Middle) Phishing", "text": "A proxy sits between you and a legitimate login page, capturing not just your password but your session cookie after you successfully authenticate — bypassing 2FA. The only reliable defence is phishing-resistant hardware keys (FIDO2)." },
+              { "title": "Consent Phishing / OAuth Phishing", "text": "Instead of stealing your password, the attacker tricks you into granting a malicious app permissions to your Google, Microsoft, or other OAuth account. Once granted, they control your account without needing your credentials." },
+              { "title": "Tracking Pixels", "text": "Tiny invisible images in emails that notify the sender when you open the message — revealing your IP address, location, device, and that your email is active. Never load remote images from unknown senders." }
+            ]
           }
         ]
       },
@@ -142,6 +162,26 @@
           {
             "heading": "4. Two-Factor Authentication (2FA/MFA)",
             "body": "2FA is a security force multiplier. It requires a second form of verification (like a code from your phone) besides your password. This means even if an attacker steals your password, they cannot get into your account. Enable it everywhere."
+          },
+          {
+            "heading": "5. How Attackers Break Passwords",
+            "bullets": [
+              { "title": "Brute Force", "text": "Automated tools try every possible combination of characters. Short passwords (under 10 characters) can be cracked in seconds. Length is your best defence — longer passwords make brute force computationally impractical." },
+              { "title": "Dictionary Attacks", "text": "Attackers try lists of common words, phrases, and known passwords. 'Password1!' and 'Summer2024' are in every dictionary list. Avoid predictable patterns." },
+              { "title": "Credential Stuffing", "text": "When a website is breached, stolen username/password pairs are tested against other services. If you reuse passwords, one breach compromises all your accounts. A password manager solves this — unique passwords everywhere." },
+              { "title": "Password Spraying", "text": "Rather than attacking one account with many passwords (which triggers lockouts), attackers try one common password against thousands of accounts. Avoid passwords like 'Welcome1' or 'Company2024'." },
+              { "title": "Rainbow Table Attacks", "text": "Pre-computed tables of password hashes that allow instant lookup of unsalted passwords. This is why systems add a unique 'salt' to each password before hashing — your password hash won't match the table even if the password itself does." }
+            ]
+          },
+          {
+            "heading": "6. Advanced Authentication Topics",
+            "bullets": [
+              { "title": "MFA Fatigue / Push Bombing", "text": "Attackers who have your password send a flood of push notification approvals to your phone, hoping you'll tap 'Approve' just to stop them. Always check what you're approving — if you didn't initiate a login, deny it and change your password immediately." },
+              { "title": "Passkeys", "text": "Passkeys replace passwords entirely. A cryptographic key pair is generated — the private key stays on your device, the public key is on the website. You authenticate with your biometric or PIN locally. Passkeys are phishing-resistant because they only work on the exact legitimate site." },
+              { "title": "Single Sign-On (SSO)", "text": "One master login (Google, Microsoft, Apple) grants access to many services. Convenient, but it means your SSO provider account is extremely high value — secure it with the strongest 2FA available (hardware key)." },
+              { "title": "SIM Swapping", "text": "An attacker calls your mobile carrier, impersonates you, and convinces them to transfer your phone number to an attacker-controlled SIM. This defeats SMS-based 2FA entirely. Use authenticator apps or hardware keys instead of SMS 2FA for important accounts." },
+              { "title": "Backup / Recovery Codes", "text": "When you enable 2FA, services provide single-use recovery codes. Store them offline (printed or in a safe). Never photograph them or store them in cloud notes — these codes bypass 2FA entirely." }
+            ]
           }
         ]
       },
@@ -231,6 +271,28 @@
           {
             "heading": "3. Your Defensive Strategy",
             "body": "A multi-layered defense is key. Use a reputable antivirus/anti-malware program and keep it updated. Be extremely cautious about what you click and download. Regularly back up your important files to an external drive or cloud service; this is your best defense against ransomware."
+          },
+          {
+            "heading": "4. More Malware Types You Should Know",
+            "bullets": [
+              { "title": "Rootkits", "text": "Malware that hides deep within the operating system, often below the level that antivirus can detect. Rootkits give attackers persistent, privileged access and can survive reboots and even OS reinstalls." },
+              { "title": "Keyloggers", "text": "Record every keystroke you make — capturing passwords, credit card numbers, and private messages. They can be software-based (installed via phishing) or hardware-based (physical device plugged between keyboard and computer)." },
+              { "title": "Botnets", "text": "Your infected device becomes part of a remotely controlled network (botnet) used to send spam, conduct DDoS attacks, or mine cryptocurrency — all without your knowledge. Your machine works for the attacker while you pay the electricity bill." },
+              { "title": "Cryptojacking", "text": "Malware silently uses your CPU to mine cryptocurrency for the attacker. Signs: unusually high CPU usage, slow performance, hot device, high electricity bills. Can arrive via malicious browser scripts or installed malware." },
+              { "title": "Fileless Malware", "text": "Operates entirely in memory — no file is written to disk, making it invisible to traditional file-scanning antivirus. It often uses legitimate system tools (like PowerShell) to carry out attacks. Requires behaviour-based EDR to detect." },
+              { "title": "Logic Bombs", "text": "Dormant code hidden inside legitimate software that activates when a specific condition is met — a date, a user action, or a file deletion. Often planted by malicious insiders." }
+            ]
+          },
+          {
+            "heading": "5. Advanced Threats & Incident Response",
+            "bullets": [
+              { "title": "Zero-Day Vulnerabilities", "text": "A flaw in software that is unknown to the vendor — no patch exists. Attackers exploit zero-days before defenders can respond. Keeping software updated closes known vulnerabilities; security software with behaviour detection catches unknown ones." },
+              { "title": "Ransomware-as-a-Service (RaaS)", "text": "Criminal groups sell ransomware toolkits to non-technical attackers as a franchise model. This has dramatically lowered the barrier to launching ransomware attacks and explains why they've surged." },
+              { "title": "Double Extortion", "text": "Modern ransomware doesn't just encrypt your files — it also steals them first. Attackers threaten to publish sensitive data publicly if you don't pay, even if you restore from backup." },
+              { "title": "Supply Chain Attacks", "text": "Malware injected into a legitimate software update or third-party library that you trust. The famous SolarWinds attack compromised thousands of organisations this way. Vet your software suppliers and monitor for unexpected behaviour after updates." },
+              { "title": "Lateral Movement", "text": "After infecting one machine, attackers move across your network to reach more valuable systems. Segmenting networks, using least-privilege accounts, and monitoring for unusual internal connections limit how far they can spread." },
+              { "title": "Indicators of Compromise (IoC)", "text": "Signs that a system may be infected: unexpected CPU/network activity, new unknown processes, disabled security tools, unusual outbound connections, or files appearing/disappearing. Report any of these to IT immediately." }
+            ]
           }
         ]
       },
@@ -320,6 +382,24 @@
           {
             "heading": "3. How to Respond",
             "body": "The golden rule is: never trust, always verify. Do not click links in suspicious texts. Hang up on unsolicited calls. If the message claims to be from a company you do business with, contact them directly using a phone number or website you know is legitimate. Never use the contact info provided in the message or call."
+          },
+          {
+            "heading": "4. AI-Enhanced Phone Attacks",
+            "bullets": [
+              { "title": "Voice Cloning & Deepfake Audio", "text": "AI can now clone someone's voice from as little as a few seconds of audio. Attackers impersonate your manager, a family member, or a bank representative in real time. If a caller makes an urgent financial or access request, hang up and call the person back on a number you already know." },
+              { "title": "OTP Bots", "text": "Automated systems call you pretending to be your bank, and use a robotic voice to ask you to 'confirm' a one-time passcode that was just sent to your phone. The bot immediately relays that code to the attacker logging into your account. No legitimate organisation will ever ask you to read back a code you just received." },
+              { "title": "Hybrid Smishing-to-Vishing", "text": "A text message creates alarm ('Your account is compromised, call this number immediately'), then the follow-up call does the actual social engineering. The two-step process feels more convincing because you initiated the call." },
+              { "title": "Pig Butchering Scams", "text": "Attackers build a relationship with you over weeks or months via text or messaging apps, posing as a romantic interest or new friend. Eventually they introduce a 'can't-miss' crypto investment opportunity. Once you invest, they vanish with your funds. The long trust-building phase is what makes this devastatingly effective." }
+            ]
+          },
+          {
+            "heading": "5. More Phone & SMS Scam Patterns",
+            "bullets": [
+              { "title": "Wangiri Fraud", "text": "A missed call from an unfamiliar international number. Calling back connects you to a premium-rate line, racking up large charges per minute. Never return missed calls from numbers you don't recognise, especially international ones." },
+              { "title": "Reverse Vishing", "text": "Instead of the attacker calling you, they send a fake alert (email or SMS) with a 'security hotline' number to call. You call them, believing you initiated a safe contact — but you're calling the attacker. Always find contact numbers from official websites, not from messages." },
+              { "title": "QR Code Smishing", "text": "A text message contains a QR code image rather than a text link. Because the URL is hidden inside the image, many SMS spam filters miss it. Treat QR codes in unsolicited messages with the same scepticism as links." },
+              { "title": "SIM Swapping", "text": "An attacker calls your mobile carrier with enough personal information (gathered from social media or data breaches) to convince them to transfer your phone number to a new SIM. They then receive all your SMS messages, including 2FA codes, and can reset your passwords. Use app-based or hardware 2FA, not SMS, for critical accounts." }
+            ]
           }
         ]
       },
@@ -396,6 +476,25 @@
           {
             "heading": "3. The Dangers of Public Wi-Fi",
             "body": "Public Wi-Fi is not secure. Attackers on the same network can potentially intercept your data. Avoid logging into sensitive accounts (bank, email) on public Wi-Fi. If you must use it, always use a trusted Virtual Private Network (VPN) to encrypt your connection."
+          },
+          {
+            "heading": "4. Access Control & Facility Security",
+            "bullets": [
+              { "title": "Full-Disk Encryption", "text": "If a laptop is stolen, full-disk encryption (BitLocker on Windows, FileVault on Mac) makes the data completely unreadable without the correct password. Enable it on all work devices — without it, anyone can read your files by booting from USB." },
+              { "title": "RFID Badge Cloning", "text": "Proximity access card readers can be skimmed from up to 30cm away using a hidden device. Anti-passback systems prevent a cloned card from being used to enter an area if it was also used to exit — providing a layer of protection against cloned badges." },
+              { "title": "Mantrap / Vestibule", "text": "A secure two-door airlock entry where only one door can open at a time. Used in high-security areas to prevent tailgating — you must be positively identified before the inner door opens." },
+              { "title": "Visitor Management", "text": "All visitors should sign in with ID, receive a temporary visitor badge, and be escorted at all times in secure areas. Never let someone follow you through a secure door just because they seem friendly or official." },
+              { "title": "Dumpster Diving", "text": "Attackers search physical waste bins and skips for printed documents containing passwords, org charts, customer data, or financial information. Always shred sensitive documents before disposal — never put them in recycling or general waste." },
+              { "title": "Printer Output Tray Risk", "text": "Sensitive documents are frequently forgotten in printer output trays, visible to anyone walking past. Collect your prints immediately, and use follow-you / pull printing where you authenticate at the printer before the job is released." }
+            ]
+          },
+          {
+            "heading": "5. Device & Data Disposal",
+            "bullets": [
+              { "title": "Secure Media Destruction", "text": "Deleting files or even formatting a drive does not remove the data — it just removes the directory pointer. Secure disposal requires overwriting (software tools that write random data multiple times), degaussing (powerful magnets for magnetic drives), or physical destruction (shredding). Your IT team should handle this." },
+              { "title": "IT Asset Disposal Policy", "text": "All devices must be formally decommissioned and wiped before they leave the organisation — including donating, selling, or disposing of old hardware. A device sold without proper wiping can expose years of sensitive data to the buyer." },
+              { "title": "OSINT from Discarded Materials", "text": "Open Source Intelligence (OSINT) techniques can reconstruct org charts, internal processes, and project names from shredded documents, discarded whiteboards, and even sticky notes. Physical information hygiene is as important as digital." }
+            ]
           }
         ]
       },
@@ -472,6 +571,29 @@
           {
             "heading": "3. When Things Go Wrong: Incident Reporting",
             "body": "If you suspect a security incident (e.g., you clicked a phishing link, lost a work device, or see suspicious activity), you must report it immediately to the designated contact (IT, InfoSec, your manager). Fast reporting is critical to minimizing damage."
+          },
+          {
+            "heading": "4. GDPR & Privacy Regulations Deep Dive",
+            "bullets": [
+              { "title": "The CIA Triad", "text": "The foundation of information security: Confidentiality (only authorised people can access data), Integrity (data is accurate and unmodified), and Availability (data is accessible when needed). Every security control protects one or more of these three properties." },
+              { "title": "Right to Erasure (Right to be Forgotten)", "text": "Under GDPR, individuals can request that their personal data be deleted. Organisations must comply within one month unless there is a legal basis for retention. This applies to backups and archives too." },
+              { "title": "Data Subject Access Request (DSAR)", "text": "Any individual can request a copy of all personal data an organisation holds about them. Organisations must respond within one month and cannot charge a fee for the first request." },
+              { "title": "Data Protection Officer (DPO)", "text": "Organisations processing large volumes of personal data must appoint a DPO — an expert responsible for ensuring GDPR compliance. Know who your DPO is and contact them for privacy questions." },
+              { "title": "Data Protection Impact Assessment (DPIA)", "text": "Required before starting any high-risk data processing activity (e.g., large-scale profiling, processing sensitive data). A DPIA identifies and mitigates privacy risks before they become breaches." },
+              { "title": "Controller vs Processor", "text": "The controller decides why and how personal data is processed. The processor handles data on the controller's behalf. Both have GDPR obligations, and their relationship must be governed by a Data Processing Agreement (DPA)." },
+              { "title": "Purpose Limitation", "text": "Personal data collected for one specific purpose cannot be used for a different purpose without fresh consent or another legal basis. You cannot collect email addresses for a newsletter and then use them for targeted advertising without separate consent." },
+              { "title": "Privacy by Design", "text": "Privacy protections should be built into systems and processes from the start, not bolted on afterwards. Default settings should offer the highest level of privacy — users should have to opt in to less private options, not opt out." }
+            ]
+          },
+          {
+            "heading": "5. Data Loss Prevention & Shadow IT",
+            "bullets": [
+              { "title": "Data Loss Prevention (DLP)", "text": "Software tools that monitor and control data movement — blocking sensitive files from being emailed externally, uploaded to personal cloud storage, or copied to USB drives. DLP is a safety net, not a replacement for good judgment." },
+              { "title": "Shadow IT", "text": "Any application, service, or device used for work purposes without IT's knowledge or approval. Personal Dropbox accounts, consumer messaging apps, and free SaaS tools are common examples. Shadow IT creates data copies outside the organisation's security controls." },
+              { "title": "Data Sovereignty", "text": "The principle that data is subject to the laws of the country where it is stored. Storing EU citizen data on servers outside the EU may violate GDPR. Always check where cloud services store data before using them for personal data." },
+              { "title": "Records of Processing Activities (ROPA)", "text": "A mandatory GDPR requirement for most organisations — a documented record of all personal data processing activities, including what data is held, why, how long it's kept, and who has access. Required for demonstrating compliance." },
+              { "title": "Pseudonymisation vs Anonymisation", "text": "Pseudonymised data has identifying information replaced with a code — it's still personal data because re-identification is possible with the key. Truly anonymised data has had identifying information irreversibly removed and is no longer subject to GDPR. Most 'anonymised' datasets are actually pseudonymised." }
+            ]
           }
         ]
       },
@@ -549,6 +671,26 @@
           {
             "heading": "3. Defending Against Manipulation",
             "body": "Always verify unusual requests, especially those involving money or sensitive data, through a secondary channel. If the 'CEO' emails you for an urgent wire transfer, call them or speak to them in person to confirm. Be skeptical of unsolicited offers and never plug in unknown devices."
+          },
+          {
+            "heading": "4. How Attackers Research Their Targets (OSINT)",
+            "bullets": [
+              { "title": "Open Source Intelligence (OSINT)", "text": "Attackers spend significant time researching targets before making contact. They mine LinkedIn profiles, company websites, job postings, social media, press releases, and even GitHub to build a detailed picture of your organisation, roles, tools, and relationships." },
+              { "title": "Org Chart Harvesting", "text": "LinkedIn makes it trivially easy to map who reports to whom, who approves financial transactions, and who has access to sensitive systems. Attackers use this to craft targeted impersonation attacks — knowing exactly who to pretend to be to get what they want." },
+              { "title": "LinkedIn Oversharing Risks", "text": "Posting about internal projects, technologies used, upcoming system migrations, or org changes helps attackers craft convincing pretexts. 'We're migrating to Salesforce next month' gives an attacker the perfect cover for a fake Salesforce support call." },
+              { "title": "Simulated Phishing Tests", "text": "Many organisations run simulated phishing campaigns to test employee awareness. If you click a simulated phishing link, you'll receive training — it's not punitive, it's educational. These tests reveal gaps before real attackers do." }
+            ]
+          },
+          {
+            "heading": "5. The Six Psychological Principles Attackers Exploit",
+            "bullets": [
+              { "title": "Authority", "text": "People comply with requests from those in power. Attackers impersonate executives, IT teams, auditors, government officials, or law enforcement. Always verify identity through a separate, trusted channel." },
+              { "title": "Urgency", "text": "'Act now or your account will be closed.' Manufactured time pressure prevents you from thinking critically or following verification procedures. Legitimate requests can always wait for proper verification." },
+              { "title": "Scarcity", "text": "'Only you can fix this before the deadline.' Creating a sense of unique responsibility makes you feel you can't delegate or double-check." },
+              { "title": "Social Proof", "text": "'Everyone else in the team has already done this.' If others have complied, it seems safe. Attackers fabricate consensus to lower your guard." },
+              { "title": "Liking & Reciprocity", "text": "Attackers build rapport — complimenting you, finding common ground, or doing a small favour first. Having 'helped' you, they then make their real request. The human impulse to return favours is a powerful lever." },
+              { "title": "Security Fatigue", "text": "Being bombarded with security alerts, 2FA prompts, and access requests eventually makes people approve things without reading them. Attackers exploit this by sending push MFA requests repeatedly until an exhausted user approves." }
+            ]
           }
         ]
       },
@@ -626,6 +768,28 @@
           {
             "heading": "3. Protecting Your Assets",
             "body": "Never share your wallet's seed phrase or private keys with anyone. Be extremely skeptical of 'guaranteed' high returns or pressure to invest quickly. Only use well-known, established cryptocurrency exchanges and verify URLs carefully before logging in."
+          },
+          {
+            "heading": "4. DeFi & Advanced Crypto Risks",
+            "bullets": [
+              { "title": "Decentralised Finance (DeFi)", "text": "DeFi protocols enable financial transactions (lending, trading, earning yield) without a central authority. There is no fraud department, no customer support, and no recourse — if funds are stolen via an exploit or scam, they are gone. The code is the contract." },
+              { "title": "Smart Contract Vulnerabilities", "text": "DeFi runs on smart contracts — self-executing code. Unaudited contracts often contain bugs that attackers can exploit to drain liquidity pools. Only interact with protocols that have been audited by reputable security firms, and even then, risk remains." },
+              { "title": "Flash Loan Attacks", "text": "An attacker borrows a massive amount of cryptocurrency with no collateral (repaid within the same transaction), uses it to manipulate prices or exploit a protocol vulnerability, profits, and repays the loan — all in milliseconds. A single transaction can drain millions." },
+              { "title": "Yield Farming Scams", "text": "Promises of 100%, 500%, or 1000% APY are almost always scams or unsustainable — the 'yield' comes from new investors' money, not genuine returns (a Ponzi structure). When inflows stop, the protocol collapses and early investors withdraw, leaving everyone else with nothing." },
+              { "title": "Airdrop Scams", "text": "You receive free tokens in your wallet. To 'claim' them, you're asked to connect your wallet to a website and approve a transaction. That approval grants the site permission to drain your entire wallet. Never interact with tokens you didn't expect to receive." },
+              { "title": "NFT Scams & Wash Trading", "text": "Fake scarcity is created by artists or promoters buying their own NFTs between wallets to inflate the price history, then selling to real buyers at inflated prices. Research volume, unique buyers, and the creator's history before purchasing." }
+            ]
+          },
+          {
+            "heading": "5. Wallet & Transaction Security",
+            "bullets": [
+              { "title": "Address Poisoning", "text": "An attacker sends you a tiny transaction from a wallet address that looks almost identical to one you frequently interact with — differing only in a few middle characters. When you copy-paste from your transaction history, you might copy the attacker's address instead. Always verify the full address before sending." },
+              { "title": "Clipboard Malware", "text": "Malware monitors your clipboard and silently replaces any copied cryptocurrency address with the attacker's address. You paste what you think is the right address, verify the first and last few characters, and send funds to the attacker. Verify the full address character by character, or use QR codes from trusted sources." },
+              { "title": "Wallet Drainers", "text": "Malicious smart contracts that, once you approve a transaction, gain permission to withdraw all assets from your wallet. Often hidden in NFT minting sites, fake DeFi protocols, or phishing pages. Treat every wallet connection and approval as a major security decision." },
+              { "title": "Token Approval Revocation", "text": "Every time you interact with a DeFi protocol, you may grant it permission to spend your tokens. These approvals persist indefinitely. Regularly audit and revoke unnecessary token approvals using tools like Revoke.cash to limit your exposure if a protocol is compromised later." },
+              { "title": "Dusting Attacks", "text": "Attackers send tiny amounts of cryptocurrency (dust) to many wallets to trace transaction patterns and de-anonymise wallet owners. Once they know a wallet belongs to a specific individual, they can target them with personalised scams." },
+              { "title": "QR Code Crypto Scams", "text": "Fake 'wallet verification' or 'sync' websites ask you to scan a QR code. The QR code initiates a transaction that sends your funds to the attacker, or connects your wallet for draining. Never scan a QR code to 'verify' or 'sync' a cryptocurrency wallet." }
+            ]
           }
         ]
       },

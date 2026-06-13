@@ -1,9 +1,9 @@
 "use client";
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import {
   Brain, Lightbulb, CheckCircle, XCircle, ArrowRight,
-  Trophy, AlertTriangle, RefreshCw,
+  Trophy, AlertTriangle, RefreshCw, Eye, EyeOff, Shield,
 } from "lucide-react";
 import type { Module, QuizQuestion } from "@/lib/content";
 import { allocatePoints, shuffleArray, isPassed, PASS_THRESHOLD, QUIZ_SERVE_COUNT, CONFIDENCE_BONUS_MULTIPLIER, CONFIDENT_WRONG_PENALTY } from "@/lib/game";
@@ -53,6 +53,8 @@ function buildServedQuestions(mod: Module): ServedQuestion[] {
   });
 }
 
+const MAX_TAB_SWITCHES = 3;
+
 export function QuizEngine({ mod, userId, readOnly = false, existingAnswers }: QuizEngineProps) {
   const router = useRouter();
 
@@ -88,6 +90,65 @@ export function QuizEngine({ mod, userId, readOnly = false, existingAnswers }: Q
   const [coachData, setCoachData] = useState<Record<string, unknown> | null>(null);
   const [coachLoading, setCoachLoading] = useState(false);
   const [serverPassed, setServerPassed] = useState<boolean | null>(null);
+
+  // Proctoring state
+  const tabSwitchCountRef = useRef(0);
+  const [tabSwitchCount, setTabSwitchCount] = useState(0);
+  const [showTabWarning, setShowTabWarning] = useState(false);
+  const [quizTerminated, setQuizTerminated] = useState(false);
+
+  // Request fullscreen on quiz start
+  useEffect(() => {
+    if (readOnly) return;
+    document.documentElement.requestFullscreen?.().catch(() => {});
+    return () => {
+      if (document.fullscreenElement) document.exitFullscreen?.().catch(() => {});
+    };
+  }, [readOnly]);
+
+  // Tab-switch detection (1.5s delay avoids false-positive from fullscreen animation)
+  useEffect(() => {
+    if (readOnly || done) return;
+    let active = false;
+    const activateTimer = setTimeout(() => { active = true; }, 1500);
+    const handleVisibility = () => {
+      if (!active || !document.hidden) return;
+      tabSwitchCountRef.current += 1;
+      const n = tabSwitchCountRef.current;
+      setTabSwitchCount(n);
+      setShowTabWarning(true);
+      if (n >= MAX_TAB_SWITCHES) setQuizTerminated(true);
+    };
+    document.addEventListener("visibilitychange", handleVisibility);
+    return () => {
+      clearTimeout(activateTimer);
+      document.removeEventListener("visibilitychange", handleVisibility);
+    };
+  }, [readOnly, done]);
+
+  // Fullscreen exit detection (ESC key) — re-requests fullscreen and counts as violation
+  useEffect(() => {
+    if (readOnly || done) return;
+    let active = false;
+    const activateTimer = setTimeout(() => { active = true; }, 1500);
+    const handleFullscreenChange = () => {
+      if (!active || document.fullscreenElement) return;
+      tabSwitchCountRef.current += 1;
+      const n = tabSwitchCountRef.current;
+      setTabSwitchCount(n);
+      setShowTabWarning(true);
+      if (n >= MAX_TAB_SWITCHES) {
+        setQuizTerminated(true);
+      } else {
+        setTimeout(() => document.documentElement.requestFullscreen?.().catch(() => {}), 100);
+      }
+    };
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+    return () => {
+      clearTimeout(activateTimer);
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
+    };
+  }, [readOnly, done]);
 
   const question = served[currentIdx];
   const currentAnswer = readOnly ? existingAnswers?.[currentIdx] : answers[currentIdx];
@@ -149,6 +210,7 @@ export function QuizEngine({ mod, userId, readOnly = false, existingAnswers }: Q
           servedQuestionIds,
           optionOrders,
           maxServedPoints,
+          tabSwitchCount: tabSwitchCountRef.current,
         }),
       });
       if (res.ok) {
@@ -184,6 +246,41 @@ export function QuizEngine({ mod, userId, readOnly = false, existingAnswers }: Q
     setDone(true);
   }, [answers, mod, served, readOnly]);
 
+  // Quiz terminated due to too many tab switches
+  if (quizTerminated && !done) {
+    return (
+      <div className="max-w-2xl mx-auto text-center py-16 space-y-6">
+        <div className="w-20 h-20 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mx-auto">
+          <EyeOff size={40} className="text-red-500" />
+        </div>
+        <div>
+          <h2 className="text-2xl font-bold text-red-600 dark:text-red-400">Quiz Terminated</h2>
+          <p className="text-gray-600 dark:text-gray-400 mt-2">
+            You switched tabs {MAX_TAB_SWITCHES} or more times. This quiz session has been ended.
+          </p>
+          <p className="text-sm text-gray-500 dark:text-gray-500 mt-1">
+            Please review the lesson and start a fresh attempt.
+          </p>
+        </div>
+        <div className="grid grid-cols-2 gap-3 max-w-sm mx-auto">
+          <button
+            onClick={() => router.push(`/modules/${mod.id}/lesson`)}
+            className="py-3 rounded-xl border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-medium text-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+          >
+            Review Lesson
+          </button>
+          <button
+            onClick={() => router.push(`/modules/${mod.id}/quiz`)}
+            className="py-3 rounded-xl text-white font-medium text-sm hover:opacity-90 transition-opacity"
+            style={{ backgroundColor: mod.hexAccent }}
+          >
+            Retake Quiz
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   if (done && !readOnly) {
     const baseScore = answers.reduce((sum, a) => {
       const q = served.find((q) => q.id === a.questionId);
@@ -217,6 +314,7 @@ export function QuizEngine({ mod, userId, readOnly = false, existingAnswers }: Q
         passed={passed}
         coachData={coachData}
         coachLoading={coachLoading}
+        tabSwitchCount={tabSwitchCount}
       />
     );
   }
@@ -231,6 +329,28 @@ export function QuizEngine({ mod, userId, readOnly = false, existingAnswers }: Q
 
   return (
     <div className="max-w-2xl mx-auto space-y-4">
+      {/* Tab-switch warning banner */}
+      {showTabWarning && !quizTerminated && (
+        <div className="fixed top-4 left-4 right-4 z-50 bg-amber-50 dark:bg-amber-900/30 border-2 border-amber-400 rounded-xl p-4 shadow-xl flex items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <AlertTriangle size={20} className="text-amber-600 flex-shrink-0" />
+            <div>
+              <p className="font-semibold text-amber-800 dark:text-amber-200 text-sm">
+                Focus violation detected! ({tabSwitchCount}/{MAX_TAB_SWITCHES})
+              </p>
+              <p className="text-xs text-amber-700 dark:text-amber-300">
+                You left the quiz or exited fullscreen. {MAX_TAB_SWITCHES - tabSwitchCount} more and your quiz will be terminated.
+              </p>
+            </div>
+          </div>
+          <button
+            onClick={() => setShowTabWarning(false)}
+            className="text-amber-600 hover:text-amber-800 dark:hover:text-amber-200 text-lg leading-none flex-shrink-0"
+            aria-label="Dismiss warning"
+          >✕</button>
+        </div>
+      )}
+
       <div>
         <h1 className="text-xl font-bold text-gray-900 dark:text-white">{mod.title} Quiz</h1>
         <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">
@@ -347,7 +467,7 @@ export function QuizEngine({ mod, userId, readOnly = false, existingAnswers }: Q
 }
 
 function ResultsScreen({
-  mod, answers, served, totalScore, maxServedPoints, confidenceBonus, confidencePenalty, pct, passed, coachData, coachLoading,
+  mod, answers, served, totalScore, maxServedPoints, confidenceBonus, confidencePenalty, pct, passed, coachData, coachLoading, tabSwitchCount,
 }: {
   mod: Module;
   answers: Answer[];
@@ -360,6 +480,7 @@ function ResultsScreen({
   passed: boolean;
   coachData: Record<string, unknown> | null;
   coachLoading: boolean;
+  tabSwitchCount: number;
 }) {
   const router = useRouter();
 
@@ -411,6 +532,19 @@ function ResultsScreen({
           )}
           {" · "}Pass mark: <strong>{Math.round(PASS_THRESHOLD * maxServedPoints)} pts</strong>
         </p>
+        {/* Tab switch integrity report */}
+        <div className={`inline-flex items-center gap-2 mt-2 px-3 py-1.5 rounded-full text-xs font-medium ${
+          tabSwitchCount === 0
+            ? "bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300"
+            : tabSwitchCount < MAX_TAB_SWITCHES
+              ? "bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300"
+              : "bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300"
+        }`}>
+          {tabSwitchCount === 0
+            ? <><Shield size={12} /> Full focus — 0 tab switches</>
+            : <><Eye size={12} /> {tabSwitchCount} tab switch{tabSwitchCount !== 1 ? "es" : ""} detected</>
+          }
+        </div>
       </div>
 
       {/* Per-question recap */}

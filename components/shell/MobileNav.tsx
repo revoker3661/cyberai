@@ -37,6 +37,8 @@ export function MobileNav({ userEmail, displayName }: MobileNavProps) {
 
   const initial = (displayName || userEmail || "U")[0].toUpperCase();
 
+  if (pathname.includes("/quiz")) return null;
+
   return (
     <>
       {/* Top bar */}
