@@ -12,11 +12,11 @@ export default async function ProfilePage() {
 
   const { data: progressRows } = await supabase
     .from("module_progress")
-    .select("score, module_id")
+    .select("score, module_id, passed")
     .eq("user_id", user.id);
 
   const rows = progressRows ?? [];
-  const completed = rows.length;
+  const completed = rows.filter((r: { passed: boolean }) => r.passed).length;
   const totalEarned = rows.reduce((sum: number, r: { score: number }) => sum + r.score, 0);
   const level = calcLevel(completed);
   const levelTitle = getLevelTitle(level);
