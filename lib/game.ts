@@ -3,6 +3,7 @@ import { LEVELS, TOTAL_MAX_POINTS } from "./content";
 export const PASS_THRESHOLD = 0.70;
 export const QUIZ_SERVE_COUNT = 15;
 export const CONFIDENCE_BONUS_MULTIPLIER = 1.25;
+export const CONFIDENT_WRONG_PENALTY = 0.20;
 
 export function calcOverallProgress(passedModules: number): number {
   return passedModules / 8;

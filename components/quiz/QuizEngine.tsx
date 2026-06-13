@@ -6,7 +6,7 @@ import {
   Trophy, AlertTriangle, RefreshCw,
 } from "lucide-react";
 import type { Module, QuizQuestion } from "@/lib/content";
-import { allocatePoints, shuffleArray, isPassed, PASS_THRESHOLD, QUIZ_SERVE_COUNT, CONFIDENCE_BONUS_MULTIPLIER } from "@/lib/game";
+import { allocatePoints, shuffleArray, isPassed, PASS_THRESHOLD, QUIZ_SERVE_COUNT, CONFIDENCE_BONUS_MULTIPLIER, CONFIDENT_WRONG_PENALTY } from "@/lib/game";
 
 type Confidence = "confident" | "guessing";
 
@@ -194,7 +194,12 @@ export function QuizEngine({ mod, userId, readOnly = false, existingAnswers }: Q
       if (!a.correct || !q || a.confidence !== "confident") return sum;
       return sum + (Math.round(q.allocatedPoints * CONFIDENCE_BONUS_MULTIPLIER) - q.allocatedPoints);
     }, 0);
-    const totalScore = baseScore + confidenceBonus;
+    const confidencePenalty = answers.reduce((sum, a) => {
+      const q = served.find((q) => q.id === a.questionId);
+      if (a.correct || !q || a.confidence !== "confident") return sum;
+      return sum + Math.round(q.allocatedPoints * CONFIDENT_WRONG_PENALTY);
+    }, 0);
+    const totalScore = baseScore + confidenceBonus - confidencePenalty;
     const maxServedPoints = served.reduce((s, q) => s + q.allocatedPoints, 0);
     const passed = serverPassed ?? isPassed(totalScore, maxServedPoints);
     const pct = Math.round((totalScore / maxServedPoints) * 100);
@@ -207,6 +212,7 @@ export function QuizEngine({ mod, userId, readOnly = false, existingAnswers }: Q
         totalScore={totalScore}
         maxServedPoints={maxServedPoints}
         confidenceBonus={confidenceBonus}
+        confidencePenalty={confidencePenalty}
         pct={pct}
         passed={passed}
         coachData={coachData}
@@ -341,7 +347,7 @@ export function QuizEngine({ mod, userId, readOnly = false, existingAnswers }: Q
 }
 
 function ResultsScreen({
-  mod, answers, served, totalScore, maxServedPoints, confidenceBonus, pct, passed, coachData, coachLoading,
+  mod, answers, served, totalScore, maxServedPoints, confidenceBonus, confidencePenalty, pct, passed, coachData, coachLoading,
 }: {
   mod: Module;
   answers: Answer[];
@@ -349,6 +355,7 @@ function ResultsScreen({
   totalScore: number;
   maxServedPoints: number;
   confidenceBonus: number;
+  confidencePenalty: number;
   pct: number;
   passed: boolean;
   coachData: Record<string, unknown> | null;
@@ -395,9 +402,12 @@ function ResultsScreen({
         </div>
 
         <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
-          Score: <strong className="text-gray-900 dark:text-white">{totalScore - confidenceBonus} / {maxServedPoints} pts</strong>
+          Score: <strong className="text-gray-900 dark:text-white">{totalScore - confidenceBonus + confidencePenalty} / {maxServedPoints} pts</strong>
           {confidenceBonus > 0 && (
             <span className="ml-2 text-amber-600 dark:text-amber-400 font-semibold">+{confidenceBonus} confidence bonus 🎯</span>
+          )}
+          {confidencePenalty > 0 && (
+            <span className="ml-2 text-red-600 dark:text-red-400 font-semibold">−{confidencePenalty} overconfidence penalty</span>
           )}
           {" · "}Pass mark: <strong>{Math.round(PASS_THRESHOLD * maxServedPoints)} pts</strong>
         </p>
@@ -425,7 +435,9 @@ function ResultsScreen({
                   <span className={ans.correct ? "text-emerald-600" : "text-red-600"}>
                     {ans.correct
                       ? `+${ans.confidence === "confident" ? Math.round(q.allocatedPoints * CONFIDENCE_BONUS_MULTIPLIER) : q.allocatedPoints} pts${ans.confidence === "confident" ? " 🎯" : ""}`
-                      : `-${q.allocatedPoints} pts`}
+                      : ans.confidence === "confident"
+                        ? `-${Math.round(q.allocatedPoints * CONFIDENT_WRONG_PENALTY)} pts`
+                        : "0 pts"}
                   </span>
                   {" · "}<span className="text-gray-400">{ans.confidence === "confident" ? "Confident" : "Just Guessing"}</span>
                 </p>

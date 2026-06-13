@@ -68,7 +68,7 @@ export default async function BadgesPage() {
               </div>
               <p className="text-sm font-semibold text-gray-900 dark:text-white mb-2 leading-tight">{mod.title}</p>
               {unlocked ? (
-                <ShareButton title={mod.title} />
+                <ShareButton title={mod.title} hexAccent={mod.hexAccent} />
               ) : (
                 <span className="text-xs text-gray-400">Complete to unlock</span>
               )}

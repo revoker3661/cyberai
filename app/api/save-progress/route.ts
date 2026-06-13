@@ -55,8 +55,13 @@ export async function POST(req: NextRequest) {
       actuallyCorrect = a.selectedIndex === q.correctIndex;
     }
     const qPoints = i >= servedCount - remainder ? pts + 1 : pts;
-    const confMultiplier = actuallyCorrect && a.confidence === "confident" ? 1.25 : 1;
-    return sum + (actuallyCorrect ? Math.round(qPoints * confMultiplier) : 0);
+    if (actuallyCorrect) {
+      const confMultiplier = a.confidence === "confident" ? 1.25 : 1;
+      return sum + Math.round(qPoints * confMultiplier);
+    } else if (a.confidence === "confident") {
+      return sum - Math.round(qPoints * 0.20);
+    }
+    return sum;
   }, 0);
 
   const passed = isPassed(score, maxServedPoints);
