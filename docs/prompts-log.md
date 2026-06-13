@@ -108,3 +108,38 @@ This log tracks significant AI-assisted prompts used to build CyberAI. Required 
 > Harden generateAIObject() and generateChat() against provider failures. Strategy: Attempt 1: Groq structured output (generateObject). Attempt 2: Gemini structured output. Attempt 3: Groq text + JSON regex extract + zod parse. Attempt 4: Gemini text + JSON regex extract + zod parse. generateChat() uses same 4-attempt pattern, passing full conversation as native CoreMessage[] array for attempts 1–2 (best context fidelity). On total failure, return typed fallback shape — never crash the UI.
 
 **Outcome:** lib/ai/client.ts implements full 4-attempt chain for both generateAIObject and generateChat. generateChat passes CoreMessage[] natively to preserve conversation quality. All AI features have graceful degradation with fallback shapes. Zero UI-crashing AI errors in production.
+
+---
+
+### Prompt 16 — Overconfidence penalty (-20% for Confident + Wrong)
+> Scoring is asymmetric: confident+correct earns a bonus but confident+wrong has no downside. Fix this: add CONFIDENT_WRONG_PENALTY = 0.20 to lib/game.ts. In save-progress, deduct Math.round(qPoints * 0.20) for confident+wrong answers. Wrong+guessing stays at 0 — you acknowledged uncertainty. Update QuizEngine to import the new constant, add confidencePenalty computation parallel to confidenceBonus, subtract it from totalScore. Results screen shows "−N overconfidence penalty" in red alongside the bonus. Per-question review: confident+wrong shows "-7 pts", guessing+wrong shows "0 pts".
+
+**Outcome:** Complete confidence-weighted scoring system: correct+confident +25%, correct+guessing +0%, wrong+confident −20%, wrong+guessing 0. Applied server-side in save-progress. Score display on results screen is fully transparent: baseScore + bonus − penalty all shown separately.
+
+---
+
+### Prompt 17 — Professional badge canvas with user name + passed-only gating
+> Badge share currently only shares text. Improve: (1) Build a Canvas API badge image (certificate-style banner, starburst badge ring, shield emoji, module title, "Awarded to: [displayName]", CyberAI branding, date). ShareButton accepts userName prop — fetched from user.user_metadata.display_name in badges/page.tsx. Share via Web Share API files[] if supported, fallback to text share, fallback to clipboard. (2) Badges page is showing badges for failed attempts — add .eq("passed", true) to the module_progress query so only truly passed modules show an unlocked badge.
+
+**Outcome:** Canvas-drawn PNG badge with user's name shared as a file on mobile Web Share API. Desktop falls back to text share. Badges page now correctly shows only passed-module badges. User display_name saved during signup via user_metadata.
+
+---
+
+### Prompt 18 — Quiz hydration mismatch fix (QuizClientWrapper)
+> QuizEngine uses Math.random() inside buildServedQuestions() in a useState lazy initializer. Next.js App Router renders client components on the server for hydration — different random values on server vs client produce different question text, causing React hydration mismatch error. Fix: create QuizClientWrapper ("use client") that uses dynamic(import QuizEngine, { ssr: false }). The wrapper must be a client component because ssr:false is not allowed in Server Components. Quiz page stays a Server Component and renders the wrapper instead of QuizEngine directly.
+
+**Outcome:** Hydration mismatch error eliminated. Quiz renders only on client (no SSR) so Math.random() never runs on the server. "Loading quiz…" shown briefly while JS loads. Named variable conflict (export const dynamic vs import dynamic) resolved by keeping the dynamic import in the client wrapper file only.
+
+---
+
+### Prompt 19 — Passed-only consistency audit (badges, cheat-sheet, profile)
+> Audit all pages that query module_progress. Problem: badges page showed badge for failed quiz, cheat-sheet showed cheat content for failed module, profile "Modules Completed" counted all rows including fails, level was inflated. Fix: (1) badges/page.tsx: .eq("passed", true) — done in Prompt 17. (2) cheat-sheet/page.tsx: .eq("passed", true). (3) profile/page.tsx: select passed column, compute completed = rows.filter(r => r.passed).length, level = calcLevel(completed). Dashboard and certificate were already correct (used passedModules filter). learn page and review page intentionally show all attempts.
+
+**Outcome:** All reward surfaces (badges, cheat-sheet, profile modules count, level) now gate on passed=true. Attempting a quiz but failing earns 0 rewards. Dashboard was already correct — no change needed.
+
+---
+
+### Prompt 20 — Comprehensive documentation update
+> Update README.md to accurately describe the full current system: confidence scoring table, overconfidence penalty, 240-question bank, anti-cheat shuffle, QuizClientWrapper hydration fix, passed-only gating decisions, FloatingAssistant page-context system, badge canvas, Learn tab. Add prompts 16–19 to prompts-log.md. Create docs/PROJECT.md — a complete technical reference covering database schema, game mechanics, scoring system, AI architecture, file inventory, security model, and all engineering decisions.
+
+**Outcome:** README fully reflects current codebase state. Prompts log complete (20 entries). docs/PROJECT.md created as a comprehensive single-document reference for evaluators to understand every system in the project.
