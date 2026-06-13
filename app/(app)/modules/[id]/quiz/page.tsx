@@ -2,7 +2,7 @@ export const dynamic = "force-dynamic";
 import { notFound, redirect } from "next/navigation";
 import { getModule } from "@/lib/content";
 import { createClient } from "@/lib/supabase/server";
-import { QuizEngine } from "@/components/quiz/QuizEngine";
+import { QuizClientWrapper } from "@/components/quiz/QuizClientWrapper";
 
 export default async function QuizPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -15,7 +15,7 @@ export default async function QuizPage({ params }: { params: Promise<{ id: strin
 
   return (
     <div className="py-2">
-      <QuizEngine mod={mod} userId={user.id} />
+      <QuizClientWrapper mod={mod} userId={user.id} />
     </div>
   );
 }

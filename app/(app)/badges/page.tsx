@@ -20,9 +20,16 @@ export default async function BadgesPage() {
   const { data: progressRows } = await supabase
     .from("module_progress")
     .select("module_id")
-    .eq("user_id", user.id);
+    .eq("user_id", user.id)
+    .eq("passed", true);
 
   const completed = new Set((progressRows ?? []).map((r: { module_id: string }) => r.module_id));
+
+  const displayName = String(
+    (user.user_metadata as Record<string, unknown>)?.display_name
+    ?? user.email?.split("@")[0]
+    ?? "Learner"
+  );
 
   return (
     <div className="max-w-3xl mx-auto">
@@ -68,7 +75,7 @@ export default async function BadgesPage() {
               </div>
               <p className="text-sm font-semibold text-gray-900 dark:text-white mb-2 leading-tight">{mod.title}</p>
               {unlocked ? (
-                <ShareButton title={mod.title} hexAccent={mod.hexAccent} />
+                <ShareButton title={mod.title} hexAccent={mod.hexAccent} userName={displayName} />
               ) : (
                 <span className="text-xs text-gray-400">Complete to unlock</span>
               )}
