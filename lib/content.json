@@ -1,0 +1,682 @@
+{
+  "app": {
+    "name": "CyberAI",
+    "tagline": "Gamified Cybersecurity Awareness Training",
+    "totalMaxPoints": 5100,
+    "moduleCount": 8,
+    "certificateTitle": "CYBERAI TRAINING PROGRAM",
+    "certificatePresenter": "Presented by the CyberAI Security Team",
+    "certificateIdFormat": "CERT-{8 random uppercase alphanumeric chars}, e.g. CERT-DEIDY1AM"
+  },
+  "levels": [
+    { "level": 1, "title": "Security Rookie", "minModulesCompleted": 0, "source": "inferred" },
+    { "level": 2, "title": "Threat Spotter", "minModulesCompleted": 1, "source": "inferred" },
+    { "level": 3, "title": "Cyber Defender", "minModulesCompleted": 3, "source": "inferred" },
+    { "level": 4, "title": "Security Architect", "minModulesCompleted": 4, "source": "wireframe (4/8 modules, 1950 pts -> Lv.4)" },
+    { "level": 5, "title": "Cyber Sentinel", "minModulesCompleted": 6, "source": "wireframe (6/8 modules, 2850 pts -> Lv.5; stays Lv.5 at 8/8)" }
+  ],
+  "formulas": {
+    "overallProgressPercent": "completedModules / 8 * 100 (wireframe: 4/8 -> 50%, 6/8 -> 75%, 8/8 -> 100%)",
+    "scoreAttainmentPercent": "round(totalPointsEarned / 5100 * 100) (wireframe: 1950 -> 38%, 2850 -> 56%, 4350 -> 85%)",
+    "questionScoring": "correct answer = full question points; wrong = 0. Confidence selection does NOT affect points (design decision: wireframes show no point modifier; confidence feeds the AI Quiz Coach instead).",
+    "moduleCompletion": "module is Completed after the user finishes its quiz once; score persists; Review Quiz replays answers read-only; lesson shows Lesson Completed state"
+  },
+  "modules": [
+    {
+      "id": "phishing",
+      "order": 1,
+      "title": "Phishing: The Lure (Email)",
+      "icon": "mail",
+      "color": "teal",
+      "hexAccent": "#14b8a6",
+      "maxPoints": 500,
+      "lesson": {
+        "sections": [
+          {
+            "heading": "1. What is Phishing?",
+            "body": "Phishing is a fraudulent attempt to obtain sensitive information such as usernames, passwords, and credit card details by disguising as a trustworthy entity in an electronic communication, typically email. It's the most common form of cyber attack."
+          },
+          {
+            "heading": "2. Red Flags of a Phishing Email",
+            "bullets": [
+              { "title": "Urgent or Threatening Language", "text": "Phrases like 'Account Suspended' or 'Unauthorized Login Attempt' create panic, rushing you into clicking without thinking." },
+              { "title": "Generic Greetings", "text": "Vague greetings like 'Dear Customer' instead of your actual name can be a major red flag." },
+              { "title": "Suspicious Links & Attachments", "text": "Hover over links to see the real URL. Never open unexpected attachments, as they can contain malware." },
+              { "title": "Sender Email Mismatch", "text": "The sender's name might say 'PayPal', but the email address is something like 'secure-update@paypalservice123.com'. Always check the full email address." },
+              { "title": "Spelling and Grammar Mistakes", "text": "Obvious errors are a sign of a scam." }
+            ]
+          },
+          {
+            "heading": "3. Your Best Defense: Skepticism",
+            "body": "The golden rule is: if an email seems suspicious, it probably is. Do not click any links or download attachments. If you think the email might be legitimate, navigate to the company's website directly in a new browser tab and log in from there. Report the phishing attempt to your IT department."
+          }
+        ]
+      },
+      "quiz": [
+        {
+          "id": "phishing-q1",
+          "points": 150,
+          "question": "After identifying a suspicious email as a phishing attempt, what is the recommended next step?",
+          "options": [
+            "Forward it to all your colleagues to warn them.",
+            "Mark it as spam and delete it.",
+            "Reply to the sender telling them you know it's a scam.",
+            "Report it to your IT/Security department using the official reporting channel."
+          ],
+          "correctIndex": 3,
+          "explanation": "Reporting phishing attempts to your IT/Security department is crucial. They can analyze the email, block the sender, and implement broader defenses to protect the entire organization. Simply marking as spam or deleting is insufficient."
+        },
+        {
+          "id": "phishing-q2",
+          "points": 100,
+          "question": "What should you do if you accidentally click a link in a phishing email?",
+          "options": [
+            "Immediately restart your computer.",
+            "Disconnect from the internet and report it to IT/Security right away.",
+            "Delete the email from your inbox and trash.",
+            "Run an antivirus scan and hope for the best."
+          ],
+          "correctIndex": 1,
+          "explanation": "Disconnecting from the network can prevent any potential malware from spreading or 'phoning home'. Reporting it immediately allows the security team to take action to protect you and the company."
+        },
+        {
+          "id": "phishing-q3",
+          "points": 100,
+          "question": "Which of these is the BIGGEST red flag for a phishing email?",
+          "options": [
+            "The email contains the company's official logo.",
+            "The sender's email address is from a public domain (like @gmail.com) but claims to be a bank.",
+            "The email is addressed to you by your first name.",
+            "The email offers you a discount on a future purchase."
+          ],
+          "correctIndex": 1,
+          "explanation": "Legitimate businesses, especially banks, will always email from their official corporate domain (e.g., @bankofamerica.com), not a free public one. This is a very strong indicator of a phishing attempt."
+        },
+        {
+          "id": "phishing-q4",
+          "points": 150,
+          "question": "You receive an email from 'Netflix' with the subject 'Your account is on hold'. It asks you to click a link to update your payment details. What is the safest course of action?",
+          "options": [
+            "Click the link and enter your details; you don't want to miss your shows.",
+            "Ignore the email and assume it's a mistake.",
+            "Open a new browser window, go to the official Netflix website, and check your account status there.",
+            "Reply to the email asking for confirmation."
+          ],
+          "correctIndex": 2,
+          "explanation": "Never trust links in unexpected emails regarding account security. The safest action is always to go directly to the official website through a trusted method to verify any claims."
+        }
+      ],
+      "cheatSheet": [
+        "Be wary of emails creating a sense of urgency or fear.",
+        "Hover over links to inspect the true destination URL before clicking.",
+        "Verify the sender's email address; don't just trust the display name.",
+        "Never open unexpected attachments, especially from unknown senders."
+      ]
+    },
+    {
+      "id": "passwords-2fa",
+      "order": 2,
+      "title": "The Strong Vault: Passwords & 2FA",
+      "icon": "lock",
+      "color": "blue",
+      "hexAccent": "#2563eb",
+      "maxPoints": 550,
+      "lesson": {
+        "sections": [
+          {
+            "heading": "1. Beyond 'password123'",
+            "body": "A strong password is your first and most crucial line of defense. Attackers use automated software to guess millions of passwords per second. Simple, common, or personal passwords can be cracked almost instantly."
+          },
+          {
+            "heading": "2. The Pillars of a Strong Password",
+            "bullets": [
+              { "title": "Length is Strength", "text": "Aim for at least 14 characters. Each additional character makes a password exponentially harder to crack." },
+              { "title": "Complexity is Key", "text": "Use a mix of uppercase letters, lowercase letters, numbers, and symbols (e.g., !@#$%)." },
+              { "title": "Uniqueness is Non-Negotiable", "text": "Never reuse passwords across different websites. A breach on one site would expose all your accounts." }
+            ]
+          },
+          {
+            "heading": "3. Your Secret Weapon: The Password Manager",
+            "body": "It's impossible to remember dozens of unique, complex passwords. A trusted password manager solves this. It generates, stores, and auto-fills ultra-strong passwords for you, so you only need to remember one master password."
+          },
+          {
+            "heading": "4. Two-Factor Authentication (2FA/MFA)",
+            "body": "2FA is a security force multiplier. It requires a second form of verification (like a code from your phone) besides your password. This means even if an attacker steals your password, they cannot get into your account. Enable it everywhere."
+          }
+        ]
+      },
+      "quiz": [
+        {
+          "id": "passwords-q1",
+          "points": 150,
+          "question": "What is the most effective way to manage unique, complex passwords for all your accounts?",
+          "options": [
+            "Write them down in a notebook.",
+            "Use a trusted password manager application.",
+            "Use the same password everywhere but change it monthly.",
+            "Use variations of your pet's name."
+          ],
+          "correctIndex": 1,
+          "explanation": "Password managers are designed to securely create, store, and manage unique and strong passwords for every account, eliminating password reuse and the need to remember them all."
+        },
+        {
+          "id": "passwords-q2",
+          "points": 150,
+          "question": "Which password example follows best practices for strength and uniqueness?",
+          "options": [
+            "YourCompany123",
+            "P@sswordForWork!",
+            "aPpLePi3&C0ff33!",
+            "QwertY@123"
+          ],
+          "correctIndex": 2,
+          "explanation": "'aPpLePi3&C0ff33!' is a strong passphrase that is long, complex, and avoids common patterns, making it highly resistant to cracking. The others use common patterns or are too short/simple."
+        },
+        {
+          "id": "passwords-q3",
+          "points": 100,
+          "question": "Which of the following is the WEAKEST password?",
+          "options": [
+            "Fg#9k$2(j@1Po!",
+            "Summer2024!",
+            "MyDogFido123",
+            "Tr0ub4dor&3"
+          ],
+          "correctIndex": 1,
+          "explanation": "'Summer2024!' is predictable and follows a common pattern (word + year + symbol), making it much easier to guess with automated tools than a truly random string of characters."
+        },
+        {
+          "id": "passwords-q4",
+          "points": 150,
+          "question": "What is the primary benefit of Two-Factor Authentication (2FA)?",
+          "options": [
+            "It makes your password stronger.",
+            "It prevents your password from being stolen.",
+            "It adds a second layer of security, making your account inaccessible even if your password is stolen.",
+            "It automatically logs you into your accounts."
+          ],
+          "correctIndex": 2,
+          "explanation": "2FA's main strength is that it requires a second factor (something you have, like your phone) in addition to your password (something you know), stopping attackers who have only stolen the password."
+        }
+      ],
+      "cheatSheet": [
+        "Use a password manager to create unique passwords for every service.",
+        "Enable Two-Factor Authentication (2FA) on all critical accounts.",
+        "Make passwords long (14+ characters) and complex (mix of cases, numbers, symbols).",
+        "Never reuse passwords. A breach on one site will compromise others."
+      ]
+    },
+    {
+      "id": "malware-ransomware",
+      "order": 3,
+      "title": "Malware & Ransomware Defense",
+      "icon": "zap",
+      "color": "green",
+      "hexAccent": "#16a34a",
+      "maxPoints": 650,
+      "lesson": {
+        "sections": [
+          {
+            "heading": "1. Understanding Malicious Software",
+            "body": "Malware is any software designed to harm your system. It includes viruses, spyware, and trojans. Ransomware is a particularly nasty type that encrypts all your files, holding them hostage until you pay a fee."
+          },
+          {
+            "heading": "2. Common Infection Vectors",
+            "bullets": [
+              { "title": "Phishing Emails", "text": "Clicking malicious links or opening infected attachments is the #1 way malware spreads." },
+              { "title": "Malicious Downloads", "text": "Software from untrusted websites, often disguised as 'free' games or utilities, can be bundled with malware." },
+              { "title": "Unpatched Software", "text": "Attackers exploit security holes in outdated software (your OS, browser, or applications). Keeping everything updated is critical." }
+            ]
+          },
+          {
+            "heading": "3. Your Defensive Strategy",
+            "body": "A multi-layered defense is key. Use a reputable antivirus/anti-malware program and keep it updated. Be extremely cautious about what you click and download. Regularly back up your important files to an external drive or cloud service; this is your best defense against ransomware."
+          }
+        ]
+      },
+      "quiz": [
+        {
+          "id": "malware-q1",
+          "points": 200,
+          "question": "What is the defining characteristic of a ransomware attack?",
+          "options": [
+            "It steals your password.",
+            "It slows down your computer.",
+            "It encrypts your files and demands a payment for their release.",
+            "It displays unwanted pop-up ads."
+          ],
+          "correctIndex": 2,
+          "explanation": "Ransomware's goal is extortion. It makes your files unusable by encrypting them and then demands a ransom payment, usually in cryptocurrency, for the decryption key."
+        },
+        {
+          "id": "malware-q2",
+          "points": 100,
+          "question": "Why is it crucial to keep your operating system and applications updated?",
+          "options": [
+            "To get new features and a better user interface.",
+            "To fix security vulnerabilities that malware can exploit.",
+            "To ensure compatibility with new websites.",
+            "To make your software run faster."
+          ],
+          "correctIndex": 1,
+          "explanation": "Software updates frequently include 'patches' for security holes that have been discovered. Attackers specifically target these known vulnerabilities in outdated software to deliver malware."
+        },
+        {
+          "id": "malware-q3",
+          "points": 200,
+          "question": "What is the single most effective way to recover from a ransomware attack without paying the ransom?",
+          "options": [
+            "Unplugging your computer from the internet.",
+            "Running an antivirus scan after the attack.",
+            "Having recent, secure backups of your important files.",
+            "Negotiating with the attackers for a lower price."
+          ],
+          "correctIndex": 2,
+          "explanation": "If you have clean backups, you can restore your files without needing to pay the attackers. This neutralizes their primary leverage and is a critical part of any security strategy."
+        },
+        {
+          "id": "malware-q4",
+          "points": 150,
+          "question": "Which of these is NOT a common way malware can infect a computer?",
+          "options": [
+            "Through official software updates from trusted vendors.",
+            "By clicking malicious links in phishing emails.",
+            "Downloading cracked software from untrusted websites.",
+            "Exploiting security vulnerabilities in outdated software."
+          ],
+          "correctIndex": 0,
+          "explanation": "Official software updates from trusted vendors are designed to fix security flaws and add features, not introduce malware. Malware typically spreads through malicious downloads, phishing, or exploiting vulnerabilities."
+        }
+      ],
+      "cheatSheet": [
+        "Ransomware encrypts your files and demands payment; backups are your best defense.",
+        "Keep your operating system, browser, and all applications fully updated.",
+        "Use a reputable antivirus program and keep its definitions current.",
+        "Be highly suspicious of unsolicited email attachments and downloads from untrusted sites."
+      ]
+    },
+    {
+      "id": "vishing-smishing",
+      "order": 4,
+      "title": "Vishing & Smishing (Non-Email Threats)",
+      "icon": "phone",
+      "color": "orange",
+      "hexAccent": "#f97316",
+      "maxPoints": 550,
+      "lesson": {
+        "sections": [
+          {
+            "heading": "1. Phishing Beyond Email",
+            "body": "Social engineering doesn't just happen in your inbox. Attackers also use phone calls and text messages to trick you. This is known as Vishing (Voice Phishing) and Smishing (SMS Phishing)."
+          },
+          {
+            "heading": "2. Common Scams and Tactics",
+            "bullets": [
+              { "title": "Urgent Bank Alerts (Smishing)", "text": "A text message claims your account is frozen and provides a link to 'verify' your identity. The link leads to a fake login page." },
+              { "title": "Tech Support Scams (Vishing)", "text": "An unsolicited call from someone claiming to be from Microsoft or Apple, stating your computer is infected. They aim to get remote access or payment." },
+              { "title": "Impersonation", "text": "Attackers may pretend to be from the IRS, a delivery service, or even your own company's IT helpdesk." }
+            ]
+          },
+          {
+            "heading": "3. How to Respond",
+            "body": "The golden rule is: never trust, always verify. Do not click links in suspicious texts. Hang up on unsolicited calls. If the message claims to be from a company you do business with, contact them directly using a phone number or website you know is legitimate. Never use the contact info provided in the message or call."
+          }
+        ]
+      },
+      "quiz": [
+        {
+          "id": "vishing-q1",
+          "points": 200,
+          "question": "You receive a text message from an unknown number that says: 'Your bank account has been locked due to suspicious activity. Click here to unlock it: [link]'. What should you do?",
+          "options": [
+            "Click the link immediately to secure your account.",
+            "Reply 'STOP' to the text message.",
+            "Delete the message and contact your bank using their official website or app.",
+            "Call the phone number the text came from."
+          ],
+          "correctIndex": 2,
+          "explanation": "This is a classic smishing tactic. The link leads to a fake site designed to steal your login credentials. Always verify such claims by contacting the institution through an official, trusted channel you find yourself."
+        },
+        {
+          "id": "vishing-q2",
+          "points": 200,
+          "question": "A person calls you claiming to be from 'Microsoft Tech Support' and says they've detected a virus on your computer. They ask to remotely access your machine. You should:",
+          "options": [
+            "Follow their instructions, as Microsoft is a trusted company.",
+            "Ask for their employee ID number to verify them.",
+            "Politely hang up the phone.",
+            "Give them your IP address so they can run a scan."
+          ],
+          "correctIndex": 2,
+          "explanation": "Legitimate tech support from companies like Microsoft or Apple will never call you unsolicited. This is a scam to gain control of your computer, steal data, or install malware. The only safe action is to hang up."
+        },
+        {
+          "id": "vishing-q3",
+          "points": 150,
+          "question": "What is the key difference between Phishing, Vishing, and Smishing?",
+          "options": [
+            "The type of information they try to steal.",
+            "The country they originate from.",
+            "The medium they use: email, voice call, or SMS text message.",
+            "The level of danger they pose."
+          ],
+          "correctIndex": 2,
+          "explanation": "They are all forms of social engineering designed to trick you. The only difference is the communication channel used: Phishing (email), Vishing (voice), and Smishing (SMS)."
+        }
+      ],
+      "cheatSheet": [
+        "Vishing = Voice Phishing (scams via phone calls).",
+        "Smishing = SMS Phishing (scams via text messages).",
+        "Never click links or call numbers from unsolicited texts or calls.",
+        "Verify any urgent request by contacting the company through their official website or phone number."
+      ]
+    },
+    {
+      "id": "physical-security",
+      "order": 5,
+      "title": "Physical, Travel, & Remote Security",
+      "icon": "globe",
+      "color": "purple",
+      "hexAccent": "#9333ea",
+      "maxPoints": 600,
+      "lesson": {
+        "sections": [
+          {
+            "heading": "1. Security is Not Just Digital",
+            "body": "Protecting information goes beyond firewalls. Physical security means protecting your devices and your screen from unauthorized access in the real world."
+          },
+          {
+            "heading": "2. In the Office and On the Go",
+            "bullets": [
+              { "title": "Lock Your Screen", "text": "Always lock your computer when you step away, even for a moment. (Win+L on Windows, Cmd+Ctrl+Q on Mac)." },
+              { "title": "Beware of Shoulder Surfing", "text": "Be aware of your surroundings in public places like cafes or airports. People can watch you enter passwords or view sensitive data over your shoulder." },
+              { "title": "Secure Your Devices", "text": "Never leave laptops, phones, or tablets unattended in public. When traveling, keep them in your possession, not in checked luggage." }
+            ]
+          },
+          {
+            "heading": "3. The Dangers of Public Wi-Fi",
+            "body": "Public Wi-Fi is not secure. Attackers on the same network can potentially intercept your data. Avoid logging into sensitive accounts (bank, email) on public Wi-Fi. If you must use it, always use a trusted Virtual Private Network (VPN) to encrypt your connection."
+          }
+        ]
+      },
+      "quiz": [
+        {
+          "id": "physical-q1",
+          "points": 200,
+          "question": "What is 'shoulder surfing'?",
+          "options": [
+            "A new web browsing technique.",
+            "Using a screen protector to block side views.",
+            "The act of observing someone's screen or keyboard to steal information.",
+            "A type of malware that watches your screen."
+          ],
+          "correctIndex": 2,
+          "explanation": "Shoulder surfing is a low-tech but effective method of stealing confidential information, like passwords or PINs, by simply looking over someone's shoulder."
+        },
+        {
+          "id": "physical-q2",
+          "points": 200,
+          "question": "When working in a public coffee shop, what is the best way to protect your data on their Wi-Fi network?",
+          "options": [
+            "Only visit websites that use HTTPS.",
+            "Use a Virtual Private Network (VPN).",
+            "Ask the barista if the Wi-Fi is secure.",
+            "Connect only for a few minutes at a time."
+          ],
+          "correctIndex": 1,
+          "explanation": "While HTTPS is good, a VPN is the most comprehensive solution. It encrypts ALL your internet traffic, creating a secure tunnel that prevents anyone on the same public network from snooping on your activity."
+        },
+        {
+          "id": "physical-q3",
+          "points": 200,
+          "question": "What is the keyboard shortcut to quickly lock your computer screen on Windows?",
+          "options": [
+            "Ctrl + Alt + Delete",
+            "Alt + F4",
+            "Windows Key + L",
+            "Ctrl + L"
+          ],
+          "correctIndex": 2,
+          "explanation": "Windows Key + L is the fastest way to lock your screen, a critical habit to build whenever you step away from your desk to prevent unauthorized physical access."
+        }
+      ],
+      "cheatSheet": [
+        "Always lock your computer when you step away (Win+L or Cmd+Ctrl+Q).",
+        "Use a VPN to encrypt your connection on public Wi-Fi networks.",
+        "Be aware of 'shoulder surfers' watching your screen in public places.",
+        "Never leave devices like laptops or phones unattended."
+      ]
+    },
+    {
+      "id": "data-handling",
+      "order": 6,
+      "title": "Data Handling, Reporting, & Compliance",
+      "icon": "trash-2",
+      "color": "indigo",
+      "hexAccent": "#4f46e5",
+      "maxPoints": 700,
+      "lesson": {
+        "sections": [
+          {
+            "heading": "1. Not All Data is Equal",
+            "body": "Data is often classified by its sensitivity: Public (press releases), Internal (org charts), and Confidential/Restricted (personally identifiable information (PII), financial records, health information). You have a responsibility to protect sensitive data."
+          },
+          {
+            "heading": "2. Secure Handling and Disposal",
+            "bullets": [
+              { "title": "Need to Know", "text": "Only access and share sensitive data with those who have a legitimate business need." },
+              { "title": "Secure Storage", "text": "Store confidential data on approved, encrypted systems, not on personal devices or unsecured cloud services." },
+              { "title": "Proper Disposal", "text": "Don't just throw sensitive information away. Physical documents should be shredded. Digital files should be securely deleted, not just moved to the trash bin." }
+            ]
+          },
+          {
+            "heading": "3. When Things Go Wrong: Incident Reporting",
+            "body": "If you suspect a security incident (e.g., you clicked a phishing link, lost a work device, or see suspicious activity), you must report it immediately to the designated contact (IT, InfoSec, your manager). Fast reporting is critical to minimizing damage."
+          }
+        ]
+      },
+      "quiz": [
+        {
+          "id": "data-q1",
+          "points": 250,
+          "question": "An employee's home address and phone number is an example of what kind of data?",
+          "options": [
+            "Public",
+            "Internal",
+            "Confidential / Personally Identifiable Information (PII)",
+            "Trivial"
+          ],
+          "correctIndex": 2,
+          "explanation": "PII is any data that can be used to identify a specific individual. It's considered sensitive, confidential data and must be protected to prevent identity theft and privacy violations."
+        },
+        {
+          "id": "data-q2",
+          "points": 250,
+          "question": "What is the correct way to dispose of a printed document containing confidential client information?",
+          "options": [
+            "Tear it in half and put it in the recycling bin.",
+            "Put it in the regular trash can.",
+            "Use a cross-cut shredder.",
+            "Leave it on your desk for the cleaning crew to handle."
+          ],
+          "correctIndex": 2,
+          "explanation": "Simply throwing away sensitive documents can lead to 'dumpster diving' attacks. A cross-cut shredder makes the documents extremely difficult to reconstruct, which is the standard for secure disposal."
+        },
+        {
+          "id": "data-q3",
+          "points": 200,
+          "question": "You realize you accidentally clicked a link in a suspicious email. What is the most important first step?",
+          "options": [
+            "Immediately run an antivirus scan.",
+            "Turn off your computer and hope for the best.",
+            "Don't tell anyone to avoid getting in trouble.",
+            "Immediately report the incident to your IT/Security department."
+          ],
+          "correctIndex": 3,
+          "explanation": "Time is critical during a potential breach. Your security team has tools and procedures to investigate and contain threats, but they need to know as soon as possible. Reporting quickly is the most responsible action."
+        }
+      ],
+      "cheatSheet": [
+        "Classify data based on sensitivity (Public, Internal, Confidential).",
+        "Handle confidential data with care and only share on a 'need-to-know' basis.",
+        "Securely dispose of sensitive data by shredding physical documents.",
+        "Report any suspected security incident to your IT/Security team IMMEDIATELY."
+      ]
+    },
+    {
+      "id": "social-engineering",
+      "order": 7,
+      "title": "Social Engineering & Modern Scams",
+      "icon": "users",
+      "color": "rose",
+      "hexAccent": "#e11d48",
+      "maxPoints": 750,
+      "lesson": {
+        "sections": [
+          {
+            "heading": "1. The Human Element",
+            "body": "Social engineering is the art of manipulating people so they give up confidential information. Attackers know that humans are often the weakest link in the security chain."
+          },
+          {
+            "heading": "2. Modern Scam Tactics",
+            "bullets": [
+              { "title": "CEO Fraud / Business Email Compromise (BEC)", "text": "An attacker impersonates a high-level executive (like the CEO) and emails an employee, usually in finance, urgently requesting a wire transfer or sensitive data." },
+              { "title": "Deepfakes & AI Voice Cloning", "text": "Scammers use AI to clone the voice of a loved one or an executive, calling to demand immediate financial assistance or authorize transactions." },
+              { "title": "Baiting & Quid Pro Quo", "text": "Leaving an infected USB drive in a parking lot (baiting) or offering a fake benefit in exchange for information (quid pro quo)." },
+              { "title": "Pretexting", "text": "Creating a fabricated scenario (a pretext) to steal personal information, such as pretending to be a survey researcher or a bank official." }
+            ]
+          },
+          {
+            "heading": "3. Defending Against Manipulation",
+            "body": "Always verify unusual requests, especially those involving money or sensitive data, through a secondary channel. If the 'CEO' emails you for an urgent wire transfer, call them or speak to them in person to confirm. Be skeptical of unsolicited offers and never plug in unknown devices."
+          }
+        ]
+      },
+      "quiz": [
+        {
+          "id": "social-q1",
+          "points": 250,
+          "question": "What is the primary goal of a 'pretexting' attack?",
+          "options": [
+            "To infect your computer with ransomware.",
+            "To create a fabricated scenario to trick you into revealing sensitive information.",
+            "To guess your password using automated tools.",
+            "To physically steal your laptop."
+          ],
+          "correctIndex": 1,
+          "explanation": "Pretexting involves an attacker inventing a scenario (the pretext) to engage a victim and increase the chance they will divulge information or perform actions that would be unlikely in ordinary circumstances."
+        },
+        {
+          "id": "social-q2",
+          "points": 250,
+          "question": "You find a USB drive in the company parking lot. What is the safest course of action?",
+          "options": [
+            "Plug it into your computer to see who it belongs to so you can return it.",
+            "Plug it into a public computer at a library to check its contents safely.",
+            "Throw it in the trash.",
+            "Give it to your IT or Security department."
+          ],
+          "correctIndex": 3,
+          "explanation": "This is a 'baiting' attack. The USB drive could be loaded with malware that will infect any computer it's plugged into. IT/Security has safe ways to examine such devices."
+        },
+        {
+          "id": "social-q3",
+          "points": 250,
+          "question": "You receive an urgent email from your company's CEO asking you to immediately wire $50,000 to a new vendor. The email address looks correct. What should you do?",
+          "options": [
+            "Process the wire transfer immediately to avoid upsetting the CEO.",
+            "Reply to the email asking for the invoice.",
+            "Call the CEO or speak to them in person to verify the request.",
+            "Forward the email to the finance department to handle."
+          ],
+          "correctIndex": 2,
+          "explanation": "This is a classic Business Email Compromise (BEC) scenario. Always verify unusual or urgent financial requests through a secondary, trusted communication channel (like a phone call or in-person conversation) before taking action."
+        }
+      ],
+      "cheatSheet": [
+        "Verify urgent financial requests from executives via a secondary channel (e.g., phone call).",
+        "Be aware that AI can now clone voices and create convincing deepfakes.",
+        "Never plug unknown USB drives or devices into your computer.",
+        "Be skeptical of unsolicited requests for information, even if they seem to come from an authority figure."
+      ]
+    },
+    {
+      "id": "crypto-scams",
+      "order": 8,
+      "title": "Financial & Cryptocurrency Scams",
+      "icon": "bitcoin",
+      "color": "amber",
+      "hexAccent": "#f59e0b",
+      "maxPoints": 800,
+      "lesson": {
+        "sections": [
+          {
+            "heading": "1. The Rise of Crypto Scams",
+            "body": "With the popularity of cryptocurrency, scammers have developed sophisticated methods to steal digital assets. Because crypto transactions are often irreversible, they are a prime target for fraudsters."
+          },
+          {
+            "heading": "2. Common Financial Scams",
+            "bullets": [
+              { "title": "Pig Butchering (Investment Scams)", "text": "Scammers build a long-term relationship (often romantic or friendly) online, then convince the victim to invest in a fake crypto platform. They show fake profits to encourage larger investments before disappearing with the money." },
+              { "title": "Fake Exchanges & Wallets", "text": "Malicious apps or websites designed to look like legitimate crypto exchanges. Once you deposit funds or enter your seed phrase, your assets are stolen." },
+              { "title": "Tech Support & Refund Scams", "text": "Scammers claim you are owed a refund or your account is compromised, then guide you to transfer funds or grant remote access to your device." },
+              { "title": "Giveaway Scams", "text": "Fake social media posts from 'celebrities' promising to double any crypto you send to their address." }
+            ]
+          },
+          {
+            "heading": "3. Protecting Your Assets",
+            "body": "Never share your wallet's seed phrase or private keys with anyone. Be extremely skeptical of 'guaranteed' high returns or pressure to invest quickly. Only use well-known, established cryptocurrency exchanges and verify URLs carefully before logging in."
+          }
+        ]
+      },
+      "quiz": [
+        {
+          "id": "crypto-q1",
+          "points": 250,
+          "question": "Someone you met online a few months ago suggests you invest in a new crypto trading platform that guarantees a 20% weekly return. They even show you screenshots of their profits. What should you do?",
+          "options": [
+            "Start with a small investment to test the waters.",
+            "Ask them for more details about how the platform works.",
+            "Recognize this as a likely 'pig butchering' scam and cut off contact.",
+            "Borrow money to maximize your potential returns."
+          ],
+          "correctIndex": 2,
+          "explanation": "This is a classic 'pig butchering' investment scam. Scammers build trust over time and use fake platforms showing fabricated profits to lure victims into investing large sums of money."
+        },
+        {
+          "id": "crypto-q2",
+          "points": 250,
+          "question": "You receive an email from a popular crypto exchange saying your account needs verification and asks you to enter your 12-word seed phrase. What is the correct action?",
+          "options": [
+            "Enter the seed phrase to ensure your account isn't locked.",
+            "Ignore the email, as legitimate exchanges will NEVER ask for your seed phrase.",
+            "Reply to the email asking why they need it.",
+            "Forward the email to a friend for advice."
+          ],
+          "correctIndex": 1,
+          "explanation": "Your seed phrase is the master key to your crypto wallet. Legitimate exchanges or support staff will never ask for it. Anyone asking for your seed phrase is trying to steal your funds."
+        },
+        {
+          "id": "crypto-q3",
+          "points": 300,
+          "pointsNote": "Wireframe shows +250, but module total is advertised as 800 and dashboard math (4350/5100 = 85%) confirms 800. Set to 300 to resolve the inconsistency. Document this decision in the README.",
+          "question": "A famous entrepreneur tweets that they are giving back to the community and will double any Bitcoin sent to a specific address. What is this?",
+          "options": [
+            "A legitimate promotional giveaway.",
+            "A common giveaway scam, often using compromised verified accounts.",
+            "A smart contract testing phase.",
+            "An exclusive investment opportunity."
+          ],
+          "correctIndex": 1,
+          "explanation": "Giveaway scams are very common on social media. Scammers often hack verified accounts or create convincing fake profiles to trick people into sending crypto, which is never returned."
+        }
+      ],
+      "cheatSheet": [
+        "Never share your crypto wallet's seed phrase or private keys with anyone.",
+        "Be highly skeptical of online acquaintances pushing 'guaranteed' high-return investments.",
+        "Legitimate tech support will never ask you to send cryptocurrency.",
+        "If an offer sounds too good to be true (like doubling your money), it is a scam."
+      ]
+    }
+  ]
+}
