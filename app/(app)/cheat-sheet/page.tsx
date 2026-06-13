@@ -19,7 +19,8 @@ export default async function CheatSheetPage() {
   const { data: progressRows } = await supabase
     .from("module_progress")
     .select("module_id")
-    .eq("user_id", user.id);
+    .eq("user_id", user.id)
+    .eq("passed", true);
 
   const completed = new Set((progressRows ?? []).map((r: { module_id: string }) => r.module_id));
   const completedModules = MODULES.filter((m) => completed.has(m.id));
