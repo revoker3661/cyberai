@@ -108,7 +108,9 @@ export const MODULES: Module[] = content.modules.map((mod) => ({
   ...mod,
   quiz: [
     ...mod.quiz,
-    ...(questionBank.modules[mod.id] ?? []).map((q) => ({ ...q, points: 0 })),
+    ...(questionBank.modules[mod.id] ?? [])
+      .filter((q) => !mod.quiz.some((existing) => existing.id === q.id))
+      .map((q) => ({ ...q, points: 0 })),
   ],
 }));
 
